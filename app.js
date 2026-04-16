@@ -1532,21 +1532,21 @@ const AI_MODEL_CONFIG={
   },
   paid:{
     provider:'anthropic',
-    model:'claude-opus-4-6',
+    model:'claude-sonnet-4-20250514',
     reasoningEffort:'high',
     fallbackProvider:'',
     fallbackModel:'',
   },
   dossier:{
     provider:'anthropic',
-    model:'claude-opus-4-6',
+    model:'claude-sonnet-4-20250514',
     reasoningEffort:'high',
     fallbackProvider:'',
     fallbackModel:'',
   },
   followup:{
     provider:'anthropic',
-    model:'claude-opus-4-6',
+    model:'claude-sonnet-4-20250514',
     reasoningEffort:'high',
     fallbackProvider:'',
     fallbackModel:'',
@@ -3897,16 +3897,24 @@ function analyzeConsultationFocus(cat='',theme=''){
 function buildDecisionSupportPromptGuide(cat='',theme=''){
   const focus=analyzeConsultationFocus(cat,theme);
   const lines=[
-    `- 相談者が本当に欲しいのは「${focus.answerNeed}」という実感です。`,
+    `【相談者が欲しい答え】`,
+    `相談者が本当に欲しいのは「${focus.answerNeed}」という実感です。`,
+    `出力の冒頭1〜2文で、この問いに対して「進む・止まる・様子を見る」のいずれかが伝わる形で言い切ること。`,
+    '',
+    `【判断材料の具体化ルール】`,
+    '- 「〜かもしれません」「〜の可能性があります」は禁止。「〜になりやすい」「〜という状況です」と断言する',
+    '- 「気持ちを大切に」「自分を信じて」などの精神論は禁止。現実的な行動と判断軸に変換する',
     '- カードの説明、並び、流派名、位置関係、システム説明は一切出さない',
     '- 読み手は占いに詳しくない前提で、普通の日本語だけで腹落ちさせる',
-    '- 綺麗事や精神論ではなく、判断材料・優先順位・行動に落とし込む',
+    '- 抽象的な「良い変化」ではなく「具体的に何が・いつ・どうなりやすいか」を書く',
+    '- 行動指示は「〜する」「〜を確認する」「〜を止める」のように動詞で完結させる',
   ];
   if(focus.isDualConcern){
-    lines.push('- 恋愛と仕事が同時に出てくる場合は、必ず論点を分けて書く');
+    lines.push('- 恋愛と仕事が同時に出てくる場合は、必ず論点を「恋愛では〜、仕事では〜」と分けて書く');
   }
   if(focus.needsDecision){
-    lines.push('- 白黒を急がせるのではなく、「何を確認してから決めるか」を具体化する');
+    lines.push('- 「何を確認してから決めるか」を具体的な確認事項として2〜3個書く');
+    lines.push('- 判断の分かれ目（進むべき条件 vs 止まるべき条件）を明記する');
   }
   return lines.join('\n');
 }
@@ -4218,41 +4226,63 @@ function renderFormattedResultText(id,text,kind='default'){
 function buildReadingOutputFormatGuide(kind='len'){
   if(kind==='len'){
     return [
-      '【出力形式】',
+      '【出力形式・厳守事項】',
       '見出しは必ず次の順で固定してください。',
+      '',
       '■ 今の流れ',
+      '▶ 最初の1文で「今の状況はどういう状態か」を断言する（例：「今は○○な流れにいます」「現状、○○が起きやすい状態です」）。',
+      '▶ 2文目で「その背景にある理由」または「転換点」を添える。',
+      '▶ 3文目以降は必要なら続けてよいが、脱線・前置き・比喩は禁止。',
+      '',
       '■ 気をつけること',
+      '▶ 最初の1文で「具体的なリスクまたは落とし穴」を断言する（例：「このまま○○すると〜になりやすい」）。',
+      '▶ ネガティブカードが出ているなら警告として前面に出す。「〜かもしれない」で逃げない。',
+      '▶ 改善・好転の兆しが見えるなら「一方で〜という流れもある」とセットで必ず伝える。',
+      '',
       '■ 次にやること',
-      '冒頭1〜2文で結論と核心を言い切ってください。',
-      'その後は、必要なら背景・分岐点・条件まで少し深く書いて構いません。',
-      'ただし脱線、重複、長い前置き、比喩は禁止します。',
-      '1文は短めにし、各見出しは2〜6文で読み返しやすく書いてください。'
+      '▶ 今日から7日以内にできる行動を3つ以内、箇条書きにする。',
+      '▶ 各行動は「〜する」「〜を確認する」「〜を止める」のように動詞で完結させる。',
+      '▶ 「気持ちを整える」「自分を信じる」などの精神論は禁止。現実に動けること・確認できることだけを書く。',
+      '▶ 状況別に書く場合は「もし○○なら〜する」の形にする。',
     ].join('\n');
   }
   if(kind==='orc'){
     return [
-      '【出力形式】',
+      '【出力形式・厳守事項】',
       '見出しは必ず次の順で固定してください。',
+      '',
       '■ 今の気持ち',
+      '▶ 最初の1文で「今の感情・状態の核心」を断言する（例：「今は○○という状態にいます」）。',
+      '▶ 感情の流れと「なぜそこにいるか」を2〜3文で整理する。前置きや比喩は禁止。',
+      '',
       '■ 魂の本質',
+      '▶ 魂の本質診断のsummaryとstressを最優先で使い、「この人の根っこにある性質」を1〜2文で断言する。',
+      '▶ 「〜な傾向があります」ではなく「〜という性質を持っています」と言い切る。',
+      '▶ 今の悩みや引っかかりとその性質の関係を具体的に結びつける。',
+      '',
       '■ 次にとる行動',
-      '冒頭1〜2文で結論と本質を言い切ってください。',
-      'その後は、必要なら感情の流れを少し深く書いて構いません。',
-      'ただし難しい言葉、長い前置き、脱線は禁止します。',
-      '1文は短めにし、「■次にとる行動」では動詞から始まる行動を2〜3個、すぐ分かる言葉で書いてください。'
+      '▶ カードのメッセージを「今週やること」に変換して2〜3個書く。',
+      '▶ 各行動は「〜する」「〜を試す」「〜をやめる」のように動詞で完結させる。',
+      '▶ 「心がけて」「意識して」「感じて」などの抽象動詞は禁止。',
     ].join('\n');
   }
   if(kind==='integration'){
     return [
-      '【出力形式】',
+      '【出力形式・厳守事項】',
       '見出しは必ず次の順で固定してください。',
+      '',
       '■ 結論',
+      '▶ 最初の1〜2文で「進む・止まる・様子を見る」のどれかを断言する。曖昧にしない。',
+      '▶ 結論は「なぜそうなのか」を一言で支える根拠もセットで書く。',
+      '',
       '■ 判断ポイント',
+      '▶「進んでよい条件」と「止まるべき条件」を分けて書く。',
+      '▶ 条件は「○○が確認できたら進む」「○○が起きたら止まる」の形で具体的に書く。',
+      '▶ 抽象的な「気持ちの変化」ではなく、現実の状況・言葉・出来事を条件にする。',
+      '',
       '■ 次にやること',
-      '最初の2文で、進む・止まる・様子を見るのどれかが伝わるように言い切ってください。',
-      'その後は、必要なら判断の軸や分岐点を少し深く書いて構いません。',
-      '各見出しは2〜6文で、短く締めつつ中身は薄くしないでください。',
-      '「次にやること」は3つまで。1行ずつ短くしてください。'
+      '▶ 今日から7日以内にやることを3つまで、1行ずつ書く。',
+      '▶ 各行を動詞で完結させる。精神論・励ましは禁止。',
     ].join('\n');
   }
   if(kind==='foundationdeep'){
@@ -6141,8 +6171,9 @@ function renderClarifyScreen(){
       <div class="clarify-q-num">FOCUS ${String(i+1).padStart(2,'0')}</div>
       <div class="clarify-q-badge"><span>${escapeHtml(qDef.badge)}</span>${escapeHtml(qDef.anchor||'')}</div>
       <div class="clarify-q-text">${escapeHtml(qDef.q)}</div>
+      ${qDef.hint?`<div class="clarify-q-hint">🔍 ${escapeHtml(qDef.hint)}</div>`:''}
       <div class="tmpl-answers">${tmplBtns}</div>
-      <textarea class="clarify-textarea" id="${taId}" placeholder="自由に書いてください。短くても大丈夫です。"></textarea>`;
+      <textarea class="clarify-textarea" id="${taId}" placeholder="選択肢を選ぶか、自由に書いてください。"></textarea>`;
     container.appendChild(block);
   });
 }
@@ -6220,10 +6251,10 @@ function hasClarifyAnswers(){
 function buildClarifyPromptText(mode='detail'){
   const entries=getClarifyEntries();
   if(!entries.length) return mode==='plain'?'なし':'';
-  const summary=`【相談者の補足整理】\n${entries.map(entry=>`- ${entry.badge}：${entry.a}`).join('\n')}`;
+  const summary=`【相談者の補足整理（心理的背景含む）】\n${entries.map(entry=>`- ${entry.badge}：${entry.a}`).join('\n')}`;
   if(mode==='detail'){
-    const detail=entries.map(entry=>`▼${entry.badge}${entry.anchor?`｜${entry.anchor}`:''}\nQ：${entry.q}\nA：${entry.a}`).join('\n');
-    return `\n${summary}\n【相談者の補足回答】\n${detail}`;
+    const detail=entries.map(entry=>`▼${entry.badge}${entry.anchor?`｜${entry.anchor}`:''}\nQ：${entry.q}${entry.hint?`\n推定：${entry.hint}`:''}\nA：${entry.a}`).join('\n');
+    return `\n${summary}\n【相談者の補足回答（推定背景と実回答）】\n${detail}\n\n※上記補足は、CBT・動機付け面接・解決志向療法の観点から設計した質問への回答です。相談者の内的矛盾・変化への準備性・理想の着地点が読み取れます。判断材料の精度向上に活用してください。`;
   }
   if(mode==='compact'){
     return `\n${summary}`;
@@ -6314,6 +6345,19 @@ function buildClarifyCardContext(){
     posLabel:getOrcClarifyPosLabel(index,SEL_ORC.length),
   }));
   const findByIds=(cards,ids)=>cards.find(card=>ids.includes(card.id))||null;
+  // カード分類
+  const blockerIds=[6,7,8,10,11,14,17,18,21,23,36];
+  const ambiguityIds=[6,7,18,24,25,26,32];
+  const externalIds=[15,16,20,24,25,26,27,28,29,34,35];
+  const peopleIds=[15,28,29,30];
+  const positiveIds=[1,2,16,17,31,33]; // 好転サイン
+  const warningIds=[6,8,10,11,14,19,21,23,30,36]; // 警戒カード
+  const blockerCard=findByIds(len,blockerIds);
+  const ambiguityCard=findByIds(len,ambiguityIds);
+  const externalCard=findByIds(len,externalIds);
+  const peopleCard=findByIds(len,peopleIds);
+  const hasWarningCard=len.some(c=>warningIds.includes(c.id));
+  const hasPositiveCard=len.some(c=>positiveIds.includes(c.id));
   return{
     input,
     category:input.cat||'総合',
@@ -6323,10 +6367,12 @@ function buildClarifyCardContext(){
     orc,
     coreCard:len.find(card=>card.index===4)||len.find(card=>card.index===1)||len[0]||null,
     futureCard:len.find(card=>card.index===5)||len.find(card=>card.index===2)||len[len.length-1]||null,
-    blockerCard:findByIds(len,CLARIFY_CARD_GROUPS.blocker),
-    ambiguityCard:findByIds(len,CLARIFY_CARD_GROUPS.ambiguity),
-    externalCard:findByIds(len,CLARIFY_CARD_GROUPS.external),
-    peopleCard:findByIds(len,CLARIFY_CARD_GROUPS.people),
+    blockerCard,
+    ambiguityCard,
+    externalCard,
+    peopleCard,
+    hasWarningCard,
+    hasPositiveCard,
     currentOrc:orc[1]||orc[0]||null,
     futureOrc:orc[2]||orc[orc.length-1]||null,
   };
@@ -6337,238 +6383,245 @@ function buildClarifyAnchor(card,prefix='参考カード'){
   return `${prefix}：${card.posLabel} No.${card.id} ${card.name}`;
 }
 
-function makeClarifyQuestion(id,badge,anchor,q,templates){
-  return{id,badge,anchor,q,templates};
+function makeClarifyQuestion(id,badge,anchor,q,hint,templates){
+  return{id,badge,anchor,q,hint,templates};
 }
 
+// ─── Q1: 核心確認（CBT ＝ 状況の認知整理）────────────────────────────
+// 「今、何をはっきりさせたいか」を明確にする
+// → 認知行動療法の「問題の定義」ステップに相当
 function buildCoreClarifyQuestion(ctx){
+  const card=ctx.coreCard||ctx.currentOrc;
+  const anchor=buildClarifyAnchor(card,'核心に近いカード');
   switch(ctx.category){
     case '恋愛':
       return makeClarifyQuestion(
-        'core',
-        '核心確認',
-        buildClarifyAnchor(ctx.coreCard||ctx.currentOrc,'軸カード'),
-        'いま一番はっきりさせたいのは、相手の気持ち・関係の今後・自分がどう動くべきかのどれですか？',
-        ['相手の気持ちを知りたい','この関係の今後を整理したい','自分がどう動くべきか知りたい','まだ核心をうまく言葉にできない']
+        'core','核心確認',anchor,
+        '今回の鑑定で、いちばん「はっきりさせたい」のはどれに近いですか？',
+        'カードから見ると、「相手側に揺れがある」か「自分の気持ちがまだ固まっていない」かのどちらかに見えます。',
+        ['相手の本音・気持ちを知りたい','この関係が続くか終わるか見たい','自分がどう動けばいいか知りたい','この人を好きでいていいか迷っている']
       );
     case '仕事':
       return makeClarifyQuestion(
-        'core',
-        '核心確認',
-        buildClarifyAnchor(ctx.coreCard||ctx.currentOrc,'軸カード'),
-        'いま一番整理したいのは、続けるか変えるか・人間関係・評価や収入・自分の適性のどれですか？',
-        ['続けるか変えるかを決めたい','職場や人間関係を整理したい','評価や収入の見通しを知りたい','自分に合う働き方を知りたい']
+        'core','核心確認',anchor,
+        '今回の鑑定で、いちばん整理したいのはどれですか？',
+        'カードから見ると、「環境側の問題」か「自分の判断がまだ定まらない」かのどちらかが核心に見えます。',
+        ['今の職場を続けるか変えるか決めたい','人間関係のストレスを整理したい','評価・収入の見通しを知りたい','自分に合う仕事・働き方を見つけたい']
       );
     case '金運':
       return makeClarifyQuestion(
-        'core',
-        '核心確認',
-        buildClarifyAnchor(ctx.coreCard||ctx.currentOrc,'軸カード'),
-        'いま一番整理したいのは、収入の流れ・出費や不安・仕事との関係・立て直し方のどれですか？',
-        ['収入の流れを整えたい','出費や不安を整理したい','仕事とのつながりを見たい','立て直し方を知りたい']
+        'core','核心確認',anchor,
+        '今回、いちばん知りたいのはどれですか？',
+        'カードから見ると、「今の流れが好転するか」か「動きのタイミングを見極めたい」かのどちらかに近いと思われます。',
+        ['収入・お金の流れが好転するか知りたい','出費や不安の原因を整理したい','今動くべきか待つべきか判断したい','将来の安定した形を知りたい']
       );
     case '人間関係':
       return makeClarifyQuestion(
-        'core',
-        '核心確認',
-        buildClarifyAnchor(ctx.coreCard||ctx.currentOrc,'軸カード'),
-        'いま一番整理したいのは、相手の本音・距離の取り方・関係の今後・自分の受け止め方のどれですか？',
-        ['相手の本音を知りたい','距離の取り方を整理したい','関係の今後を見たい','自分の受け止め方を整えたい']
+        'core','核心確認',anchor,
+        '今回の鑑定で、いちばん整理したいのはどれですか？',
+        'カードから見ると、「相手への対処」か「自分の受け止め方を変える」かのどちらかが鍵に見えます。',
+        ['相手の本音・行動の意図を知りたい','この関係をどう続けるか決めたい','自分が傷つかない距離感を知りたい','関係を修復すべきか手放すか判断したい']
       );
     default:
       return makeClarifyQuestion(
-        'core',
-        '核心確認',
-        buildClarifyAnchor(ctx.coreCard||ctx.currentOrc,'軸カード'),
-        '今回のテーマで、いま一番整理したいのは何ですか？',
-        ['現状を整理したい','相手や環境の影響を知りたい','次にどう動くべきか知りたい','まだ核心をうまく言葉にできない']
+        'core','核心確認',anchor,
+        '今回の鑑定で、いちばんはっきりさせたいのはどれに近いですか？',
+        'カードから見ると、「状況の外側にある問題」か「自分の中にある迷い」かのどちらかに核心がありそうです。',
+        ['今の状況の流れを整理したい','相手や環境の影響を読みたい','次に何をすべきか知りたい','自分の気持ちや判断を固めたい']
       );
   }
 }
 
-function buildBlockerClarifyQuestion(ctx){
+// ─── Q2: 感情 vs 認知のズレ（CBT の自動思考同定）────────────────────
+// 「頭では分かっているのに動けない」という内的矛盾を特定する
+function buildCognitiveMismatchQuestion(ctx){
+  const card=ctx.blockerCard||ctx.ambiguityCard||ctx.currentOrc;
+  const anchor=buildClarifyAnchor(card,'引っかかりに近いカード');
+  switch(ctx.category){
+    case '恋愛':
+      return makeClarifyQuestion(
+        'mismatch','頭と気持ちのズレ',anchor,
+        '「頭では分かっているけど、気持ちがついていかない」と感じることはありますか？',
+        'このカードの組み合わせから、「理性では答えが出ているが、感情がブレーキをかけている」状態に見えます。どれに近いか教えてください。',
+        ['離れた方がいいと分かっているが踏み切れない','相手を信じたいのに疑いが消えない','もう終わりにしたいのに連絡を待ってしまう','自分の気持ちが何なのか、自分でも分からない']
+      );
+    case '仕事':
+      return makeClarifyQuestion(
+        'mismatch','頭と気持ちのズレ',anchor,
+        '「頭では答えが出ているけど、動けない」と感じていますか？',
+        'カードから見ると、「判断材料は揃っているのに一歩が踏み出せない」状態に見えます。どれに近いか教えてください。',
+        ['転職・変化の必要性は感じているが動けない','今の職場を辞めたいが後悔が怖い','やりたいことは分かっているが現実的に無理だと感じる','誰かの期待や評価を気にしすぎて判断できない']
+      );
+    case '金運':
+      return makeClarifyQuestion(
+        'mismatch','頭と気持ちのズレ',anchor,
+        'お金の問題で「分かっているのにできない」ことはありますか？',
+        'カードから見ると、「行動の方向性は見えているが、不安が先に立って動けない」状態に見えます。',
+        ['節約・見直しが必要だと分かっているが続かない','投資・動きを考えているが怖くて踏み出せない','収入を上げたいが具体的な方法が分からない','お金のことを考えると気持ちが重くなって避けてしまう']
+      );
+    default:
+      return makeClarifyQuestion(
+        'mismatch','頭と気持ちのズレ',anchor,
+        '「頭では分かっているのに、なかなか動けない」と感じていることはありますか？',
+        'カードから見ると、「情報や判断は揃っているが、感情的なブレーキがかかっている」ように見えます。',
+        ['答えは分かっているが踏み切れない','変わりたいのに変われない自分がいる','周囲への影響が気になって動けない','どこから手をつけていいか分からない']
+      );
+  }
+}
+
+// ─── Q3: 変化への準備性（動機付け面接）─────────────────────────────
+// 「今すぐ動きたいのか、もう少し様子を見たいのか」を把握する
+// → 動機付け面接の「変化のステージ」に相当（前熟考→熟考→準備→行動）
+function buildChangeReadinessQuestion(ctx){
+  const card=ctx.futureCard||ctx.futureOrc;
+  const anchor=buildClarifyAnchor(card,'今後の流れに近いカード');
+  switch(ctx.category){
+    case '恋愛':
+      return makeClarifyQuestion(
+        'readiness','動く準備の確認',anchor,
+        'いま、この関係に対してどのくらい「動く気持ち」がありますか？',
+        'カードの流れから見ると、「近いうちに何かが動く」タイミングに見えます。今のあなたの状態はどれに近いですか？',
+        ['すぐにでも動きたい・連絡したい','もう少し様子を見てから動きたい','相手の出方を見て決めたい','まずは自分の気持ちを整理してから']
+      );
+    case '仕事':
+      return makeClarifyQuestion(
+        'readiness','動く準備の確認',anchor,
+        '今の状況を変えることへの「準備度」はどのくらいですか？',
+        'カードから見ると、変化の波が近づいているように見えます。今のあなたの状態はどれに近いですか？',
+        ['今すぐ動ける・すでに動いている','3ヶ月以内には動きたい','半年〜1年かけて準備したい','まだ具体的に考えられない段階']
+      );
+    case '金運':
+      return makeClarifyQuestion(
+        'readiness','行動の準備確認',anchor,
+        'お金の状況を変えることへの「準備度」はどのくらいですか？',
+        'カードから見ると、変化できる時期が近づいているように見えます。',
+        ['今すぐ具体的な行動を起こせる','少し準備が整ったら動ける','もう少し情報を集めてから','今はまだ動けない事情がある']
+      );
+    default:
+      return makeClarifyQuestion(
+        'readiness','行動の準備確認',anchor,
+        '今のテーマについて「行動を起こす準備度」はどのくらいですか？',
+        'カードの流れから見ると、動けるタイミングが近づいているように読めます。',
+        ['今すぐ動きたい','近いうちに動けそう','もう少し様子を見たい','まだ整理が必要な段階']
+      );
+  }
+}
+
+// ─── Q4: 外部要因（自己効力感の棚卸し）────────────────────────────
+// 「自分でコントロールできること」と「できないこと」を分ける
+// → CBT の「コントロール可能性の認識」に相当
+function buildLocusQuestion(ctx){
+  const card=ctx.externalCard||ctx.peopleCard||ctx.futureCard;
+  const anchor=buildClarifyAnchor(card,'影響力に近いカード');
   switch(ctx.category){
     case '恋愛':
     case '人間関係':
       return makeClarifyQuestion(
-        'blocker',
-        '引っかかり確認',
-        buildClarifyAnchor(ctx.blockerCard||ctx.ambiguityCard||ctx.currentOrc,'引っかかりやすいカード'),
-        'いま止まりやすい原因は、相手の態度・タイミング・自分の不安・第三者や環境のどれに近いですか？',
-        ['相手の態度が読めない','タイミングが合わない','自分の不安や迷いが強い','第三者や環境の影響が大きい']
+        'locus','影響の整理',anchor,
+        'この問題で「自分でコントロールできること」と「相手や状況に任せるしかないこと」、どちらの比重が大きいですか？',
+        'カードから見ると、「相手側の動き次第」の部分が多い状況に見えます。あなた自身のとらえ方に近いのはどれですか？',
+        ['自分が変わればきっと相手も変わると思う','相手次第なのでこちらからはあまり動けない','自分にできることはやったので後は待つしかない','どちらが原因か、まだうまく整理できていない']
       );
     case '仕事':
       return makeClarifyQuestion(
-        'blocker',
-        '引っかかり確認',
-        buildClarifyAnchor(ctx.blockerCard||ctx.ambiguityCard||ctx.currentOrc,'引っかかりやすいカード'),
-        'いま止まりやすい原因は、職場環境・条件やタイミング・自分の迷い・体力や気力のどれに近いですか？',
-        ['職場や上司の影響が大きい','条件やタイミングが難しい','自分の迷いが強い','体力や気力が追いつかない']
+        'locus','影響の整理',anchor,
+        'この問題に「一番強く影響しているもの」はどれですか？',
+        'カードから見ると、「職場や上司など外の要因」が大きく作用している状況に見えます。',
+        ['上司・職場の方針や環境の問題が大きい','自分のスキル・経験がまだ足りない','タイミングや運が向いていない','自分の決断力・意志力が課題']
       );
     case '金運':
       return makeClarifyQuestion(
-        'blocker',
-        '引っかかり確認',
-        buildClarifyAnchor(ctx.blockerCard||ctx.ambiguityCard||ctx.currentOrc,'引っかかりやすいカード'),
-        'いま止まりやすい原因は、出費・先への不安・判断材料不足・動く余力のなさのどれに近いですか？',
-        ['出費が気になって動けない','先への不安が大きい','判断材料が足りない','今は余力が少ない']
+        'locus','影響の整理',anchor,
+        'お金の問題で「自分が変えられること」と「外の事情」の比重はどちらが大きいですか？',
+        'カードから見ると、「外の条件（仕事・市況など）」と「内の判断（使い方・動き方）」が両方絡んでいるように見えます。',
+        ['外の事情（仕事・景気など）の影響が大きい','自分の行動や判断を変えれば改善できる','両方が絡み合っていて整理しにくい','特定の出来事や時期が起点になっている']
       );
     default:
       return makeClarifyQuestion(
-        'blocker',
-        '引っかかり確認',
-        buildClarifyAnchor(ctx.blockerCard||ctx.ambiguityCard||ctx.currentOrc,'引っかかりやすいカード'),
-        'いま止まりやすい原因は、相手や環境・条件やタイミング・自分の迷いのどれに近いですか？',
-        ['相手や環境の影響が大きい','条件やタイミングが難しい','自分の迷いが強い','何から整理すべきか定まらない']
+        'locus','影響の整理',anchor,
+        'この問題で一番強く影響しているのは「外の事情」と「自分の内側」、どちらですか？',
+        'カードから見ると、外からの力と内側の反応が重なり合っている状況に見えます。',
+        ['外の環境・他者の影響が大きい','自分の気持ちや判断の問題が大きい','両方が絡み合っている','何が原因か、まだはっきりしない']
       );
   }
 }
 
-function buildFeelingsClarifyQuestion(ctx){
+// ─── Q5: 理想の着地点（解決空間の定義）─────────────────────────────
+// 「どうなったら解決したと感じるか」を明確にする
+// → 解決志向療法（SFT）の「奇跡の質問」に相当
+function buildIdealOutcomeQuestion(ctx){
+  const card=ctx.futureCard||ctx.futureOrc;
+  const anchor=buildClarifyAnchor(card,'着地点に近いカード');
   switch(ctx.category){
     case '恋愛':
       return makeClarifyQuestion(
-        'feelings',
-        '気持ち確認',
-        buildClarifyAnchor(ctx.currentOrc||ctx.peopleCard||ctx.externalCard,'感情の流れに近いカード'),
-        '本音では、どうなれたらいちばん気持ちが落ち着きますか？',
-        ['相手の本音が分かれば落ち着く','今後の方向性が見えれば落ち着く','自分の気持ちを決められれば落ち着く','少し距離を置ければ落ち着く']
-      );
-    default:
-      return makeClarifyQuestion(
-        'feelings',
-        '気持ち確認',
-        buildClarifyAnchor(ctx.currentOrc||ctx.peopleCard||ctx.externalCard,'感情の流れに近いカード'),
-        '本音では、どんな状態になれたら少し楽になれそうですか？',
-        ['相手の本音が分かれば楽になる','状況が整理できれば楽になる','自分の気持ちが決まれば楽になる','少し距離を置ければ楽になる']
-      );
-  }
-}
-
-function buildExternalClarifyQuestion(ctx){
-  switch(ctx.category){
-    case '恋愛':
-    case '人間関係':
-      return makeClarifyQuestion(
-        'external',
-        '外部要因確認',
-        buildClarifyAnchor(ctx.externalCard||ctx.peopleCard||ctx.futureCard,'関係性に影響するカード'),
-        'このテーマに強く影響している相手や第三者はいますか？',
-        ['相手本人の影響が大きい','第三者や周囲の事情がある','環境や距離の問題が大きい','特定の相手より自分の問題が大きい']
+        'ideal','理想の着地点',anchor,
+        '今回の鑑定を終えた後、どういう状態になれたら「読んでよかった」と感じますか？',
+        'カードから見ると「関係の方向性」か「自分の気持ちの決め方」のどちらかが今の一番の課題に見えます。',
+        ['相手との関係がどうなるか見えた','自分がどうすべきか決められた','今の気持ちをうまく整理できた','次の一歩を踏み出す勇気が持てた']
       );
     case '仕事':
       return makeClarifyQuestion(
-        'external',
-        '外部要因確認',
-        buildClarifyAnchor(ctx.externalCard||ctx.futureCard,'外部要因に近いカード'),
-        'このテーマに強く影響しているのは、誰・何ですか？',
-        ['上司や職場の方針','同僚や人間関係','条件やお金の問題','自分の判断や体力']
+        'ideal','理想の着地点',anchor,
+        '今回の鑑定で、どんな「答え」が見えたら前に進みやすくなりますか？',
+        'カードから見ると「決断の後押し」か「現実的な見通し」のどちらかが今最も必要に見えます。',
+        ['続けるか変えるかの方向性が見えた','今の環境で生き残る立ち回りが分かった','転職・起業のタイミングが見えた','今日からできる具体的な行動が分かった']
       );
     case '金運':
       return makeClarifyQuestion(
-        'external',
-        '外部要因確認',
-        buildClarifyAnchor(ctx.externalCard||ctx.futureCard,'外部要因に近いカード'),
-        'お金の流れに強く影響しているのは何ですか？',
-        ['仕事や収入の変化','固定費や生活コスト','大きな出費の予定','将来への不安や判断ミス']
+        'ideal','理想の着地点',anchor,
+        '今回の鑑定で、どんな「答え」が見えたら前に進みやすくなりますか？',
+        'カードから見ると「流れの好転時期」か「今すぐ取れる行動」のどちらかが最優先に見えます。',
+        ['お金の流れが好転するか・時期が分かった','今すぐ取れる行動が具体的に分かった','長期的な安定に向けた方向性が見えた','不安の原因がはっきり整理できた']
       );
     default:
       return makeClarifyQuestion(
-        'external',
-        '外部要因確認',
-        buildClarifyAnchor(ctx.externalCard||ctx.futureCard,'外部要因に近いカード'),
-        '今回のテーマに強く影響している外部要因はありますか？',
-        ['相手や周囲の影響が大きい','環境やタイミングの問題がある','条件面の影響が大きい','外より自分の問題が大きい']
+        'ideal','理想の着地点',anchor,
+        '今回の鑑定で、どんな「答え」が見えたら前に進みやすくなりますか？',
+        'カードから見ると「状況の見通し」か「自分の行動の方向性」のどちらかが今の核心に見えます。',
+        ['今の流れと今後の見通しが整理できた','次に何をすべきか具体的に分かった','相手や状況との向き合い方が見えた','自分の気持ちや価値観が整理できた']
       );
   }
 }
 
-function buildOutcomeClarifyQuestion(ctx){
-  switch(ctx.category){
-    case '恋愛':
-      return makeClarifyQuestion(
-        'outcome',
-        '着地点確認',
-        buildClarifyAnchor(ctx.futureCard||ctx.futureOrc,'着地点に近いカード'),
-        '今回の鑑定で、どこが見えたら前に進みやすくなりますか？',
-        ['相手との今後の流れ','自分が取るべき距離感','待つべきか動くべきか','この関係を続ける価値']
-      );
-    case '仕事':
-      return makeClarifyQuestion(
-        'outcome',
-        '着地点確認',
-        buildClarifyAnchor(ctx.futureCard||ctx.futureOrc,'着地点に近いカード'),
-        '今回の鑑定で、どこが見えたら前に進みやすくなりますか？',
-        ['続けるか変えるかの判断','今の職場での立ち回り','評価や収入の見通し','今やるべき行動の順番']
-      );
-    default:
-      return makeClarifyQuestion(
-        'outcome',
-        '着地点確認',
-        buildClarifyAnchor(ctx.futureCard||ctx.futureOrc,'着地点に近いカード'),
-        '今回の鑑定で、どこが見えたら前に進みやすくなりますか？',
-        ['今の流れの見通し','次に取るべき行動','相手や環境との向き合い方','自分の気持ちの整理']
-      );
-  }
-}
-
-function buildConstraintClarifyQuestion(ctx){
-  switch(ctx.category){
-    case '仕事':
-      return makeClarifyQuestion(
-        'constraint',
-        '行動制約確認',
-        buildClarifyAnchor(ctx.futureCard||ctx.blockerCard,'未来に近いカード'),
-        '今すぐ動くとしたら、いちばん現実的な制約は何ですか？',
-        ['時間が足りない','気力や体力が追いつかない','周囲の反応が気になる','条件面がまだ固まらない']
-      );
-    case '金運':
-      return makeClarifyQuestion(
-        'constraint',
-        '行動制約確認',
-        buildClarifyAnchor(ctx.futureCard||ctx.blockerCard,'未来に近いカード'),
-        '今すぐ動くとしたら、いちばん現実的な制約は何ですか？',
-        ['手元資金に余裕がない','何を優先すべきか決めきれない','周囲に相談しづらい','まだ様子を見たい事情がある']
-      );
-    default:
-      return makeClarifyQuestion(
-        'constraint',
-        '行動制約確認',
-        buildClarifyAnchor(ctx.futureCard||ctx.blockerCard,'未来に近いカード'),
-        '今すぐ動くとしたら、いちばん現実的な制約は何ですか？',
-        ['時間が足りない','気持ちがまだ定まらない','相手や周囲の反応が気になる','条件面が整っていない']
-      );
-  }
-}
-
+// ─── 質問組み立てロジック（最大5問、最低3問）─────────────────────
 function buildClarifyQuestions(){
   const ctx=buildClarifyCardContext();
-  const hasStrongNeed=!!(ctx.themeShort||ctx.blockerCard||ctx.ambiguityCard||ctx.externalCard||ctx.peopleCard);
+  const cat=ctx.category;
+  const hasStrongNeed=!!(ctx.themeShort||ctx.blockerCard||ctx.ambiguityCard||ctx.externalCard||ctx.peopleCard||ctx.hasWarningCard);
+  // テーマが十分長く特に目立ったカードもない単純なケースでは省略
   if(!hasStrongNeed&&SEL_LEN.length<9) return [];
-  const questions=[buildCoreClarifyQuestion(ctx)];
-  if(ctx.blockerCard||ctx.ambiguityCard||ctx.themeShort){
-    questions.push(buildBlockerClarifyQuestion(ctx));
+
+  const questions=[];
+
+  // Q1: 核心確認（常に追加）
+  questions.push(buildCoreClarifyQuestion(ctx));
+
+  // Q2: 頭と気持ちのズレ（ブロッカーや曖昧カードがある場合、またはカテゴリに関係なく追加）
+  questions.push(buildCognitiveMismatchQuestion(ctx));
+
+  // Q3: 動く準備の確認（未来カードがある場合、またはテーマが明確な場合）
+  if(ctx.futureCard||ctx.futureOrc||ctx.themeShort||SEL_LEN.length>=9){
+    questions.push(buildChangeReadinessQuestion(ctx));
   }
-  if(questions.length<3){
-    if(['恋愛','人間関係'].includes(ctx.category)){
-      questions.push((ctx.externalCard||ctx.peopleCard)?buildExternalClarifyQuestion(ctx):buildFeelingsClarifyQuestion(ctx));
-    }else if(ctx.externalCard||['仕事','金運'].includes(ctx.category)){
-      questions.push(buildExternalClarifyQuestion(ctx));
-    }
+
+  // Q4: 影響の整理（外部カードや人物カードがある場合、または恋愛・人間関係カテゴリ）
+  if(ctx.externalCard||ctx.peopleCard||['恋愛','人間関係','仕事'].includes(cat)){
+    questions.push(buildLocusQuestion(ctx));
   }
-  if(questions.length<3&&(ctx.futureCard||ctx.futureOrc||ctx.themeShort)){
-    questions.push(buildOutcomeClarifyQuestion(ctx));
-  }
-  if(questions.length<3&&(ctx.themeShort||ctx.blockerCard||ctx.ambiguityCard||['仕事','金運'].includes(ctx.category))){
-    questions.push(buildConstraintClarifyQuestion(ctx));
-  }
+
+  // Q5: 理想の着地点（常に追加：解決志向でゴールを明確化）
+  questions.push(buildIdealOutcomeQuestion(ctx));
+
+  // 重複排除
   const seen=new Set();
   return questions.filter(question=>{
     if(!question||seen.has(question.id)) return false;
     seen.add(question.id);
     return true;
-  }).slice(0,3);
+  }).slice(0,5);
 }
+
 
 function renderFortuneLayer(meimei){
   if(!meimei) return '';
@@ -7030,20 +7083,23 @@ async function runLenReading(){
   const ringInfo=ringIdx>=0&&is9?`\n【指輪カード特殊ルール】指輪は⑤より左側=ネガティブ（束縛・浮気）、右側=ポジティブ（結婚・深い約束）。現在位置は${['①','②','③','④','⑤','⑥','⑦','⑧','⑨'][ringIdx]}です。`:'';
 
 
-  const systemPrompt=`あなたは、占いに詳しくない人からも「ちゃんと分かってくれている」と感じてもらえる一流の鑑定者です。
-役割はカードの説明ではなく、相談者が判断できる文章を書くことです。
+  const systemPrompt=`あなたは、「答えを出す」ことを使命とする一流の鑑定者です。
+役割は状況を説明することではなく、「相談者が今日から動ける判断材料」を与えることです。
+カードは内部で使い切り、出力にはカード名もシステム説明も一切出さない。
 
 ${buildDecisionSupportPromptGuide(cat,theme)}
 
-【絶対禁止】
+【絶対禁止 ─ これをやると鑑定書として失敗とみなす】
 - カード名、カード枚数、並び、過去/現在/未来、顕在/潜在、占術名、システム説明
 - 「〜のカードが出ているので」「配置では〜」のような書き方
+- 「〜かもしれません」「〜の可能性があります」「〜ではないでしょうか」の弱い言い回し
 - キーワードの列挙や辞書の焼き直し
-- きれいごとの励ましだけで終わること
+- 「自分を信じて」「焦らずに」など精神論だけで終わること
+- 抽象的な「良い変化」「好転の流れ」だけで行動が示されない文章
 
 【警戒重視の読み方】
 - 出ているカードにネガティブな意味のもの（障害・損失・終わり・不信・停滞・争い・嫉妬など）があれば、それを「警告」として■今の流れか■気をつけることで正直に前面に出す
-- 「かもしれません」で逃げず「この状況では〜になりやすい」と言い切る
+- 「この状況では〜になりやすい」「〜に注意が必要です」と言い切る
 - ただし同時に、以下のカードが出ているときは「改善の兆し」として必ずセットで伝える
   → 騎士(1)：好転の知らせが近づいているサイン
   → コウノトリ(17)：状況が動き始めている・変化の始まり
@@ -7258,6 +7314,7 @@ ${lenSpreadContext.diagonalDetails}`
   const reactionText=buildReactionPromptSnippet();
 
   const systemPrompt=`あなたはプロの占い師です。この統合メッセージは鑑定の締めくくりであり、相談者が最後に持ち帰る「答え」です。
+最優先の使命は「結論を出す」ことです。「様子を見て」「信じて」だけで終わる文章は失敗とみなします。
 
 【カード間の優先順位】
 - ルノルマンは現実・状況・タイムラインを示す主軸。統合の結論はルノルマンの流れを上書きしない
@@ -7268,23 +7325,25 @@ ${buildDecisionSupportPromptGuide(cat,theme)}
 
 【絶対禁止】
 - カード名、占術名、システム説明
-- 個別解釈の繰り返し
+- 個別解釈の繰り返し（前のセクションの焼き直し）
+- 「〜かもしれません」「〜の可能性があります」の弱い言い回し
 - 優しいだけで何も決められない文章
+- 抽象的な励ましで行動が示されない文章
 
-【出力形式】
-次の3見出しだけで書くこと。
+【出力形式・厳守】
+次の3見出しだけで書くこと。見出し以外の前置きは不要。
 
 ■ 結論
-相談者が最初に読む2文で、進む・止まる・様子を見るのどれかが分かるように書く。ここは短く、核心だけに絞る。
+最初の2文で「進む・止まる・様子を見る」のどれかを断言する。「なぜそうなのか」を一言で支える根拠もセットで書く。
 
 ■ 判断ポイント
-何を確認できたら進めてよくて、何が見えたら切り替えるべきかを書く。必要なら少し深く掘ってよい。
-${focus.isDualConcern?`恋愛と仕事が両方あるので、必要なら二つに分けて整理する。`:''}
+「進んでよい条件」と「止まるべき条件」を分けて書く。条件は「○○が確認できたら進む」「○○が起きたら止まる」の形で具体的に書く。
+${focus.isDualConcern?`恋愛と仕事が両方あるので、「恋愛では〜、仕事では〜」と分けて整理する。`:''}
 
 ■ 次にやること
-今日から7日以内にやることを3つまで、1行ずつ、短い文で書く。
+今日から7日以内にやることを3つまで、1行ずつ、「〜する」「〜を確認する」「〜を止める」の動詞形で書く。精神論は禁止。
 
-合計700字前後。冒頭だけは短く締め、その後は脱線しない範囲で必要なら深く書いてよい。1文は短く、難しい言葉は禁止。`;
+合計700字前後。1文は短く、難しい言葉は禁止。`;
 
  const prompt=`【相談者】${name}さん
 【相談テーマ】${cat}「${theme||'全般'}」
@@ -7393,17 +7452,18 @@ ${LAST_OUTPUTS.integration||'なし'}`,
 
 async function polishPremiumDossierDraft(draft,sourceContext){
   const systemPrompt=`あなたは最高級の鑑定書を仕上げる編集長です。
-役割は、鑑定の中身を薄めずに、冗長さ・重複・矛盾を削り、読み返しやすい最終稿へ磨き上げることです。
+役割は、鑑定の中身を薄めずに、冗長さ・重複・矛盾を削り、「答えが出ている」最終稿へ磨き上げることです。
+編集の最優先チェックポイント：HEADLINEに「進む・止まる・様子を見る」のどれかが明確に書かれているか。なければ必ず書き直す。
 
 以下を厳守してください。
 - 出力は必ず指定タグのみ。タグ名や順番は一切変えない
-- HEADLINE は最初の30秒で結論と本質が分かる2〜3文に整える
-- CORE は、魂の本質診断のsummaryとstressを核心として残し、名前・生まれは補足程度に抑える。脱線しないなら少し長くなってもよい
-- TIMING は現実の時系列を基準に整える。脱線しないなら少し長くなってもよい
+- HEADLINE は「最初の1文で答えを断言する」形に整える。「〜かもしれない」は削除して言い切りに変換する
+- CORE は、魂の本質診断のsummaryとstressを核心として残し、名前・生まれは補足程度に抑える。その人の行動パターンと今の悩みを具体的に結びつける
+- TIMING は現実の時系列を基準に整える。「近い将来」「いずれ」などの曖昧な表現は「○週間以内」「○月頃」に変換する
+- ACTION7・ACTION30 の各行動は「〜する」「〜を確認する」「〜をやめる」の動詞形に整える。精神論は削除する
+- WARNING は「これをすると〜になりやすい」の言い切り形に整える
 - カード名、占術名、並び、システム説明は一切出さない
-- 同じ内容の言い換えを繰り返さない
-- 抽象論を削り、現実の判断・行動につながる密度へ上げる
-- 7日以内 / 30日以内の行動は、動詞から始まる具体表現にする
+- HEADLINE・CORE・CLOSINGの中身が同じにならないよう各セクションの役割を明確に分ける
 - KEYWORDS には、魂の本質診断のタグや判断の軸になる言葉を優先して入れる（カード名は禁止）
 - 不安を煽りすぎず、希望だけでも誤魔化さない
 - 相談者が占いを知らなくても自然に読める文体にする
@@ -7411,15 +7471,15 @@ async function polishPremiumDossierDraft(draft,sourceContext){
 出力形式:
 [[TITLE]]...[[/TITLE]]
 [[SUBTITLE]]...[[/SUBTITLE]]
-[[HEADLINE]]...[[/HEADLINE]]
-[[CORE]]...[[/CORE]]
-[[TIMING]]...[[/TIMING]]
-[[ACTION7]]1行ずつ3項目以上[[/ACTION7]]
-[[ACTION30]]1行ずつ3項目以上[[/ACTION30]]
-[[WARNING]]1行ずつ2〜4項目[[/WARNING]]
-[[LUCK]]1行ずつ2〜4項目[[/LUCK]]
+[[HEADLINE]]最初の1文で答えを断言。2〜3文で根拠[[/HEADLINE]]
+[[CORE]]魂の本質診断を軸にその人らしさと今の悩みを結びつける[[/CORE]]
+[[TIMING]]「○週間以内」「○月頃」で言い切る[[/TIMING]]
+[[ACTION7]]1行ずつ3項目以上。動詞で完結[[/ACTION7]]
+[[ACTION30]]1行ずつ3項目以上。動詞で完結[[/ACTION30]]
+[[WARNING]]1行ずつ2〜4項目。言い切りで書く[[/WARNING]]
+[[LUCK]]1行ずつ2〜4項目。実用的サインとして書く[[/LUCK]]
 [[KEYWORDS]]/ 区切りで4〜6個[[/KEYWORDS]]
-[[CLOSING]]...[[/CLOSING]]`;
+[[CLOSING]]HEADLINEの繰り返しではなく「この先の自分をどう扱うか」に触れる[[/CLOSING]]`;
 
   const prompt=`以下は鑑定書の下書きです。
 タグ構造は維持したまま、完成度の高い最終稿へ仕上げてください。
@@ -7441,31 +7501,33 @@ async function runPremiumDossier(){
 
   const systemPrompt=`あなたはトップクラスの占い師兼、鑑定書を仕立てる編集者です。
 目的は「普通の長文鑑定」ではなく、相談者が保存して何度も見返したくなるプロ品質の鑑定書を作ることです。
+この鑑定書の最大の使命は「答えを出す」ことです。結論が曖昧な鑑定書は価値がありません。
 
 以下を厳守してください。
-- HEADLINE では相談者の知りたい答えを冒頭2〜3文で明確にする
+- HEADLINE では相談者の知りたい答えを冒頭2〜3文で「進む・止まる・様子を見る」のどれかが分かる形で断言する。「〜かもしれない」は禁止
 - CORE では、魂の本質診断のsummary（行動パターン）とstress（しんどくなりやすい場面）を軸にその人らしさを描く。名前・生まれは補足として添える程度にとどめる
-- TIMING は現実の時系列で近い出来事を言葉にする
-- これまでの鑑定文を繰り返すだけにしない
+- TIMING は現実の時系列で近い出来事を言葉にする（「近い将来」などの抽象表現は禁止、「○週間以内」「○月頃」などで言い切る）
+- ACTION7 と ACTION30 は「〜する」「〜を確認する」「〜を止める」の動詞形で書く。精神論・励ましは禁止
+- WARNING は正直に書く。「注意したほうがよいかも」ではなく「これをすると〜になりやすい」と言い切る
+- LUCK は単なる「幸運のサイン」ではなく、「この行動をとると流れが良くなりやすい」という実用的なサインにする
+- これまでの鑑定文を繰り返すだけにしない（HEADLINEとCOREとCLOSINGの中身が同じになることは禁止）
 - カード名、占術名、並び、システム説明は一切出さない
 - 抽象論で逃げず、現実の行動に落とし込む
-- 不安を煽りすぎない
-- 言い切りはするが、相手の気持ちなど不確定要素は慎重に扱う
 - KEYWORDS には、魂の本質診断のタグや判断の軸になる言葉を優先して入れる（カード名は禁止）
 - 出力は必ず指定タグのみで返し、タグ外には何も書かない
 
 出力形式:
 [[TITLE]]...[[/TITLE]]
 [[SUBTITLE]]...[[/SUBTITLE]]
-[[HEADLINE]]...[[/HEADLINE]]
-[[CORE]]...[[/CORE]]
-[[TIMING]]...[[/TIMING]]
-[[ACTION7]]1行ずつ3項目以上[[/ACTION7]]
-[[ACTION30]]1行ずつ3項目以上[[/ACTION30]]
-[[WARNING]]1行ずつ2〜4項目[[/WARNING]]
-[[LUCK]]1行ずつ2〜4項目[[/LUCK]]
+[[HEADLINE]]最初の1文で答えを断言。2〜3文で根拠を添える[[/HEADLINE]]
+[[CORE]]魂の本質診断のsummary/stressを核心として使う。その人らしい行動パターンと今の悩みの根を結びつける[[/CORE]]
+[[TIMING]]「○週間以内」「○月頃」のように時期を言い切る[[/TIMING]]
+[[ACTION7]]1行ずつ3項目以上。各行動は動詞で完結[[/ACTION7]]
+[[ACTION30]]1行ずつ3項目以上。各行動は動詞で完結[[/ACTION30]]
+[[WARNING]]1行ずつ2〜4項目。言い切りで書く[[/WARNING]]
+[[LUCK]]1行ずつ2〜4項目。実用的な「流れに乗るサイン」として書く[[/LUCK]]
 [[KEYWORDS]]/ 区切りで4〜6個[[/KEYWORDS]]
-[[CLOSING]]...[[/CLOSING]]`;
+[[CLOSING]]この鑑定書全体を読んだ相談者へのメッセージ。HEADLINEの繰り返しにせず、「この先の自分をどう扱うか」に触れる[[/CLOSING]]`;
 
   const prompt=`${source.contextText}
 
