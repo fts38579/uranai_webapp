@@ -114,7 +114,7 @@ const MEMBER_ACCESS_CODES = new Set(
     .map(value => value.trim())
     .filter(Boolean)
 );
-const DEFAULT_DEVELOPER_ACCESS_EMAILS = ['tekechannnel@gmail.com'];
+const DEFAULT_DEVELOPER_ACCESS_EMAILS = ['tekechannnel@gmail.com', 'fts38579@gmail.com'];
 const DEVELOPER_ACCESS_EMAILS = new Set(
   [...DEFAULT_DEVELOPER_ACCESS_EMAILS, ...String(process.env.DEVELOPER_ACCESS_EMAILS || '')
     .split(',')
