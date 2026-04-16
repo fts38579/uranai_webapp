@@ -1277,7 +1277,7 @@ function getKakuLuck(n){
 const PAGE_PARAMS=new URLSearchParams(location.search);
 const DEV_MODE=PAGE_PARAMS.has('dev');
 const MEMBER_PREVIEW_PARAM=PAGE_PARAMS.has('member');
-const LOCAL_TEST_RUNTIME=location.protocol==='file:'||['127.0.0.1','localhost','::1'].includes(location.hostname);
+const LOCAL_TEST_RUNTIME=location.protocol==='file:'||['127.0.0.1','localhost','::1'].includes(location.hostname)||PAGE_PARAMS.has('dev');
 const FILE_PROXY_STORAGE_KEY='uranai-file-proxy-origin-v1';
 const FILE_PROXY_CANDIDATES=['http://127.0.0.1:3000','http://localhost:3000','http://127.0.0.1:3060','http://localhost:3060','http://127.0.0.1:3062','http://localhost:3062'];
 let FILE_PROXY_ORIGIN='';
@@ -1625,7 +1625,7 @@ const RESULT_STAGE_DEFS_BASE=[
   {key:'len',label:'ルノルマン',copy:'カードの流れを読み、現状と次の分岐を整理しています。'},
   {key:'orc',label:'オラクル',copy:'気持ちの底にあるテーマと整え方を言葉にしています。'},
   {key:'integration',label:'結論',copy:'出そろった読みを束ね、今日から動ける答えへまとめています。'},
-  {key:'basic',label:'土台の整理',copy:'名前・生まれ・体験エピソードから、判断の癖を補足しています。'},
+  {key:'basic',label:'土台の整理',copy:'名前・生まれ・魂の本質診断から、判断の癖を補足しています。'},
 ];
 const RESULT_STAGE_DEFS_PAID=[...RESULT_STAGE_DEFS_BASE];
 let RESULT_STAGE_STATE={};
@@ -2390,7 +2390,7 @@ function resetReactionFlow(showMessage=false){
   REACTION_ANSWERS={};
   REACTION_PROFILE=null;
   renderReactionQuestionnaire();
-  if(showMessage) showToast('体験エピソードの回答をリセットしました');
+  if(showMessage) showToast('魂の本質診断の回答をリセットしました');
 }
 
 function chooseReactionOption(optionId){
@@ -2415,7 +2415,7 @@ function renderReactionQuestionnaire(){
   const progressRatio=Math.max(0,Math.min(1,totalSteps?answeredCount/totalSteps:0));
 
   if(!currentId&&REACTION_PROFILE){
-    progressEl.textContent='体験エピソードのメモがまとまりました';
+    progressEl.textContent='魂の本質診断の結果がまとまりました';
     if(progressFillEl) progressFillEl.style.width='100%';
     questionEl.textContent='結果に反映する補足メモを準備しました';
     choicesEl.innerHTML='';
@@ -2425,7 +2425,7 @@ function renderReactionQuestionnaire(){
 
   const question=getReactionQuestion(currentId);
   if(!question){
-    progressEl.textContent='体験エピソード質問';
+    progressEl.textContent='魂の本質診断';
     if(progressFillEl) progressFillEl.style.width='0%';
     questionEl.textContent='このセクションを読み込めませんでした。';
     choicesEl.innerHTML='';
@@ -2433,7 +2433,7 @@ function renderReactionQuestionnaire(){
     return;
   }
 
-  progressEl.textContent=`体験エピソード ${Math.min(answeredCount+1,totalSteps)} / ${totalSteps}`;
+  progressEl.textContent=`魂の本質診断 ${Math.min(answeredCount+1,totalSteps)} / ${totalSteps}`;
   if(progressFillEl){
     const nextRatio=Math.max(progressRatio,(Math.min(answeredCount+1,totalSteps)/Math.max(totalSteps,1))*0.92);
     progressFillEl.style.width=`${Math.max(8,Math.round(nextRatio*100))}%`;
@@ -2468,14 +2468,14 @@ function applySampleReactionAnswers(){
 }
 
 function buildReactionPromptSnippet(profile=REACTION_PROFILE){
-  if(!profile) return '体験エピソードの補足：未入力';
+  if(!profile) return '魂の本質診断：未入力';
   return [
-    '体験エピソードの補足',
+    '魂の本質診断',
     `要約：${profile.summary}`,
     `反応が出やすい場面：${profile.stress}`,
     `力が出やすい動き：${profile.power}`,
     `扱い方のメモ：${profile.handling}`,
-    profile.evidence?.length?`体験エピソード回答：${profile.evidence.join(' / ')}`:'',
+    profile.evidence?.length?`魂の本質診断の回答：${profile.evidence.join(' / ')}`:'',
   ].filter(Boolean).join(' / ');
 }
 
@@ -2853,7 +2853,7 @@ function setDeveloperAccessError(message){
 }
 
 function canUseDeveloperQuickAccess(){
-  return LOCAL_TEST_RUNTIME;
+  return LOCAL_TEST_RUNTIME||DEV_MODE;
 }
 
 function setGoogleAuthError(message){
@@ -3393,7 +3393,7 @@ function repairStaticCopy(){
   });
   const reactionField=document.getElementById('reaction-progress')?.closest('.field-group');
   if(reactionField){
-    setWithin(reactionField,'.field-label','体験エピソードから見る反応の傾向');
+    setWithin(reactionField,'.field-label','魂の本質診断');
     setWithin(reactionField,'.field-note','価値観の正しさではなく、実際にイラッとした場面や居心地よかった場面に近いほうを選んでください。答えに応じて、次の質問が少しだけ変わります。');
     setWithin(reactionField,'.reaction-actions .vault-link','この質問をやり直す');
   }
@@ -3426,7 +3426,7 @@ function repairStaticCopy(){
   setText('#s-result .result-progress-eyebrow','鑑定の進み');
   setText('#result-progress-title','結果をまとめています');
   setText('#result-progress-copy','いまの向きと次の進路を順に整理し、まとまったところから下に反映しています。');
-  setText('#rs-basis .result-detail-title','名前・生まれ・体験エピソードから見える傾向を見る');
+  setText('#rs-basis .result-detail-title','名前・生まれ・魂の本質診断から見える傾向を見る');
   setText('#rs-basis .result-detail-copy','カード結果を読んだあと、必要なときだけ土台を開ける形にしています。');
   const basisPanels=document.querySelectorAll('#rs-basis .basis-panel');
   if(basisPanels[0]){
@@ -3438,7 +3438,7 @@ function repairStaticCopy(){
     setWithin(basisPanels[1],'.basis-panel-copy','生まれた時期から見える、力の出し方や揺れやすい場面をかみくだいて整理します。');
   }
   if(basisPanels[2]){
-    setWithin(basisPanels[2],'.basis-panel-title','体験エピソードから見える傾向');
+    setWithin(basisPanels[2],'.basis-panel-title','魂の本質診断から見える傾向');
     setWithin(basisPanels[2],'.basis-panel-copy','答え方のクセから、しんどくなりやすい場面と元気が出やすい動き方を整理します。');
   }
   setText('#rs-len .rs-eyebrow','カード鑑定 01');
@@ -4182,7 +4182,7 @@ function buildFormattedReadingMarkup(text='',kind='default'){
 function buildFoundationSummaryMarkup(text=''){
   const sections=splitSections(text);
   const parsedSections=(sections.length?sections:[text]).map(parseStructuredSection);
-  const flowLabels=['名前から見える傾向','生まれから見える傾向','体験エピソードから見える傾向'];
+  const flowLabels=['名前から見える傾向','生まれから見える傾向','魂の本質診断から見える傾向'];
   return `
     <div class="foundation-flow">
       ${flowLabels.map((label,index)=>`<div class="foundation-flow-step">STEP ${String(index+1).padStart(2,'0')} ${escapeHtml(label)}</div>`).join('')}
@@ -4234,12 +4234,12 @@ function buildReadingOutputFormatGuide(kind='len'){
       '【出力形式】',
       '見出しは必ず次の順で固定してください。',
       '■ 今の気持ち',
-      '■ 本音',
-      '■ 次の整え方',
+      '■ 魂の本質',
+      '■ 次にとる行動',
       '冒頭1〜2文で結論と本質を言い切ってください。',
-      'その後は、必要なら感情の流れや整え方を少し深く書いて構いません。',
+      'その後は、必要なら感情の流れを少し深く書いて構いません。',
       'ただし難しい言葉、長い前置き、脱線は禁止します。',
-      '1文は短めにし、各見出しは2〜6文で、すぐ分かる言葉で書いてください。'
+      '1文は短めにし、「■次にとる行動」では動詞から始まる行動を2〜3個、すぐ分かる言葉で書いてください。'
     ].join('\n');
   }
   if(kind==='integration'){
@@ -4281,8 +4281,8 @@ function buildFoundationSummaryOutput(){
       REACTION_PROFILE.handling,
     ]
     :[
-      '体験エピソードの回答がまだないため、この段階は簡易表示です。',
-      '回答を入れると、ストレスが出やすい場面と整いやすい条件まで補足できます。'
+      '魂の本質診断がまだ未入力のため、この段階は簡易表示です。',
+      '診断を入力すると、ストレスが出やすい場面と整いやすい条件まで補足できます。'
     ];
   const sections=[
     {
@@ -4298,7 +4298,7 @@ function buildFoundationSummaryOutput(){
         :'生まれの情報が不足しているため、この部分は今回は簡易表示です。生年と生月が入ると、流れの癖と力の出し方を整理できます。'
     },
     {
-      title:'体験エピソード診断',
+      title:'魂の本質診断',
       body:reactionLines.filter(Boolean).join('\n\n')
     }
   ];
@@ -4368,7 +4368,7 @@ function buildFoundationDeepSourceContext(){
       `誕生日から見える行動の癖: ${lifeText}`,
     ].filter(Boolean).join('\n')
     :[
-      '体験エピソード診断は未入力のため簡易表示です。',
+      '魂の本質診断は未入力のため簡易表示です。',
       `誕生日から見える行動の癖: ${lifeText}`,
     ].filter(Boolean).join('\n');
 
@@ -4385,7 +4385,7 @@ ${nameText}
 【四柱推命】
 ${meimeiText}
 
-【体験エピソード診断】
+【魂の本質診断】
 ${reactionText}
 
 【基礎鑑定の要約】
@@ -4407,7 +4407,7 @@ function buildFoundationDeepFallback(){
     `${input.fullname||'あなた'}さんは、${focus.shortLabel}の場面で感情だけで決めるより、自分が納得できる筋道が見えたときに力を出しやすいタイプです。`,
     birthPlain?.overview,
     namePlain?.overview,
-    reaction?.summary?`反応面では、${reaction.summary}`:'体験エピソード診断は未入力のため、この部分は簡易表示です。',
+    reaction?.summary?`反応面では、${reaction.summary}`:'魂の本質診断は未入力のため、この部分は簡易表示です。',
     birthPlain?.timing,
     namePlain?.timing,
     reaction?.stress?`今の悩みでは、${reaction.stress} 場面で揺れやすくなります。`:'',
@@ -5424,7 +5424,7 @@ function buildDossierProof(){
   if(input.theme) basisTags.push('本人の悩みを直接反映');
   if(MEIMEI) basisTags.push('生まれの傾向');
   if(NAMEJUDGE) basisTags.push('名前から伝わる印象');
-  if(REACTION_PROFILE?.label) basisTags.push('体験エピソードの反応');
+  if(REACTION_PROFILE?.label) basisTags.push('魂の本質診断の傾向');
   if(hasClarifyAnswers()) basisTags.push('追加ヒアリング');
 
   return`
@@ -5434,7 +5434,7 @@ function buildDossierProof(){
           <div class="dossier-proof-eyebrow">見た観点</div>
           <div class="dossier-proof-title">今回の鑑定で見た観点</div>
         </div>
-        <div class="dossier-proof-copy">${escapeHtml(input.fullname||'あなた')}さんの相談内容、生まれや名前から伝わる傾向、体験エピソードの反応を重ね、判断材料として読み返しやすい形へ再編集した鑑定書です。</div>
+        <div class="dossier-proof-copy">${escapeHtml(input.fullname||'あなた')}さんの相談内容、生まれや名前から伝わる傾向、魂の本質診断の傾向を重ね、判断材料として読み返しやすい形へ再編集した鑑定書です。</div>
       </div>
       <div class="dossier-proof-meta">
         ${basisTags.filter(Boolean).map(tag=>`<div class="dossier-proof-pill">${escapeHtml(tag)}</div>`).join('')}
@@ -5465,7 +5465,7 @@ function getDossierDiagnosticSections(){
     },
     {
       eyebrow:'診断',
-      title:'体験エピソードから見える傾向',
+      title:'魂の本質診断から見える傾向',
       body:reaction
         ?[
           reaction.summary,
@@ -5473,7 +5473,7 @@ function getDossierDiagnosticSections(){
           `力が出やすい動き：${reaction.power}`,
           reaction.handling,
         ].filter(Boolean).join('\n\n')
-        :'体験エピソードの回答がまだないため、この部分は簡易表示です。'
+        :'魂の本質診断がまだ未入力のため、この部分は簡易表示です。'
     }
   ];
 }
@@ -5522,7 +5522,7 @@ function renderDossierIncludedSections(){
           <div class="dossier-proof-eyebrow">保存内容</div>
           <div class="dossier-proof-title">この鑑定書に入る内容</div>
         </div>
-        <div class="dossier-proof-copy">カード占いの結果だけでなく、名前・生まれ・体験エピソードから見えた傾向まで含めて、1回分の鑑定をまとめて保存できる形にしています。</div>
+        <div class="dossier-proof-copy">カード占いの結果だけでなく、名前・生まれ・魂の本質診断から見えた傾向まで含めて、1回分の鑑定をまとめて保存できる形にしています。</div>
       </div>
     </div>
     <div class="dossier-grid">
@@ -6726,7 +6726,7 @@ function renderReactionProfile(){
   if(!wrap) return;
   if(!REACTION_PROFILE){
     wrap.innerHTML=`<div style="font-size:13px;color:var(--muted);font-family:'Shippori Mincho',serif;line-height:2;padding:16px 0">
-      体験エピソードの回答がないため、このレイヤーは省略しました。<br>
+      魂の本質診断が未入力のため、このレイヤーは省略しました。<br>
       入力画面で答えると、ストレスが出やすい場面と力の出し方を補足できます。
     </div>`;
     return;
@@ -6925,8 +6925,8 @@ ${buildDecisionSupportPromptGuide(cat,theme)}
 
 ===ORC===
 ■ 今の気持ち
-■ 本音
-■ 次の整え方
+■ 魂の本質
+■ 次にとる行動
 
 ===INTEGRATION===
 ■ 結論
@@ -6946,7 +6946,7 @@ ${nameDetail}
 【誕生日から見える行動の癖】
 ${lifeDetail}
 
-【体験エピソードから見える反応】
+【魂の本質診断から見える傾向】
 ${reactionText}
 
 【ルノルマン${SEL_LEN.length}枚（全カード詳細）】
@@ -7041,6 +7041,18 @@ ${buildDecisionSupportPromptGuide(cat,theme)}
 - キーワードの列挙や辞書の焼き直し
 - きれいごとの励ましだけで終わること
 
+【警戒重視の読み方】
+- 出ているカードにネガティブな意味のもの（障害・損失・終わり・不信・停滞・争い・嫉妬など）があれば、それを「警告」として■今の流れか■気をつけることで正直に前面に出す
+- 「かもしれません」で逃げず「この状況では〜になりやすい」と言い切る
+- ただし同時に、以下のカードが出ているときは「改善の兆し」として必ずセットで伝える
+  → 騎士(1)：好転の知らせが近づいているサイン
+  → コウノトリ(17)：状況が動き始めている・変化の始まり
+  → 星(16)：見通しが開けてくるサイン
+  → 太陽(31)：問題解決・明るい転換が来るサイン
+  → 鍵(33)：答えが出る・扉が開くサイン
+  → クローバー(2)：思わぬ小さな好機が潜んでいる
+- 「どこに危険があって、どこに光があるか」を分けて示すことで、相談者が判断できる地図を作る
+
 【内部での使い方】
 - ${is9?'9枚引きでは、列を「背景→現状→未来」、行を「顕在意識→現実→潜在意識」として必ず重ね読みする':is3?'3枚引きでは、左を背景、中央を現状の核心、右を次の流れとして読み、相談者がどこで止まっているかを一直線に整理する':'1枚引きでは、背景と現状をひと続きで整理し、次の一歩まで落とし込む'}
 - ${is9?'左列は背景・原因、中列は現在地と核心、右列は今のまま進んだ場合の近い未来として扱う':is3?'背景・現状・近い未来を分けつつ、結論は一つの流れとしてまとめる':'カードの意味をそのまま見せず、相談者の現実の悩みに翻訳する'}
@@ -7062,7 +7074,7 @@ ${buildDecisionSupportPromptGuide(cat,theme)}
 ここに至る背景と、いま起きていることを整理する。冒頭1〜2文で結論と核心を言い切る。その後は必要なら背景や分岐点を掘ってよい。
 
 ■ 気をつけること
-見落としやすい本音、認識と現実のズレ、分岐点を短く言語化する。
+ここがこの鑑定の核心です。現実に起きている・または近く起きやすいリスク（ネガティブカードの示す警告）を正直に言い切る。「かもしれない」で逃げず「〜になりやすい」と伝える。改善の兆しや好転の余地が見えるカードがあれば、必ず「一方で〜という兆しもある」とセットで伝える。
 ${focus.isDualConcern?`恋愛と仕事が両方あるので、必要なら「恋愛では」「仕事では」と分けて整理する。`:''}
 
 ■ 次にやること
@@ -7127,11 +7139,12 @@ ${birthPlain?[birthPlain.overview,birthPlain.timing,birthPlain.advice].filter(Bo
 【名前から伝わる傾向】
 ${namePlain?[namePlain.overview,namePlain.timing,namePlain.advice].filter(Boolean).join(' '):'なし'}
 
-【体験エピソード診断】
+【魂の本質診断】
 ${reactionText}`;
 
   const systemPrompt=`あなたは、弱っている相談者の頭を余計に混乱させず、自然に前を向かせる一流の鑑定者です。
-役割は気持ちを甘やかすことではなく、迷いの扱い方を分かりやすく言葉にすることです。
+役割は気持ちを甘やかすことではなく、迷いの扱い方と「次にとる具体的な行動」を分かりやすく言葉にすることです。
+オラクルカードはアドバイスの媒体です。各カードのメッセージを相談者への行動提案に変換することが最重要の仕事です。
 
 ${buildDecisionSupportPromptGuide(cat,theme)}
 
@@ -7148,7 +7161,8 @@ ${buildDecisionSupportPromptGuide(cat,theme)}
 - ${lpGuide}
 ${LP&&lpCard?.master?`- ライフパスナンバー${LP}はマスターナンバーであり、通常の数字より高い感受性・使命感・精神的緊張を伴う。${LP===11?'直感と霊的洞察が突出している一方、神経的な過敏さや現実との乖離に悩みやすい。':LP===22?'大きな夢を現実に構築する力を持つが、その重圧が自己不信や燃え尽きに転じやすい。':'高い愛と奉仕の使命を持つが、自己犠牲の限界を超えやすく、まず自分自身を満たすことが先決。'}この特性を踏まえ、相談者の悩みの根に触れること。`:''}
 ${is3&&SEL_ORC.some(id=>ORACLE[id]?.master)?`- 引いたカードの中にマスターナンバーが含まれている。そのポジションのエネルギーはより強く・繊細に現れており、課題と才能の両面が際立つ。その深さを読み取ること。`:''}
-- 「あなたの本質」は四柱推命・姓名判断・体験エピソード診断から見える、その人の根っこの性質だけを書く
+- 「あなたの本質」は四柱推命・姓名判断・魂の本質診断から見える、その人の根っこの性質だけを書く
+- 【魂の本質（■魂の本質 セクション）の最重要ルール】魂の本質診断のsummaryとstressを必ず核心として使うこと。名前・生まれの情報はあくまで補足として添えるにとどめ、魂の本質診断の内容を軸とすること。魂の本質診断が未入力の場合は、その旨を一文で記したうえで名前・生まれから補足する
 - 行動は、無理なく実行できる順番にする
 
 【出力形式】
@@ -7157,11 +7171,11 @@ ${is3&&SEL_ORC.some(id=>ORACLE[id]?.master)?`- 引いたカードの中にマス
 ■ 今の気持ち
 ここまでの流れと、いま抱えすぎていることを整理する。冒頭1〜2文で結論と本質を言い切る。その後は必要なら感情の流れまで掘ってよい。
 
-■ 本音
+■ 魂の本質
 その人の根っこの性質と、いま本当に引っかかっている点を書く。短く始め、その後は必要なら少し深く書いてよい。
 
-■ 次の整え方
-気持ちの立て直し方と、今日から7日以内にできる動きを2つまで書く。
+■ 次にとる行動
+気持ちの整理より「何をするか」を優先する。引いたカードのメッセージを「今週これをやってみてください」という行動提案に変換する。複数カードが同じ方向を指しているなら、それを最重要行動として前に出す。行動は2〜3個まで、「〜する」「〜を確認する」「〜を止める」のように動詞で始める。
 
 合計${is3?'760字前後':'320字前後'}。冒頭だけは短く締め、その後は脱線しない範囲で必要なら深く書いてよい。1文は短く、難しい言葉は禁止。`;
 
@@ -7245,6 +7259,11 @@ ${lenSpreadContext.diagonalDetails}`
 
   const systemPrompt=`あなたはプロの占い師です。この統合メッセージは鑑定の締めくくりであり、相談者が最後に持ち帰る「答え」です。
 
+【カード間の優先順位】
+- ルノルマンは現実・状況・タイムラインを示す主軸。統合の結論はルノルマンの流れを上書きしない
+- オラクルは本人の内面・動機・行動の整え方を示す補助線
+- 結論はルノルマンの現実診断を土台に、オラクルで方向性を補強する形にする
+
 ${buildDecisionSupportPromptGuide(cat,theme)}
 
 【絶対禁止】
@@ -7280,7 +7299,7 @@ ${nameDetail}
 【誕生日から見える行動の癖】
 ${lifeDetail}
 
-【体験エピソードから見える反応】
+【魂の本質診断から見える傾向】
 ${reactionText}
 
 【ルノルマン${SEL_LEN.length}枚（全カード詳細）】
@@ -7350,7 +7369,7 @@ function buildPremiumDossierSourceContext(){
 【生まれから見える傾向】${birthText}
 【名前から伝わる印象】${nameText}
 【誕生日から見える行動の癖】${lifeText}
-【体験エピソードの補足】${reactionText}
+【魂の本質診断の補足】${reactionText}
 【ルノルマン】${lenNames}
 【オラクル】${orcNames}
 【補足回答】${clarifyText}
@@ -7379,12 +7398,13 @@ async function polishPremiumDossierDraft(draft,sourceContext){
 以下を厳守してください。
 - 出力は必ず指定タグのみ。タグ名や順番は一切変えない
 - HEADLINE は最初の30秒で結論と本質が分かる2〜3文に整える
-- CORE と TIMING は、脱線しないなら少し長くなってもよい
+- CORE は、魂の本質診断のsummaryとstressを核心として残し、名前・生まれは補足程度に抑える。脱線しないなら少し長くなってもよい
+- TIMING は現実の時系列を基準に整える。脱線しないなら少し長くなってもよい
 - カード名、占術名、並び、システム説明は一切出さない
 - 同じ内容の言い換えを繰り返さない
 - 抽象論を削り、現実の判断・行動につながる密度へ上げる
 - 7日以内 / 30日以内の行動は、動詞から始まる具体表現にする
-- KEYWORDS にはカード名ではなく、判断の軸になる言葉だけを入れる
+- KEYWORDS には、魂の本質診断のタグや判断の軸になる言葉を優先して入れる（カード名は禁止）
 - 不安を煽りすぎず、希望だけでも誤魔化さない
 - 相談者が占いを知らなくても自然に読める文体にする
 
@@ -7424,13 +7444,14 @@ async function runPremiumDossier(){
 
 以下を厳守してください。
 - HEADLINE では相談者の知りたい答えを冒頭2〜3文で明確にする
-- CORE と TIMING は、脱線しないなら少し長くなってもよい
+- CORE では、魂の本質診断のsummary（行動パターン）とstress（しんどくなりやすい場面）を軸にその人らしさを描く。名前・生まれは補足として添える程度にとどめる
+- TIMING は現実の時系列で近い出来事を言葉にする
 - これまでの鑑定文を繰り返すだけにしない
 - カード名、占術名、並び、システム説明は一切出さない
 - 抽象論で逃げず、現実の行動に落とし込む
 - 不安を煽りすぎない
 - 言い切りはするが、相手の気持ちなど不確定要素は慎重に扱う
-- KEYWORDS にはカード名ではなく、判断の軸になる言葉だけを入れる
+- KEYWORDS には、魂の本質診断のタグや判断の軸になる言葉を優先して入れる（カード名は禁止）
 - 出力は必ず指定タグのみで返し、タグ外には何も書かない
 
 出力形式:
@@ -7516,7 +7537,7 @@ function buildFollowupContext(){
   const orcNames=(SEL_ORC||[]).map(id=>`No.${id} ${ORACLE[id]?.name||''}`).join(' / ');
   return `【相談者】${input.fullname||'あなた'}さん
 【相談テーマ】${input.cat||'総合'}「${input.theme||'全般'}」
-【体験エピソードの補足】${buildReactionPromptSnippet()}
+【魂の本質診断の補足】${buildReactionPromptSnippet()}
 【ルノルマン】${lenNames||'なし'}
 【オラクル】${orcNames||'なし'}
 【人物像の要約】
@@ -8393,7 +8414,7 @@ function buildRichOrcFallback(name,cat,is3){
     lines.push(`もともとの持ち味として、${lpCard.msg.replace(/してください。?$/,'できる人です。')} その良さを、いまは他人のためだけでなく自分の判断にも使う段階です。`);
   }
 
-  lines.push('','■ 本音','');
+  lines.push('','■ 魂の本質','');
   if(namePlain){
     lines.push(namePlain.overview);
   }
@@ -8408,8 +8429,11 @@ function buildRichOrcFallback(name,cat,is3){
   if(reaction?.handling){
     lines.push(`抱え方の癖としては、${reaction.handling}`);
   }
+  if(!reaction){
+    lines.push('魂の本質診断を入力すると、あなたのストレスが出やすい場面・力を出しやすい動き方・整いやすい条件まで、この「魂の本質」欄に詳しく反映できます。入力画面の「魂の本質診断」からお試しください。');
+  }
 
-  lines.push('','■ 次の整え方','');
+  lines.push('','■ 次にとる行動','');
   if(focus.isDualConcern){
     lines.push('恋愛と仕事を同じ不安で抱えないことが最優先です。恋愛では「安心できるか」、仕事では「続ける意味があるか」と、問いを分けるだけで頭の混乱がかなり減ります。');
   }else if(focus.hasLove){
