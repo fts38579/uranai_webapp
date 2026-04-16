@@ -1,0 +1,4477 @@
+﻿<!DOCTYPE html>
+
+<html lang="ja">
+
+<head>
+
+<meta charset="UTF-8">
+
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+<title>羅針占術</title>
+<link href="https://fonts.googleapis.com/css2?family=Shippori+Mincho:wght@400;500;600;700&family=Cinzel+Decorative:wght@400;700&family=Noto+Sans+JP:wght@300;400&display=swap" rel="stylesheet">
+
+<style>
+
+/* 笊絶武笊絶武笊絶武笊絶武笊絶武笊絶武笊絶武笊絶武笊絶武笊絶武笊絶武笊絶武笊絶武笊絶武笊絶武笊絶武笊絶武笊絶武笊絶武
+
+   DESIGN SYSTEM
+
+笊絶武笊絶武笊絶武笊絶武笊絶武笊絶武笊絶武笊絶武笊絶武笊絶武笊絶武笊絶武笊絶武笊絶武笊絶武笊絶武笊絶武笊絶武笊絶武 */
+
+:root{
+
+  --void:#04030a;
+
+  --deep:#0c0818;
+
+  --mid:#1a1230;
+
+  --surface:#231840;
+
+  --gold:#c9952a;
+
+  --gold-l:#e4b84a;
+
+  --gold-d:#8a6418;
+
+  --silver:#a8b4c8;
+
+  --rose:#c04060;
+
+  --teal:#2a8a7a;
+
+  --cream:#f0ead8;
+
+  --cream2:#ddd4bc;
+
+  --muted:#9088a4;
+
+  --border:rgba(201,149,42,0.2);
+
+  --border2:rgba(201,149,42,0.08);
+
+}
+
+*{box-sizing:border-box;margin:0;padding:0;}
+
+html{scroll-behavior:smooth;}
+
+body{
+
+  font-family:'Noto Sans JP',sans-serif;
+
+  background:var(--void);
+
+  color:var(--cream);
+
+  min-height:100vh;
+
+  overflow-x:hidden;
+
+}
+
+
+
+/* SCREENS */
+
+.screen{display:none;min-height:100vh;position:relative;}
+
+.screen.active{display:flex;flex-direction:column;}
+
+
+
+/* 笊絶武笊絶武笊絶武笊絶武笊絶武笊絶武笊絶武笊絶武笊絶武笊絶武笊絶武笊絶武笊絶武笊絶武笊絶武笊絶武笊絶武笊絶武笊絶武
+
+   STAR FIELD BACKGROUND
+
+笊絶武笊絶武笊絶武笊絶武笊絶武笊絶武笊絶武笊絶武笊絶武笊絶武笊絶武笊絶武笊絶武笊絶武笊絶武笊絶武笊絶武笊絶武笊絶武 */
+
+.starfield{
+
+  position:fixed;inset:0;pointer-events:none;z-index:0;overflow:hidden;
+
+}
+
+.star{
+
+  position:absolute;border-radius:50%;background:#fff;
+
+  animation:twinkle var(--d,3s) ease-in-out infinite var(--delay,0s);
+
+}
+
+@keyframes twinkle{0%,100%{opacity:var(--min-op,.1);transform:scale(1)}50%{opacity:var(--max-op,.9);transform:scale(1.2)}}
+
+
+
+/* 笊絶武笊絶武笊絶武笊絶武笊絶武笊絶武笊絶武笊絶武笊絶武笊絶武笊絶武笊絶武笊絶武笊絶武笊絶武笊絶武笊絶武笊絶武笊絶武
+
+   TOP / LANDING
+
+笊絶武笊絶武笊絶武笊絶武笊絶武笊絶武笊絶武笊絶武笊絶武笊絶武笊絶武笊絶武笊絶武笊絶武笊絶武笊絶武笊絶武笊絶武笊絶武 */
+
+#s-top{
+
+  align-items:center;justify-content:flex-start;
+
+  background:radial-gradient(ellipse at 50% 20%,#1a0a30 0%,#08051a 60%,#04030a 100%);
+
+  min-height:100vh;text-align:center;padding:72px 20px 88px;position:relative;
+
+}
+
+.top-hero-shell{
+
+  width:100%;max-width:680px;margin:0 auto 0;
+
+}
+
+.top-main{
+
+  position:relative;overflow:hidden;text-align:center;
+
+  padding:48px 40px 40px;border:1px solid rgba(201,149,42,.16);
+
+  background:
+
+    radial-gradient(circle at 50% 0%,rgba(201,149,42,.12),transparent 44%),
+
+    linear-gradient(180deg,rgba(255,255,255,.03),rgba(201,149,42,.02) 60%,rgba(255,255,255,.01));
+
+  box-shadow:0 18px 60px rgba(0,0,0,.24), inset 0 0 40px rgba(201,149,42,.04);
+
+}
+
+.top-main::before{
+
+  content:'';position:absolute;left:28px;right:28px;top:0;height:1px;
+
+  background:linear-gradient(90deg,transparent,rgba(228,184,74,.55),transparent);
+
+}
+
+.top-seal{
+
+  width:120px;height:120px;margin:0 auto 32px;
+
+  border:1px solid rgba(201,149,42,.4);
+
+  border-radius:50%;display:flex;align-items:center;justify-content:center;
+
+  font-size:52px;position:relative;
+
+  animation:sealPulse 4s ease-in-out infinite;
+
+}
+
+.top-seal::before{
+
+  content:'';position:absolute;inset:-8px;border-radius:50%;
+
+  border:1px solid rgba(201,149,42,.15);
+
+  animation:sealPulse 4s ease-in-out infinite .5s;
+
+}
+
+.top-seal::after{
+
+  content:'';position:absolute;inset:-16px;border-radius:50%;
+
+  border:1px solid rgba(201,149,42,.07);
+
+  animation:sealPulse 4s ease-in-out infinite 1s;
+
+}
+
+@keyframes sealPulse{0%,100%{box-shadow:0 0 20px rgba(201,149,42,.1)}50%{box-shadow:0 0 40px rgba(201,149,42,.3)}}
+
+.top-title{
+
+  font-family:'Cinzel Decorative',serif;
+
+  font-size:clamp(28px,6vw,52px);
+
+  color:var(--gold-l);letter-spacing:.1em;
+
+  margin-bottom:10px;
+
+  text-shadow:0 0 60px rgba(201,149,42,.4);
+
+}
+
+.top-sub{
+
+  font-family:'Shippori Mincho',serif;
+
+  font-size:12px;letter-spacing:.3em;
+
+  color:var(--muted);margin-bottom:28px;
+
+}
+
+.top-desc{
+
+  font-family:'Shippori Mincho',serif;
+
+  font-size:16px;line-height:2.12;
+
+  color:rgba(240,234,216,.68);max-width:480px;margin:0 auto 34px;
+
+  letter-spacing:.08em;
+
+}
+
+.top-btns{display:flex;flex-wrap:wrap;gap:12px;max-width:none;margin:0;justify-content:center;}
+
+.btn-top{
+
+  min-width:238px;padding:18px 28px;border:none;border-radius:1px;
+
+  font-family:'Shippori Mincho',serif;
+
+  font-size:15px;letter-spacing:.3em;
+
+  display:inline-flex;align-items:center;justify-content:center;text-decoration:none;
+  cursor:pointer;transition:all .3s;position:relative;overflow:hidden;
+
+}
+
+.btn-top::before{content:'';position:absolute;inset:0;background:linear-gradient(90deg,transparent,rgba(255,255,255,.06),transparent);transform:translateX(-100%);transition:transform .5s;}
+
+.btn-top:hover::before{transform:translateX(100%);}
+
+.btn-free{
+
+  min-width:214px;
+  background:rgba(255,255,255,.02);border:1px solid rgba(201,149,42,.24);
+
+  color:var(--cream2);
+  font-size:14px;
+  letter-spacing:.18em;
+
+}
+
+.btn-free:hover{background:rgba(201,149,42,.08);border-color:rgba(228,184,74,.68);color:var(--gold-l);}
+
+.btn-paid{
+
+  background:linear-gradient(135deg,var(--gold-d),var(--gold));
+
+  color:#04030a;font-weight:700;
+
+  box-shadow:0 16px 34px rgba(201,149,42,.24), inset 0 1px 0 rgba(255,255,255,.18);
+  border:1px solid rgba(228,184,74,.5);
+
+}
+
+.btn-paid:hover{box-shadow:0 20px 42px rgba(201,149,42,.32), inset 0 1px 0 rgba(255,255,255,.22);transform:translateY(-1px);}
+
+.top-note{
+  max-width:none;margin-top:18px;padding-top:18px;border-top:1px solid rgba(201,149,42,.12);
+  font-size:11px;color:var(--muted);letter-spacing:.1em;line-height:1.85;
+}
+.runtime-status{
+  margin:14px auto 0;padding:12px 14px;max-width:520px;
+  border:1px solid rgba(201,149,42,.16);background:rgba(255,255,255,.025);
+  text-align:left;
+}
+.runtime-status-title{
+  font-size:11px;letter-spacing:.16em;color:var(--cream);
+}
+.runtime-status-detail{
+  margin-top:6px;font-size:11px;line-height:1.8;color:rgba(240,234,216,.6);letter-spacing:.05em;
+}
+.runtime-status.ok{border-color:rgba(90,171,90,.28);background:rgba(90,171,90,.08);}
+.runtime-status.ok .runtime-status-title{color:#bde6bd;}
+.runtime-status.warn{border-color:rgba(201,149,42,.24);background:rgba(201,149,42,.06);}
+.runtime-status.warn .runtime-status-title{color:var(--gold-l);}
+.runtime-status.bad{border-color:rgba(192,64,64,.3);background:rgba(192,64,64,.08);}
+.runtime-status.bad .runtime-status-title{color:#f0b0b0;}
+.top-side{
+
+  width:100%;max-width:1120px;margin:20px auto 28px;
+
+  display:grid;grid-template-columns:minmax(0,1fr) 280px;gap:12px;
+
+}
+
+.top-side-card{
+
+  position:relative;overflow:hidden;text-align:left;padding:24px 24px 22px;
+
+  border:1px solid rgba(201,149,42,.14);
+
+  background:linear-gradient(180deg,rgba(255,255,255,.03),rgba(255,255,255,.015));
+
+  box-shadow:0 14px 42px rgba(0,0,0,.18);
+
+}
+
+.top-side-card::before{
+
+  content:'';position:absolute;left:18px;right:18px;top:0;height:1px;
+
+  background:linear-gradient(90deg,transparent,rgba(228,184,74,.48),transparent);
+
+}
+
+.top-side-eyebrow{
+  font-size:10px;letter-spacing:.18em;color:var(--muted);text-transform:uppercase;margin-bottom:10px;
+}
+.top-side-title{
+
+  font-family:'Shippori Mincho',serif;font-size:16px;line-height:1.7;color:var(--gold-l);
+
+  letter-spacing:.08em;margin-bottom:14px;
+
+}
+
+.top-side-copy{
+
+  font-size:12px;line-height:1.9;color:rgba(240,234,216,.7);letter-spacing:.05em;
+
+}
+
+.top-point-list{
+
+  display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:14px;margin-top:4px;
+
+}
+
+.top-point-row{
+
+  padding:16px 14px;border:1px solid rgba(201,149,42,.1);
+
+  background:rgba(255,255,255,.016);
+
+  text-align:left;
+
+}
+
+.top-point-num{
+
+  font-family:'Cinzel Decorative',serif;font-size:13px;line-height:1;color:var(--gold-d);
+
+  margin-bottom:8px;
+
+}
+
+.top-point-title{
+
+  font-family:'Shippori Mincho',serif;font-size:14px;line-height:1.6;color:var(--cream);
+
+  letter-spacing:.06em;margin-bottom:6px;
+
+}
+
+.top-point-copy{
+
+  font-size:11px;line-height:1.85;color:rgba(240,234,216,.55);letter-spacing:.04em;
+
+}
+
+.top-archive-metrics{
+
+  display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:8px;margin-top:14px;
+
+}
+
+.top-archive-metric{
+
+  padding:10px 8px;border:1px solid rgba(201,149,42,.12);background:rgba(255,255,255,.02);
+
+}
+
+.top-archive-metric-label{
+
+  font-size:9px;letter-spacing:.18em;color:var(--muted);margin-bottom:5px;
+
+}
+
+.top-archive-metric-value{
+
+  font-family:'Shippori Mincho',serif;font-size:15px;line-height:1.5;color:var(--gold-l);
+
+  letter-spacing:.06em;
+
+}
+
+.top-archive-foot{
+
+  margin-top:12px;font-size:11px;line-height:1.8;color:rgba(240,234,216,.56);letter-spacing:.04em;
+
+}
+
+.guide-stage{
+
+  width:100%;max-width:1120px;margin:0 auto 34px;
+
+  display:grid;grid-template-columns:minmax(0,180px) minmax(0,1fr);gap:18px;
+
+  padding:24px;border:1px solid rgba(201,149,42,.12);
+
+  background:linear-gradient(135deg,rgba(255,255,255,.03),rgba(201,149,42,.02));
+
+  text-align:left;position:relative;overflow:hidden;
+
+}
+
+.guide-stage::before{
+
+  content:'';position:absolute;inset:auto -20% -40% auto;width:240px;height:240px;
+
+  background:radial-gradient(circle,rgba(201,149,42,.08),transparent 68%);
+
+  pointer-events:none;
+
+}
+
+.guide-visual{
+
+  display:flex;align-items:center;justify-content:center;min-height:220px;
+
+  border:1px solid rgba(201,149,42,.12);background:rgba(255,255,255,.018);position:relative;
+
+}
+
+.guide-avatar-shell{
+
+  width:140px;height:180px;border-radius:28px 28px 42px 42px;
+
+  border:1px solid rgba(201,149,42,.18);position:relative;
+
+  background:linear-gradient(180deg,rgba(201,149,42,.09),rgba(12,8,24,.2));
+
+  box-shadow:0 18px 60px rgba(0,0,0,.24), inset 0 0 38px rgba(201,149,42,.08);
+
+}
+
+.guide-avatar-shell::before{
+
+  content:'';position:absolute;top:18px;left:50%;transform:translateX(-50%);
+
+  width:66px;height:66px;border-radius:50%;
+
+  border:1px solid rgba(201,149,42,.25);background:rgba(255,255,255,.02);
+
+}
+
+.guide-avatar-shell::after{
+
+  content:'';position:absolute;bottom:18px;left:50%;transform:translateX(-50%);
+
+  width:88px;height:66px;border-radius:50% 50% 34% 34%;
+
+  border:1px solid rgba(201,149,42,.18);background:rgba(255,255,255,.02);
+
+}
+
+.guide-sigil{
+
+  position:absolute;inset:0;display:flex;align-items:center;justify-content:center;
+
+  font-family:'Cinzel Decorative',serif;font-size:38px;color:var(--gold-l);
+
+  text-shadow:0 0 28px rgba(201,149,42,.32);
+
+}
+
+.guide-shell-label{
+  position:absolute;left:50%;bottom:12px;transform:translateX(-50%);
+  font-size:10px;letter-spacing:.14em;color:rgba(240,234,216,.55);white-space:nowrap;
+}
+.guide-copy{position:relative;z-index:1;}
+.guide-eyebrow{
+  font-size:10px;letter-spacing:.18em;color:var(--muted);
+  text-transform:uppercase;margin-bottom:8px;
+}
+.guide-name{
+
+  font-family:'Shippori Mincho',serif;font-size:24px;color:var(--gold-l);
+
+  letter-spacing:.14em;margin-bottom:6px;
+
+}
+
+.guide-role{
+  font-size:12px;color:rgba(240,234,216,.65);letter-spacing:.12em;
+  margin-bottom:18px;
+}
+.guide-quote{
+
+  font-family:'Shippori Mincho',serif;font-size:15px;line-height:2.05;
+
+  color:rgba(240,234,216,.86);margin-bottom:14px;letter-spacing:.06em;
+
+}
+
+.guide-note{
+
+  font-size:12px;line-height:1.9;color:rgba(240,234,216,.56);
+
+  letter-spacing:.05em;margin-bottom:16px;
+
+}
+
+.offer-grid{
+
+  display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:12px;
+
+}
+
+.offer-card{
+
+  border:1px solid rgba(201,149,42,.12);padding:14px 14px 12px;
+
+  background:rgba(255,255,255,.016);
+
+}
+
+.offer-card.member{background:linear-gradient(180deg,rgba(201,149,42,.06),rgba(255,255,255,.018));}
+
+.offer-card-top{
+
+  display:flex;justify-content:space-between;gap:10px;align-items:center;margin-bottom:8px;
+
+}
+
+.offer-card-title{
+
+  font-family:'Shippori Mincho',serif;font-size:15px;color:var(--gold-l);letter-spacing:.08em;
+
+}
+
+.offer-card-badge{
+  font-size:9px;letter-spacing:.12em;padding:3px 8px;border-radius:999px;
+  border:1px solid rgba(201,149,42,.18);color:var(--gold-l);
+}
+.offer-card-price{
+
+  font-size:11px;color:rgba(240,234,216,.5);letter-spacing:.08em;margin-bottom:10px;
+
+}
+
+.offer-list{display:flex;flex-direction:column;gap:7px;}
+
+.offer-item{
+
+  font-size:12px;line-height:1.8;color:rgba(240,234,216,.68);
+
+  padding-left:13px;position:relative;
+
+}
+
+.offer-item::before{
+
+  content:'•';position:absolute;left:0;top:0;color:var(--gold-d);
+
+}
+
+
+
+.vault-grid{
+
+  width:100%;max-width:1120px;margin:30px auto 0;
+
+  display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:16px;
+
+}
+
+.vault-card{
+
+  position:relative;overflow:hidden;background:linear-gradient(180deg,rgba(255,255,255,.032),rgba(255,255,255,.018));
+
+  border:1px solid rgba(201,149,42,.12);
+
+  padding:24px 22px 22px;text-align:left;min-height:100%;
+
+  box-shadow:0 10px 40px rgba(0,0,0,.16);
+
+}
+
+.vault-card::before{
+
+  content:'';position:absolute;left:22px;right:22px;top:0;height:1px;
+
+  background:linear-gradient(90deg,transparent,rgba(228,184,74,.42),transparent);
+
+}
+
+.vault-eyebrow{
+  font-size:9px;letter-spacing:.16em;color:var(--muted);
+  text-transform:uppercase;margin-bottom:8px;
+}
+.vault-title{
+
+  font-family:'Shippori Mincho',serif;
+
+  font-size:18px;color:var(--gold-l);letter-spacing:.12em;
+
+  margin-bottom:10px;
+
+}
+
+.vault-desc{
+
+  font-size:12px;line-height:1.9;color:rgba(240,234,216,.6);
+
+  letter-spacing:.05em;margin-bottom:14px;
+
+}
+
+.vault-empty{
+
+  font-size:12px;line-height:1.8;color:rgba(240,234,216,.42);
+
+  padding:10px 0 4px;
+
+}
+
+.vault-insight{
+
+  margin-bottom:12px;padding:12px 13px 11px;border:1px solid rgba(201,149,42,.1);
+
+  background:rgba(255,255,255,.022);
+
+}
+
+.vault-insight-label{
+  font-size:9px;letter-spacing:.14em;color:var(--muted);margin-bottom:6px;
+}
+.vault-insight-body{
+
+  font-size:12px;line-height:1.9;color:rgba(240,234,216,.72);letter-spacing:.04em;
+
+}
+
+.history-list{display:flex;flex-direction:column;gap:10px;}
+
+.history-item{
+
+  width:100%;text-align:left;background:rgba(255,255,255,.02);
+
+  border:1px solid rgba(201,149,42,.12);padding:13px 14px 12px;
+
+  cursor:pointer;transition:all .2s;
+
+}
+
+.history-item:hover{border-color:rgba(201,149,42,.35);background:rgba(201,149,42,.04);}
+
+.history-item-top{
+
+  display:flex;justify-content:space-between;gap:10px;align-items:center;margin-bottom:6px;
+
+}
+
+.history-item-date{font-size:10px;color:var(--muted);letter-spacing:.12em;}
+
+.history-pill{
+
+  display:inline-flex;align-items:center;justify-content:center;
+
+  font-size:9px;letter-spacing:.18em;padding:3px 8px;border-radius:999px;
+
+  border:1px solid rgba(201,149,42,.18);color:var(--gold-l);
+
+}
+
+.history-pill.paid{background:rgba(201,149,42,.12);}
+
+.history-pill.free{background:rgba(255,255,255,.04);}
+
+.history-item-title{
+
+  font-family:'Shippori Mincho',serif;font-size:13px;color:var(--cream);
+
+  line-height:1.7;margin-bottom:4px;
+
+}
+
+.history-item-meta{
+
+  font-size:11px;color:rgba(240,234,216,.5);line-height:1.7;
+
+}
+
+.history-item-tail{
+
+  display:flex;justify-content:space-between;gap:10px;align-items:center;
+
+  margin-top:10px;padding-top:10px;border-top:1px solid rgba(201,149,42,.08);
+
+  font-size:10px;line-height:1.6;color:rgba(240,234,216,.46);letter-spacing:.08em;
+
+}
+
+.history-item-link{
+
+  color:var(--gold-l);letter-spacing:.14em;white-space:nowrap;
+
+}
+
+.vault-link{
+
+  display:inline-flex;align-items:center;justify-content:center;
+
+  margin-top:12px;padding:10px 18px;background:transparent;
+
+  border:1px solid rgba(201,149,42,.22);color:var(--gold-l);
+
+  font-family:'Shippori Mincho',serif;font-size:12px;letter-spacing:.18em;cursor:pointer;
+
+  transition:all .2s;
+
+}
+
+.vault-link:hover{border-color:rgba(201,149,42,.45);background:rgba(201,149,42,.06);}
+
+.pattern-list{display:flex;flex-direction:column;gap:10px;}
+
+.pattern-row{
+
+  display:flex;justify-content:space-between;gap:14px;align-items:flex-start;
+
+  padding-bottom:10px;border-bottom:1px solid rgba(201,149,42,.08);
+
+}
+
+.pattern-row:last-child{border-bottom:none;padding-bottom:0;}
+
+.pattern-label{font-size:11px;letter-spacing:.14em;color:var(--muted);}
+
+.pattern-value{
+
+  flex:1;text-align:right;font-family:'Shippori Mincho',serif;
+
+  font-size:13px;line-height:1.8;color:rgba(240,234,216,.82);
+
+}
+
+.member-card{border-color:rgba(201,149,42,.18);background:linear-gradient(180deg,rgba(201,149,42,.05),rgba(255,255,255,.02));}
+
+.member-state{
+
+  display:inline-flex;align-items:center;gap:6px;
+
+  padding:4px 10px;border-radius:999px;margin-bottom:10px;
+
+  font-size:10px;letter-spacing:.16em;border:1px solid rgba(201,149,42,.22);
+
+}
+
+.member-state.active{color:#efd37d;background:rgba(201,149,42,.12);}
+
+.member-state.inactive{color:var(--muted);background:rgba(255,255,255,.03);}
+
+.member-benefits{display:flex;flex-direction:column;gap:8px;margin-top:10px;}
+
+.member-benefit{
+
+  font-size:12px;line-height:1.8;color:rgba(240,234,216,.7);
+
+  padding-left:14px;position:relative;
+
+}
+
+.member-benefit::before{
+
+  content:'•';position:absolute;left:0;top:0;color:var(--gold-d);font-size:10px;
+
+}
+
+.premium-entry{
+
+  width:100%;max-width:1120px;margin:18px auto 0;padding:28px 26px 26px;
+
+  border:1px solid rgba(201,149,42,.16);
+
+  background:linear-gradient(135deg,rgba(201,149,42,.08),rgba(255,255,255,.02) 42%,rgba(255,255,255,.012));
+
+  box-shadow:0 14px 42px rgba(0,0,0,.2);position:relative;overflow:hidden;
+
+}
+
+.premium-entry::before{
+
+  content:'';position:absolute;left:26px;right:26px;top:0;height:1px;
+
+  background:linear-gradient(90deg,transparent,rgba(228,184,74,.48),transparent);
+
+}
+
+.premium-entry-head{
+
+  display:flex;justify-content:space-between;gap:18px;align-items:flex-start;flex-wrap:wrap;
+
+}
+
+.premium-entry-eyebrow{
+
+  font-size:10px;letter-spacing:.34em;color:var(--muted);text-transform:uppercase;margin-bottom:8px;
+
+}
+
+.premium-entry-title{
+
+  font-family:'Shippori Mincho',serif;font-size:26px;line-height:1.6;color:var(--gold-l);
+
+  letter-spacing:.08em;margin-bottom:10px;
+
+}
+
+.premium-entry-copy{
+
+  max-width:660px;font-size:13px;line-height:2;color:rgba(240,234,216,.78);letter-spacing:.05em;
+
+}
+
+.premium-entry-meta{
+
+  display:flex;flex-wrap:wrap;gap:8px;margin-top:14px;
+
+}
+
+.premium-entry-pill{
+
+  display:inline-flex;align-items:center;justify-content:center;padding:7px 12px;
+
+  border:1px solid rgba(201,149,42,.18);background:rgba(255,255,255,.03);
+
+  font-size:11px;letter-spacing:.08em;color:rgba(240,234,216,.76);
+
+}
+
+.premium-entry-story{
+
+  margin-top:18px;padding:18px 18px 16px;
+
+  border:1px solid rgba(201,149,42,.12);background:rgba(255,255,255,.02);
+
+}
+
+.premium-entry-story-title{
+
+  font-size:10px;letter-spacing:.28em;color:var(--muted);text-transform:uppercase;margin-bottom:10px;
+
+}
+
+.premium-entry-story-line{
+
+  font-size:13px;line-height:2;color:rgba(240,234,216,.78);letter-spacing:.04em;
+
+}
+
+.premium-entry-story-line + .premium-entry-story-line{margin-top:10px;}
+
+.premium-entry-grid{
+
+  display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:12px;margin-top:18px;
+
+}
+
+.premium-entry-summary-card{
+
+  border:1px solid rgba(201,149,42,.12);background:rgba(255,255,255,.018);
+
+  padding:16px 15px 14px;
+
+}
+
+.premium-entry-summary-title{
+
+  font-family:'Shippori Mincho',serif;font-size:16px;letter-spacing:.08em;color:var(--gold-l);
+
+  margin-bottom:8px;
+
+}
+
+.premium-entry-summary-copy{
+
+  font-size:12px;line-height:1.9;color:rgba(240,234,216,.74);
+
+}
+
+.premium-entry-detail-stack{
+
+  display:flex;flex-direction:column;gap:14px;margin-top:18px;
+
+}
+
+.premium-entry-card{
+
+  border:1px solid rgba(201,149,42,.12);background:rgba(255,255,255,.018);
+
+  padding:16px 15px 14px;
+
+}
+
+.premium-entry-card-eyebrow{
+
+  font-size:10px;letter-spacing:.24em;color:var(--muted);margin-bottom:8px;
+
+}
+
+.premium-entry-card-title{
+
+  font-family:'Shippori Mincho',serif;font-size:16px;letter-spacing:.08em;color:var(--gold-l);
+
+  margin-bottom:8px;
+
+}
+
+.premium-entry-card-kicker{
+
+  font-size:10px;letter-spacing:.2em;color:var(--muted);margin:12px 0 6px;
+
+}
+
+.premium-entry-card-kicker:first-of-type{margin-top:0;}
+
+.premium-entry-card-body{
+
+  font-size:12px;line-height:1.9;color:rgba(240,234,216,.74);
+
+}
+
+.premium-entry-actions{
+
+  display:flex;flex-wrap:wrap;gap:12px;margin-top:18px;
+
+}
+
+.premium-entry-subbtn{
+
+  display:inline-flex;align-items:center;justify-content:center;padding:12px 16px;cursor:pointer;
+
+  border:1px solid rgba(201,149,42,.18);background:rgba(255,255,255,.02);
+
+  color:var(--cream);font-size:12px;letter-spacing:.08em;transition:all .2s;text-decoration:none;
+
+}
+
+.premium-entry-subbtn:hover{border-color:rgba(201,149,42,.42);background:rgba(201,149,42,.06);}
+
+.site-footer{
+  margin-top:28px;
+  padding:20px 0 8px;
+  border-top:1px solid rgba(201,149,42,.14);
+}
+
+.site-footer-inner{
+  display:flex;
+  justify-content:space-between;
+  align-items:flex-start;
+  gap:18px;
+  flex-wrap:wrap;
+}
+
+.site-footer-note{
+  max-width:760px;
+  font-size:12px;
+  line-height:1.9;
+  color:rgba(245,236,221,.6);
+}
+
+.site-footer-links{
+  display:flex;
+  gap:10px;
+  flex-wrap:wrap;
+}
+
+.site-footer-link{
+  display:inline-flex;
+  align-items:center;
+  gap:6px;
+  padding:9px 14px;
+  border:1px solid rgba(201,149,42,.18);
+  color:var(--cream);
+  text-decoration:none;
+  font-size:12px;
+  letter-spacing:.08em;
+  background:rgba(255,255,255,.02);
+  transition:all .22s ease;
+}
+
+.site-footer-link:hover{
+  border-color:rgba(201,149,42,.46);
+  background:rgba(201,149,42,.08);
+}
+
+
+
+/* 笊絶武笊絶武笊絶武笊絶武笊絶武笊絶武笊絶武笊絶武笊絶武笊絶武笊絶武笊絶武笊絶武笊絶武笊絶武笊絶武笊絶武笊絶武笊絶武
+
+   INPUT SCREEN
+
+笊絶武笊絶武笊絶武笊絶武笊絶武笊絶武笊絶武笊絶武笊絶武笊絶武笊絶武笊絶武笊絶武笊絶武笊絶武笊絶武笊絶武笊絶武笊絶武 */
+
+#s-input{
+
+  background:linear-gradient(180deg,#0c0818 0%,#080514 100%);
+
+  align-items:center;justify-content:flex-start;padding:60px 20px 80px;
+
+}
+
+.input-wrap{width:100%;max-width:560px;margin:0 auto;}
+
+.input-header{text-align:center;margin-bottom:48px;}
+
+.input-eyebrow{font-size:11px;letter-spacing:.4em;color:var(--muted);margin-bottom:12px;}
+
+.input-title{
+
+  font-family:'Shippori Mincho',serif;
+
+  font-size:22px;color:var(--gold-l);letter-spacing:.15em;margin-bottom:8px;
+
+}
+
+.input-line{width:40px;height:1px;background:var(--gold);margin:0 auto;}
+
+
+
+.field-group{margin-bottom:28px;}
+
+.field-label{
+
+  display:block;font-size:11px;letter-spacing:.25em;
+
+  color:var(--muted);margin-bottom:10px;
+
+}
+
+.field-input{
+
+  width:100%;background:rgba(255,255,255,.04);
+
+  border:1px solid rgba(201,149,42,.18);border-radius:1px;
+
+  padding:14px 18px;font-family:'Noto Sans JP',sans-serif;
+
+  font-size:15px;color:var(--cream);outline:none;
+
+  transition:border-color .25s,background .25s;
+
+}
+
+.field-input:focus{border-color:rgba(201,149,42,.5);background:rgba(255,255,255,.06);}
+
+.field-input::placeholder{color:rgba(240,234,216,.18);}
+
+.field-select{
+
+  appearance:none;
+
+  background-image:url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='10' height='6'%3E%3Cpath d='M0 0l5 6 5-6z' fill='%239088a4'/%3E%3C/svg%3E");
+
+  background-repeat:no-repeat;background-position:right 16px center;
+
+  padding-right:40px;cursor:pointer;
+
+}
+
+.field-select option{background:#1a1230;color:var(--cream);}
+
+.field-textarea{resize:vertical;min-height:90px;line-height:1.7;}
+
+.field-note{
+
+  margin-top:8px;
+
+  font-size:11px;
+
+  line-height:1.8;
+
+  letter-spacing:.06em;
+
+  color:rgba(240,234,216,.62);
+
+}
+
+
+
+/* 逕溷ｹｴ譛域律 GUI */
+
+.date-grid{display:grid;grid-template-columns:2fr 1fr 1fr;gap:10px;}
+
+.date-label{font-size:10px;letter-spacing:.2em;color:var(--muted);margin-bottom:6px;display:block;text-align:center;}
+
+
+
+/* 繝ｩ繧ｸ繧ｪ諤ｧ蛻･ */
+
+.gender-row{display:flex;gap:12px;}
+
+.gender-btn{
+
+  flex:1;padding:12px;border:1px solid rgba(201,149,42,.18);
+
+  border-radius:1px;background:transparent;
+
+  font-family:'Noto Sans JP',sans-serif;font-size:13px;
+
+  color:var(--muted);cursor:pointer;transition:all .2s;letter-spacing:.1em;
+
+}
+
+.gender-btn.sel{border-color:var(--gold);background:rgba(201,149,42,.1);color:var(--gold-l);}
+
+
+
+/* 繝√ぉ繝・け繝懊ャ繧ｯ繧ｹ */
+
+.check-row{display:flex;align-items:center;gap:12px;cursor:pointer;padding:14px 0;}
+
+.check-box{
+
+  width:18px;height:18px;border:1px solid rgba(201,149,42,.3);
+
+  border-radius:2px;background:transparent;display:flex;align-items:center;justify-content:center;
+
+  flex-shrink:0;transition:all .2s;
+
+}
+
+.check-box.checked{border-color:var(--gold);background:rgba(201,149,42,.15);}
+.check-box.checked::after{content:'✓';font-size:12px;color:var(--gold-l);}
+.check-label{font-size:13px;color:var(--muted);letter-spacing:.08em;}
+.local-data-note{
+  margin-top:2px;
+  font-size:11px;
+  line-height:1.85;
+  color:rgba(240,234,216,.58);
+}
+.local-data-actions{
+  display:flex;
+  flex-wrap:wrap;
+  gap:10px;
+  margin-top:12px;
+}
+
+.reaction-shell{
+  padding:18px 18px 16px;
+  border:1px solid rgba(201,149,42,.16);
+  background:
+    radial-gradient(circle at top right, rgba(201,149,42,.08), transparent 36%),
+    rgba(255,255,255,.028);
+  box-shadow:inset 0 1px 0 rgba(255,255,255,.03);
+}
+.reaction-progress{
+  font-size:12px;
+  letter-spacing:.18em;
+  color:var(--gold-l);
+  margin-bottom:10px;
+  font-family:'Shippori Mincho',serif;
+}
+.reaction-progress-bar{
+  width:100%;
+  height:6px;
+  border-radius:999px;
+  background:rgba(255,255,255,.06);
+  overflow:hidden;
+  margin-bottom:14px;
+}
+.reaction-progress-fill{
+  width:33%;
+  height:100%;
+  background:linear-gradient(90deg,var(--gold-d),var(--gold-l));
+  box-shadow:0 0 18px rgba(201,149,42,.24);
+  transition:width .25s ease;
+}
+.reaction-question{
+  font-family:'Shippori Mincho',serif;
+  font-size:18px;
+  line-height:1.75;
+  color:var(--cream);
+}
+.reaction-choices{
+  display:grid;
+  grid-template-columns:1fr;
+  gap:10px;
+  margin-top:16px;
+}
+.reaction-choice{
+  width:100%;
+  padding:14px 16px;
+  border:1px solid rgba(201,149,42,.18);
+  background:rgba(255,255,255,.03);
+  color:var(--cream);
+  font-family:'Noto Sans JP',sans-serif;
+  font-size:13px;
+  line-height:1.8;
+  text-align:left;
+  cursor:pointer;
+  transition:border-color .24s,background .24s,transform .24s;
+}
+.reaction-choice:hover{
+  border-color:rgba(201,149,42,.42);
+  background:rgba(201,149,42,.08);
+  transform:translateY(-1px);
+}
+.reaction-summary{
+  margin-top:14px;
+  padding-top:14px;
+  border-top:1px solid rgba(201,149,42,.12);
+  font-size:12px;
+  line-height:1.9;
+  color:rgba(240,234,216,.68);
+}
+.reaction-summary strong{
+  color:var(--gold-l);
+  font-family:'Shippori Mincho',serif;
+  font-weight:600;
+}
+.reaction-actions{
+  display:flex;
+  flex-wrap:wrap;
+  gap:10px;
+  margin-top:12px;
+}
+.reaction-mini-tags{
+  display:flex;
+  flex-wrap:wrap;
+  gap:8px;
+  margin-top:10px;
+}
+.reaction-mini-tag{
+  padding:4px 8px;
+  border:1px solid rgba(201,149,42,.16);
+  font-size:10px;
+  letter-spacing:.14em;
+  color:var(--cream-soft);
+  background:rgba(255,255,255,.02);
+}
+
+.input-btns{display:flex;gap:12px;margin-top:36px;}
+.btn-main{
+  flex:2;padding:16px;background:linear-gradient(135deg,var(--gold-d),var(--gold));
+  border:none;border-radius:1px;
+  font-family:'Shippori Mincho',serif;
+
+  font-size:14px;letter-spacing:.25em;color:#04030a;
+
+  cursor:pointer;transition:all .3s;font-weight:600;
+
+}
+
+.btn-main:hover{box-shadow:0 4px 20px rgba(201,149,42,.3);transform:translateY(-1px);}
+
+.btn-skip{
+
+  flex:1;padding:16px;background:transparent;
+
+  border:1px solid rgba(201,149,42,.2);border-radius:1px;
+
+  font-family:'Shippori Mincho',serif;
+
+  font-size:13px;letter-spacing:.2em;color:var(--muted);cursor:pointer;
+
+  transition:all .2s;
+
+}
+
+.btn-skip:hover{border-color:rgba(201,149,42,.4);color:var(--cream);}
+.flow-nav-row{
+  display:flex;
+  flex-wrap:wrap;
+  gap:10px;
+  justify-content:center;
+  margin-top:18px;
+}
+.flow-nav-btn{
+  padding:12px 18px;
+  background:rgba(255,255,255,.02);
+  border:1px solid rgba(201,149,42,.18);
+  color:rgba(240,234,216,.74);
+  font-family:'Shippori Mincho',serif;
+  font-size:12px;
+  letter-spacing:.12em;
+  cursor:pointer;
+  transition:all .2s;
+}
+.flow-nav-btn:hover{
+  border-color:rgba(201,149,42,.42);
+  background:rgba(201,149,42,.06);
+  color:var(--cream);
+}
+
+
+/* 笊絶武笊絶武笊絶武笊絶武笊絶武笊絶武笊絶武笊絶武笊絶武笊絶武笊絶武笊絶武笊絶武笊絶武笊絶武笊絶武笊絶武笊絶武笊絶武
+
+   LENORMAND SCREEN
+
+笊絶武笊絶武笊絶武笊絶武笊絶武笊絶武笊絶武笊絶武笊絶武笊絶武笊絶武笊絶武笊絶武笊絶武笊絶武笊絶武笊絶武笊絶武笊絶武 */
+
+#s-len{
+
+  background:#04030a;
+
+  min-height:100vh;position:relative;overflow:hidden;
+
+}
+
+.len-bg{
+
+  position:absolute;inset:0;
+
+  background:radial-gradient(ellipse at 30% 50%,#1a0820 0%,#040210 50%,#000008 100%);
+
+}
+
+/* 豬ｮ驕翫☆繧九ヱ繝ｼ繝・ぅ繧ｯ繝ｫ */
+
+.particle{
+
+  position:absolute;border-radius:50%;pointer-events:none;
+
+  animation:float var(--d,8s) ease-in-out infinite var(--delay,0s);
+
+}
+
+@keyframes float{0%,100%{transform:translateY(0) scale(1);opacity:.3}50%{transform:translateY(-30px) scale(1.2);opacity:.7}}
+
+
+
+.len-content{position:relative;z-index:1;display:flex;flex-direction:column;align-items:center;min-height:100vh;padding:24px 6px 80px;}
+
+.deck-title{
+
+  font-family:'Shippori Mincho',serif;
+
+  font-size:13px;letter-spacing:.35em;color:var(--muted);
+
+  margin-bottom:8px;text-align:center;
+
+}
+
+.deck-instruction{
+
+  font-family:'Shippori Mincho',serif;
+
+  font-size:18px;letter-spacing:.12em;color:var(--gold-l);
+
+  margin-bottom:32px;text-align:center;
+
+  animation:instPulse 2s ease-in-out infinite;
+
+}
+
+@keyframes instPulse{0%,100%{opacity:.7}50%{opacity:1}}
+
+
+
+/* 繧ｷ繝｣繝・ヵ繝ｫ荳ｭ繧ｫ繝ｼ繝峨ョ繝・く */
+
+.shuffle-area{
+
+  position:relative;width:160px;height:220px;margin:0 auto 40px;
+
+  cursor:pointer;
+
+}
+
+.shuffle-card{
+
+  position:absolute;width:140px;height:210px;
+
+  border-radius:8px;
+
+  background:linear-gradient(145deg,#180c30,#0c0620,#180c30);
+
+  border:1.5px solid rgba(201,149,42,.5);
+
+  display:flex;align-items:center;justify-content:center;
+
+  box-shadow:0 8px 32px rgba(0,0,0,.6),inset 0 0 40px rgba(201,149,42,.04);
+
+  transition:transform .1s;
+
+}
+
+.shuffle-card:nth-child(1){transform:rotate(-3deg) translateX(-10px);}
+
+.shuffle-card:nth-child(2){transform:rotate(-1deg) translateX(-4px);}
+
+.shuffle-card:nth-child(3){transform:rotate(1deg) translateX(2px);}
+
+.shuffle-card:nth-child(4){transform:rotate(3deg) translateX(8px);}
+
+.shuffle-card:nth-child(5){transform:rotate(5deg) translateX(14px);}
+
+.shuffle-card-inner{
+
+  width:110px;height:165px;
+
+  border:1px solid rgba(201,149,42,.3);
+
+  border-radius:4px;
+
+  display:flex;align-items:center;justify-content:center;
+
+  font-size:32px;opacity:.6;
+
+}
+
+.shuffle-area.shuffling .shuffle-card{
+
+  animation:cardShuffle .4s ease-in-out infinite alternate;
+
+}
+
+.shuffle-card:nth-child(1).shuffling{animation-delay:0s;}
+
+.shuffle-card:nth-child(2).shuffling{animation-delay:.08s;}
+
+.shuffle-card:nth-child(3).shuffling{animation-delay:.16s;}
+
+.shuffle-card:nth-child(4).shuffling{animation-delay:.24s;}
+
+.shuffle-card:nth-child(5).shuffling{animation-delay:.32s;}
+
+@keyframes cardShuffle{
+
+  0%{transform:rotate(-4deg) translateX(-12px) translateY(0);}
+
+  50%{transform:rotate(0deg) translateX(0px) translateY(-8px);}
+
+  100%{transform:rotate(4deg) translateX(12px) translateY(0);}
+
+}
+
+
+
+.btn-stop{
+
+  padding:14px 48px;
+
+  background:transparent;
+
+  border:1px solid rgba(201,149,42,.5);
+
+  border-radius:1px;
+
+  font-family:'Shippori Mincho',serif;
+
+  font-size:14px;letter-spacing:.3em;
+
+  color:var(--gold-l);cursor:pointer;
+
+  transition:all .3s;
+
+  position:relative;overflow:hidden;
+
+}
+
+.btn-stop::before{content:'';position:absolute;inset:0;background:rgba(201,149,42,.08);transform:scaleX(0);transition:transform .3s;}
+
+.btn-stop:hover::before{transform:scaleX(1);}
+
+.btn-stop:hover{border-color:var(--gold);box-shadow:0 0 20px rgba(201,149,42,.2);}
+
+
+
+/* 蠑輔＞縺溘き繝ｼ繝牙・逕ｻ髱｢陦ｨ遉ｺ */
+
+.cards-fullscreen{
+
+  width:100%;display:none;
+
+  flex-direction:column;align-items:center;gap:24px;
+
+}
+
+.cards-fullscreen.on{display:flex;}
+
+.cards-row{
+
+  display:flex;justify-content:center;flex-wrap:wrap;gap:10px;
+
+  width:100%;max-width:900px;
+
+}
+
+.result-card{
+
+  border-radius:8px;overflow:hidden;
+
+  box-shadow:0 8px 32px rgba(0,0,0,.5);
+
+  animation:cardReveal .6s ease-out both;
+
+  cursor:pointer;transition:transform .25s,box-shadow .25s;
+
+  position:relative;
+
+  border:1.5px solid rgba(201,149,42,.3);
+
+}
+
+.result-card:hover{transform:translateY(-8px) scale(1.03);box-shadow:0 16px 48px rgba(0,0,0,.6),0 0 20px rgba(201,149,42,.2);}
+
+@keyframes cardReveal{
+
+  from{opacity:0;transform:translateY(24px) rotateY(-20deg) scale(.9);}
+
+  to{opacity:1;transform:none;}
+
+}
+
+.result-card-img{width:100%;height:100%;object-fit:cover;display:block;}
+
+.result-card-placeholder{
+
+  width:100%;height:100%;
+
+  background:linear-gradient(155deg,#200c40,#100618);
+
+  display:flex;flex-direction:column;align-items:center;justify-content:center;
+
+  padding:8px 6px;text-align:center;
+
+}
+
+.rc-type{position:absolute;top:6px;right:6px;font-size:8px;padding:2px 6px;border-radius:2px;}
+
+.rc-len-badge{background:rgba(42,107,107,.85);color:#d4ffff;}
+
+.rc-orc-badge{background:rgba(139,32,32,.85);color:#ffd4d4;}
+
+.rc-num{font-family:'Cinzel Decorative',serif;font-size:24px;color:var(--gold-l);line-height:1;}
+
+.rc-name{font-family:'Shippori Mincho',serif;font-size:9px;color:rgba(240,234,216,.7);margin-top:5px;line-height:1.4;}
+
+.rc-kw{font-size:8px;color:var(--muted);margin-top:4px;}
+
+
+
+/* 3ﾃ・繧ｰ繝ｪ繝・ラ - 蜈ｨ逕ｻ髱｢蟇ｾ蠢・*/
+
+.grid33{
+
+  display:grid;grid-template-columns:repeat(3,1fr);gap:8px;
+
+  width:100%;max-width:100%;
+
+  padding:0 2px;
+
+}
+
+.grid33-cell{display:flex;flex-direction:column;align-items:center;gap:5px;}
+
+.grid33-cell .pos-lbl{font-size:9px;letter-spacing:.1em;color:var(--muted);text-align:center;}
+
+
+
+/* 繧ｫ繝ｼ繝峨げ繝ｭ繝ｼ貍泌・ */
+
+@keyframes cardGlow{
+
+  0%,100%{box-shadow:0 16px 52px rgba(0,0,0,.75),0 0 28px rgba(201,149,42,.1);}
+
+  50%{box-shadow:0 24px 72px rgba(0,0,0,.9),0 0 64px rgba(201,149,42,.35);}
+
+}
+
+.card-glow{
+
+  animation:cardReveal .9s ease-out both,cardGlow 4s ease-in-out infinite .9s !important;
+
+}
+
+/* 繧ｫ繝ｼ繝臥判蜒上・繧ｺ繝ｼ繝繧､繝ｳ貍泌・ */
+
+.result-card-img{width:100%;height:100%;object-fit:cover;display:block;transition:transform .5s ease;}
+
+.result-card:hover .result-card-img{transform:scale(1.05);}
+
+/* 蜊倅ｽ灘､ｧ陦ｨ遉ｺ繝ｩ繝・ヱ繝ｼ */
+
+.card-single-wrap{
+
+  display:flex;justify-content:center;align-items:center;
+
+  width:100%;padding:12px 0 20px;
+
+}
+
+
+
+/* 笊絶武笊絶武笊絶武笊絶武笊絶武笊絶武笊絶武笊絶武笊絶武笊絶武笊絶武笊絶武笊絶武笊絶武笊絶武笊絶武笊絶武笊絶武笊絶武
+
+   ORACLE SCREEN
+
+笊絶武笊絶武笊絶武笊絶武笊絶武笊絶武笊絶武笊絶武笊絶武笊絶武笊絶武笊絶武笊絶武笊絶武笊絶武笊絶武笊絶武笊絶武笊絶武 */
+
+#s-orc{
+
+  min-height:100vh;position:relative;overflow:hidden;
+
+}
+
+.orc-bg{
+
+  position:absolute;inset:0;
+
+  background:radial-gradient(ellipse at 50% 40%,#0a1a28 0%,#04080f 60%,#020408 100%);
+
+}
+
+/* 陌ｹ縺ｮ蜈・*/
+
+.rainbow-light{
+
+  position:absolute;
+
+  width:600px;height:600px;
+
+  border-radius:50%;
+
+  background:conic-gradient(
+
+    from 0deg,
+
+    rgba(255,100,100,.06),rgba(255,180,50,.06),rgba(255,255,80,.06),
+
+    rgba(100,255,100,.06),rgba(50,200,255,.06),rgba(150,100,255,.06),
+
+    rgba(255,100,200,.06),rgba(255,100,100,.06)
+
+  );
+
+  top:50%;left:50%;transform:translate(-50%,-50%);
+
+  animation:rainbowSpin 20s linear infinite;
+
+  pointer-events:none;
+
+}
+
+.rainbow-light2{
+
+  position:absolute;
+
+  width:400px;height:400px;
+
+  border-radius:50%;
+
+  background:conic-gradient(
+
+    from 180deg,
+
+    rgba(255,150,150,.04),rgba(255,220,80,.04),rgba(100,255,150,.04),
+
+    rgba(80,180,255,.04),rgba(180,100,255,.04),rgba(255,100,180,.04),
+
+    rgba(255,150,150,.04)
+
+  );
+
+  top:50%;left:50%;transform:translate(-50%,-50%);
+
+  animation:rainbowSpin 12s linear infinite reverse;
+
+  pointer-events:none;
+
+}
+
+@keyframes rainbowSpin{from{transform:translate(-50%,-50%) rotate(0deg)}to{transform:translate(-50%,-50%) rotate(360deg)}}
+
+
+
+.orc-content{position:relative;z-index:1;display:flex;flex-direction:column;align-items:center;min-height:100vh;padding:24px 6px 80px;}
+
+
+
+/* 謨ｰ蟄怜・蜉・*/
+
+.num-inputs{display:flex;flex-direction:column;gap:20px;width:100%;max-width:400px;margin:24px 0;}
+
+.num-input-wrap{
+
+  background:rgba(255,255,255,.03);
+
+  border:1px solid rgba(201,149,42,.18);
+
+  border-radius:2px;padding:20px 24px;
+
+  display:flex;align-items:center;justify-content:space-between;gap:16px;
+
+}
+
+.num-label{
+
+  font-family:'Shippori Mincho',serif;
+
+  font-size:13px;letter-spacing:.1em;color:var(--muted);
+
+  white-space:nowrap;
+
+}
+
+.num-stepper{display:flex;align-items:center;gap:12px;}
+
+.num-step-btn{
+
+  width:36px;height:36px;border-radius:50%;
+
+  background:rgba(201,149,42,.1);border:1px solid rgba(201,149,42,.3);
+
+  color:var(--gold-l);font-size:18px;cursor:pointer;
+
+  display:flex;align-items:center;justify-content:center;
+
+  transition:all .2s;
+
+}
+
+.num-step-btn:hover{background:rgba(201,149,42,.2);}
+
+.num-val{
+
+  font-family:'Cinzel Decorative',serif;
+
+  font-size:24px;color:var(--gold-l);
+
+  min-width:50px;text-align:center;
+
+}
+
+.num-text-input{
+
+  width:70px;padding:8px 12px;
+
+  background:rgba(255,255,255,.06);
+
+  border:1px solid rgba(201,149,42,.2);border-radius:1px;
+
+  font-family:'Cinzel Decorative',serif;font-size:18px;
+
+  color:var(--gold-l);text-align:center;outline:none;
+
+}
+
+.num-range{
+
+  width:100%;appearance:none;height:4px;
+
+  background:rgba(201,149,42,.2);border-radius:2px;outline:none;
+
+  margin-top:12px;
+
+}
+
+.num-range::-webkit-slider-thumb{
+
+  appearance:none;width:18px;height:18px;
+
+  border-radius:50%;background:var(--gold);cursor:pointer;
+
+  box-shadow:0 0 8px rgba(201,149,42,.4);
+
+}
+
+
+
+/* 笊絶武笊絶武笊絶武笊絶武笊絶武笊絶武笊絶武笊絶武笊絶武笊絶武笊絶武笊絶武笊絶武笊絶武笊絶武笊絶武笊絶武笊絶武笊絶武
+
+   RESULT SCREEN
+
+笊絶武笊絶武笊絶武笊絶武笊絶武笊絶武笊絶武笊絶武笊絶武笊絶武笊絶武笊絶武笊絶武笊絶武笊絶武笊絶武笊絶武笊絶武笊絶武 */
+
+#s-result{
+
+  background:linear-gradient(180deg,#080514 0%,#04030a 100%);
+
+  padding:0 0 80px;
+
+}
+
+.result-wrap{
+  max-width:960px;
+  margin:0 auto;
+  padding:48px 20px;
+  display:flex;
+  flex-direction:column;
+}
+#result-progress-card{order:1;}
+#rs-integration{order:2;}
+#rs-len{order:3;}
+#rs-orc{order:4;}
+#rs-basis{order:5;}
+#rs-dossier{order:6;}
+#result-upgrade-panel{order:7;}
+
+
+/* 繧ｻ繧ｯ繧ｷ繝ｧ繝ｳ蜈ｱ騾・*/
+
+.rs{margin-bottom:40px;}
+
+.rs-eyebrow{font-size:10px;letter-spacing:.18em;color:var(--muted);margin-bottom:10px;}
+.rs-title{
+  font-family:'Shippori Mincho',serif;
+  font-size:20px;color:var(--gold-l);letter-spacing:.12em;
+  margin-bottom:20px;padding-bottom:14px;
+  border-bottom:1px solid var(--border);
+  display:flex;align-items:center;gap:10px;
+}
+.rs-icon{font-family:'Cinzel Decorative',serif;font-size:22px;color:var(--gold);}
+.rs-copy{
+  margin:-8px 0 18px;
+  font-size:12px;
+  line-height:1.9;
+  color:rgba(240,234,216,.62);
+}
+
+
+.basis-grid{
+  display:grid;
+  grid-template-columns:repeat(auto-fit,minmax(280px,1fr));
+  gap:18px;
+}
+.basis-panel.wide{
+  grid-column:1 / -1;
+}
+.basis-panel{
+  padding:22px 22px 24px;
+  background:
+    radial-gradient(circle at top right, rgba(201,149,42,.12), transparent 38%),
+    rgba(255,255,255,.025);
+  border:1px solid rgba(201,149,42,.16);
+
+  box-shadow:0 12px 36px rgba(0,0,0,.2), inset 0 1px 0 rgba(255,255,255,.03);
+
+}
+
+.basis-panel-head{
+  font-size:10px;
+  letter-spacing:.16em;
+  color:var(--muted);
+  margin-bottom:10px;
+}
+.basis-panel-title{
+
+  font-family:'Shippori Mincho',serif;
+
+  font-size:20px;
+
+  letter-spacing:.12em;
+
+  color:var(--gold-l);
+
+  margin-bottom:10px;
+
+}
+
+.basis-panel-copy{
+  font-size:12px;
+  line-height:1.9;
+  color:rgba(240,234,216,.62);
+  margin-bottom:18px;
+}
+.reaction-basis-title{
+  font-family:'Shippori Mincho',serif;
+  font-size:18px;
+  letter-spacing:.14em;
+  color:var(--gold-l);
+  text-align:center;
+  margin-bottom:16px;
+}
+.insight-grid{
+
+  display:grid;
+
+  grid-template-columns:repeat(2,minmax(0,1fr));
+
+  gap:10px;
+
+  margin-top:14px;
+
+}
+
+.insight-card{
+
+  padding:14px 14px 16px;
+
+  background:rgba(255,255,255,.02);
+
+  border:1px solid rgba(201,149,42,.12);
+
+}
+
+.insight-kicker{
+
+  font-size:9px;
+
+  letter-spacing:.2em;
+
+  color:var(--muted);
+
+  margin-bottom:8px;
+
+}
+
+.insight-title{
+
+  font-family:'Shippori Mincho',serif;
+
+  font-size:14px;
+
+  line-height:1.7;
+
+  color:var(--cream);
+
+  margin-bottom:6px;
+
+}
+
+.insight-copy{
+
+  font-size:12px;
+
+  line-height:1.9;
+
+  color:rgba(240,234,216,.7);
+
+}
+
+.tag-row{
+
+  display:flex;
+
+  flex-wrap:wrap;
+
+  gap:8px;
+
+  margin-top:14px;
+
+}
+
+.tag-pill{
+
+  padding:6px 10px;
+
+  border:1px solid rgba(201,149,42,.18);
+
+  background:rgba(201,149,42,.06);
+
+  font-size:10px;
+
+  letter-spacing:.12em;
+
+  color:rgba(240,234,216,.78);
+
+}
+
+.candidate-grid{
+
+  display:grid;
+
+  grid-template-columns:repeat(2,minmax(0,1fr));
+
+  gap:10px;
+
+  margin-top:14px;
+
+}
+
+.candidate-card{
+
+  padding:14px;
+
+  background:rgba(255,255,255,.015);
+
+  border:1px solid rgba(201,149,42,.1);
+
+}
+
+.candidate-label{
+
+  font-size:9px;
+
+  letter-spacing:.2em;
+
+  color:var(--muted);
+
+  margin-bottom:8px;
+
+}
+
+.candidate-value{
+
+  font-family:'Shippori Mincho',serif;
+
+  font-size:18px;
+
+  color:var(--gold-l);
+
+  margin-bottom:6px;
+
+}
+
+.candidate-copy{
+
+  font-size:11px;
+
+  line-height:1.8;
+
+  color:rgba(240,234,216,.64);
+
+}
+
+.split-note{
+  margin-top:12px;
+  font-size:11px;
+  line-height:1.8;
+  color:rgba(240,234,216,.58);
+}
+.fortune-shell{
+  margin-top:18px;
+  padding:18px 18px 16px;
+  border:1px solid rgba(201,149,42,.14);
+  background:linear-gradient(180deg,rgba(201,149,42,.06),rgba(255,255,255,.018));
+}
+.fortune-head{
+  display:flex;
+  justify-content:space-between;
+  gap:12px;
+  align-items:flex-start;
+  flex-wrap:wrap;
+  margin-bottom:12px;
+}
+.fortune-eyebrow{
+  font-size:10px;
+  letter-spacing:.24em;
+  color:var(--muted);
+  margin-bottom:6px;
+}
+.fortune-headline{
+  font-family:'Shippori Mincho',serif;
+  font-size:18px;
+  line-height:1.7;
+  color:var(--gold-l);
+  letter-spacing:.08em;
+}
+.fortune-meta{
+  max-width:320px;
+  font-size:11px;
+  line-height:1.8;
+  color:rgba(240,234,216,.62);
+}
+.fortune-grid{
+  display:grid;
+  grid-template-columns:repeat(2,minmax(0,1fr));
+  gap:10px;
+  margin-top:12px;
+}
+.fortune-card{
+  padding:14px;
+  border:1px solid rgba(201,149,42,.1);
+  background:rgba(255,255,255,.018);
+}
+.fortune-card.current{
+  border-color:rgba(201,149,42,.28);
+  background:rgba(201,149,42,.07);
+}
+.fortune-kicker{
+  font-size:9px;
+  letter-spacing:.2em;
+  color:var(--muted);
+  margin-bottom:8px;
+}
+.fortune-title{
+  font-family:'Shippori Mincho',serif;
+  font-size:15px;
+  line-height:1.7;
+  color:var(--cream);
+  margin-bottom:6px;
+}
+.fortune-copy{
+  font-size:12px;
+  line-height:1.85;
+  color:rgba(240,234,216,.72);
+}
+.fortune-pill-row{
+  display:flex;
+  flex-wrap:wrap;
+  gap:6px;
+  margin-top:10px;
+}
+.fortune-pill{
+  padding:4px 8px;
+  border:1px solid rgba(201,149,42,.14);
+  background:rgba(201,149,42,.05);
+  font-size:9px;
+  letter-spacing:.1em;
+  color:rgba(240,234,216,.72);
+}
+.fortune-track{
+  display:grid;
+  grid-template-columns:repeat(4,minmax(0,1fr));
+  gap:8px;
+  margin-top:12px;
+}
+.fortune-track-item{
+  padding:10px;
+  border:1px solid rgba(201,149,42,.08);
+  background:rgba(255,255,255,.012);
+}
+.fortune-track-item.current{
+  border-color:rgba(201,149,42,.24);
+  background:rgba(201,149,42,.06);
+}
+.fortune-track-age{
+  font-size:9px;
+  letter-spacing:.16em;
+  color:var(--muted);
+  margin-bottom:4px;
+}
+.fortune-track-pillar{
+  font-family:'Shippori Mincho',serif;
+  font-size:16px;
+  color:var(--gold-l);
+  margin-bottom:4px;
+}
+.fortune-track-copy{
+  font-size:10px;
+  line-height:1.7;
+  color:rgba(240,234,216,.62);
+}
+.fortune-year-grid{
+  display:grid;
+  grid-template-columns:repeat(3,minmax(0,1fr));
+  gap:8px;
+  margin-top:12px;
+}
+.fortune-year-item{
+  padding:12px;
+  border:1px solid rgba(201,149,42,.08);
+  background:rgba(255,255,255,.015);
+}
+.fortune-year-item.current{
+  border-color:rgba(201,149,42,.24);
+  background:rgba(201,149,42,.06);
+}
+.fortune-year-head{
+  display:flex;
+  justify-content:space-between;
+  gap:8px;
+  align-items:center;
+  margin-bottom:6px;
+}
+.fortune-year-label{
+  font-size:10px;
+  letter-spacing:.14em;
+  color:var(--muted);
+}
+.fortune-year-pillar{
+  font-family:'Shippori Mincho',serif;
+  font-size:15px;
+  color:var(--gold-l);
+}
+.fortune-year-copy{
+  font-size:11px;
+  line-height:1.8;
+  color:rgba(240,234,216,.68);
+}
+.dynamic-list{
+  display:grid;
+  grid-template-columns:repeat(2,minmax(0,1fr));
+  gap:8px;
+  margin-top:12px;
+}
+.dynamic-item{
+  padding:12px;
+  border:1px solid rgba(201,149,42,.08);
+  background:rgba(255,255,255,.015);
+}
+.dynamic-label{
+  font-size:10px;
+  letter-spacing:.14em;
+  color:var(--muted);
+  margin-bottom:6px;
+}
+.dynamic-copy{
+  font-size:11px;
+  line-height:1.8;
+  color:rgba(240,234,216,.66);
+}
+
+
+/* 蝓ｺ譛ｬ諠・ｱ繧ｫ繝ｼ繝・*/
+
+.info-grid{display:grid;grid-template-columns:1fr 1fr;gap:16px;margin-bottom:20px;}
+
+.info-block{
+
+  background:rgba(255,255,255,.03);border:1px solid var(--border2);
+
+  border-radius:2px;padding:20px;
+
+}
+
+.info-block-title{font-size:10px;letter-spacing:.25em;color:var(--muted);margin-bottom:14px;}
+
+
+
+/* 蝗帶浤謗ｨ蜻ｽ */
+
+.pillars-row{display:grid;grid-template-columns:repeat(4,1fr);gap:8px;}
+
+.pillar{text-align:center;padding:14px 4px;border:1px solid var(--border2);border-radius:1px;background:rgba(255,255,255,.02);}
+
+.p-lbl{font-size:9px;letter-spacing:.15em;color:var(--muted);margin-bottom:8px;}
+
+.p-kan{font-family:'Shippori Mincho',serif;font-size:22px;line-height:1;}
+
+.p-zhi{font-size:11px;color:var(--muted);margin-top:3px;}
+
+.p-el{font-size:9px;margin-top:5px;}
+
+.p-branch-el{font-size:9px;color:rgba(240,234,216,.45);margin-top:3px;}
+
+.p-god{font-size:9px;letter-spacing:.08em;margin-top:7px;color:var(--gold-d);}
+
+.p-hidden{font-size:9px;line-height:1.5;color:rgba(240,234,216,.58);margin-top:5px;padding:0 4px;}
+
+.c-wood{color:#5aab5a;}.c-fire{color:#c04040;}.c-earth{color:#c0922b;}.c-metal{color:#8080c0;}.c-water{color:#4070c0;}
+
+
+
+.fe-bar2{margin-top:14px;}
+
+.fe-row2{display:flex;gap:3px;height:5px;border-radius:2px;overflow:hidden;margin-bottom:6px;}
+
+.fe-s{height:100%;}
+
+.fw{background:#4a8b4a;}.ff{background:#c03030;}.fo{background:#c0922b;}.fm{background:#8080c0;}.fwa{background:#2b60a0;}
+
+.fe-legend2{display:flex;gap:8px;flex-wrap:wrap;}
+
+.fe-i{display:flex;align-items:center;gap:3px;font-size:9px;color:var(--muted);}
+
+.fe-d{width:7px;height:7px;border-radius:50%;}
+
+
+
+.dm-note{margin-top:14px;padding:12px 14px;border-left:2px solid var(--gold);background:rgba(201,149,42,.05);font-size:12px;line-height:1.8;color:rgba(240,234,216,.7);}
+
+.lp-note{margin-top:10px;padding:12px 14px;border-left:2px solid #7a6bb0;background:rgba(122,107,176,.05);font-size:12px;line-height:1.8;color:rgba(240,234,216,.7);}
+
+
+
+/* 蟋灘錐蛻､譁ｭ */
+
+.name-grid{display:grid;grid-template-columns:repeat(5,1fr);gap:6px;margin-bottom:14px;}
+
+.kakaku{text-align:center;padding:12px 4px;border:1px solid var(--border2);border-radius:1px;background:rgba(255,255,255,.02);}
+
+.kk-lbl{font-size:9px;letter-spacing:.1em;color:var(--muted);margin-bottom:6px;}
+
+.kk-num{font-family:'Cinzel Decorative',serif;font-size:18px;color:var(--gold-l);line-height:1;}
+
+.kk-name{font-size:8px;color:var(--muted);margin-top:4px;}
+
+.kk-luck{font-size:9px;margin-top:4px;}
+
+.luck-great{color:#e4a840;}.luck-good{color:#5aab5a;}.luck-warn{color:#d98d3e;}.luck-mid{color:var(--muted);}.luck-bad{color:#c04040;}
+
+
+
+/* 繝翫Λ繝・ぅ繝門渕譛ｬ諠・ｱ繧ｫ繝ｼ繝・*/
+
+.narr-grid{display:grid;grid-template-columns:repeat(3,1fr);gap:14px;margin-bottom:4px;}
+
+.narr-card{
+
+  background:rgba(255,255,255,.03);
+
+  border:1px solid var(--border2);
+
+  border-radius:2px;padding:22px 18px;
+
+  position:relative;overflow:hidden;
+
+}
+
+.narr-card::before{content:'';position:absolute;top:0;left:0;right:0;height:2px;background:linear-gradient(90deg,var(--gold-d),var(--gold-l),var(--gold-d));}
+
+.narr-icon{font-size:18px;color:var(--gold);margin-bottom:8px;opacity:.7;}
+
+.narr-label{font-size:10px;letter-spacing:.25em;color:var(--muted);margin-bottom:12px;}
+
+.narr-body{font-family:'Shippori Mincho',serif;font-size:13px;line-height:2;color:rgba(240,234,216,.85);}
+
+
+
+/* 繝ｪ繝ｼ繝・ぅ繝ｳ繧ｰ繝悶Ο繝・け・医Λ繝吶Ν縺ｪ縺暦ｼ・*/
+
+.reading-block{
+  background:rgba(255,255,255,.02);
+  border:1px solid var(--border2);
+  padding:22px 24px;border-radius:1px;
+  font-family:'Shippori Mincho',serif;
+
+  font-size:14px;line-height:2.1;
+
+  color:rgba(240,234,216,.88);
+
+  letter-spacing:.04em;
+
+  white-space:pre-wrap;
+
+  word-break:break-word;
+  overflow-wrap:anywhere;
+}
+.formatted-output{
+  white-space:normal;
+  letter-spacing:normal;
+  font-family:inherit;
+}
+.reading-rich-shell{
+  display:grid;
+  gap:14px;
+}
+.reading-rich-hero{
+  padding:20px 22px 22px;
+  border:1px solid rgba(201,149,42,.18);
+  background:
+    radial-gradient(circle at top right, rgba(201,149,42,.12), transparent 36%),
+    rgba(255,255,255,.025);
+  position:relative;
+  overflow:hidden;
+}
+.reading-rich-hero::after{
+  content:'';
+  position:absolute;
+  inset:0 auto auto 0;
+  width:100%;
+  height:1px;
+  background:linear-gradient(90deg,rgba(228,184,74,.55),transparent 72%);
+}
+.reading-rich-kicker{
+  font-size:10px;
+  letter-spacing:.22em;
+  color:rgba(240,234,216,.44);
+  margin-bottom:10px;
+}
+.reading-rich-title{
+  font-family:'Shippori Mincho',serif;
+  font-size:24px;
+  line-height:1.6;
+  letter-spacing:.1em;
+  color:var(--gold-l);
+  margin-bottom:12px;
+}
+.reading-rich-lead{
+  font-family:'Shippori Mincho',serif;
+  font-size:18px;
+  line-height:2;
+  color:rgba(244,239,228,.92);
+}
+.reading-rich-copy{
+  margin-top:12px;
+  display:grid;
+  gap:10px;
+}
+.reading-rich-copy p,
+.reading-rich-card-body p,
+.foundation-card-body p{
+  margin:0;
+  font-size:13px;
+  line-height:2;
+  color:rgba(240,234,216,.74);
+}
+.reading-rich-grid{
+  display:grid;
+  grid-template-columns:repeat(auto-fit,minmax(220px,1fr));
+  gap:12px;
+}
+.reading-rich-card{
+  padding:18px 18px 20px;
+  border:1px solid rgba(201,149,42,.12);
+  background:rgba(255,255,255,.018);
+}
+.reading-rich-card-title{
+  font-family:'Shippori Mincho',serif;
+  font-size:16px;
+  line-height:1.7;
+  letter-spacing:.08em;
+  color:var(--cream);
+  margin-bottom:10px;
+}
+.reading-rich-card-body{
+  display:grid;
+  gap:10px;
+}
+.reading-rich-list{
+  display:grid;
+  gap:8px;
+}
+.reading-rich-list-item{
+  position:relative;
+  padding-left:16px;
+  font-size:12px;
+  line-height:1.9;
+  color:rgba(240,234,216,.72);
+}
+.reading-rich-list-item::before{
+  content:'•';
+  position:absolute;
+  left:0;
+  top:0;
+  color:var(--gold);
+}
+.kind-len .reading-rich-hero{
+  border-color:rgba(201,149,42,.26);
+  background:
+    radial-gradient(circle at top right, rgba(201,149,42,.16), transparent 34%),
+    rgba(255,255,255,.024);
+}
+.kind-orc .reading-rich-hero{
+  border-color:rgba(122,155,201,.24);
+  background:
+    radial-gradient(circle at top right, rgba(122,155,201,.16), transparent 34%),
+    rgba(255,255,255,.024);
+}
+.kind-orc .reading-rich-title{color:#c8d7f5;}
+.kind-integration .reading-rich-hero{
+  border-color:rgba(229,185,79,.3);
+  background:
+    radial-gradient(circle at top right, rgba(229,185,79,.18), transparent 34%),
+    linear-gradient(180deg,rgba(201,149,42,.09),rgba(255,255,255,.02));
+}
+.kind-foundationdeep .reading-rich-hero{
+  border-color:rgba(214,178,92,.26);
+  background:
+    radial-gradient(circle at top right, rgba(214,178,92,.16), transparent 34%),
+    linear-gradient(180deg, rgba(201,149,42,.08), rgba(255,255,255,.018));
+}
+.kind-foundationdeep .reading-rich-title{
+  color:#ecd8aa;
+}
+.foundation-flow{
+  display:flex;
+  flex-wrap:wrap;
+  gap:8px;
+  margin-bottom:14px;
+}
+.foundation-flow-step{
+  padding:6px 10px;
+  border:1px solid rgba(201,149,42,.16);
+  background:rgba(201,149,42,.06);
+  font-size:10px;
+  letter-spacing:.12em;
+  color:rgba(240,234,216,.74);
+}
+.foundation-grid{
+  display:grid;
+  grid-template-columns:repeat(auto-fit,minmax(220px,1fr));
+  gap:12px;
+}
+.foundation-card{
+  padding:18px 18px 20px;
+  border:1px solid rgba(201,149,42,.12);
+  background:
+    radial-gradient(circle at top right, rgba(201,149,42,.1), transparent 42%),
+    rgba(255,255,255,.018);
+}
+.foundation-card-step{
+  font-size:10px;
+  letter-spacing:.24em;
+  color:rgba(240,234,216,.4);
+  margin-bottom:8px;
+}
+.foundation-card-title{
+  font-family:'Shippori Mincho',serif;
+  font-size:18px;
+  line-height:1.7;
+  letter-spacing:.08em;
+  color:var(--gold-l);
+  margin-bottom:10px;
+}
+.foundation-card-body{
+  display:grid;
+  gap:10px;
+}
+.result-detail-accordion{
+  border:1px solid rgba(201,149,42,.16);
+  background:
+    radial-gradient(circle at top right, rgba(201,149,42,.1), transparent 38%),
+    rgba(255,255,255,.02);
+}
+.result-detail-accordion > summary{
+  list-style:none;
+  cursor:pointer;
+  display:flex;
+  align-items:center;
+  justify-content:space-between;
+  gap:16px;
+  padding:20px 22px;
+}
+.result-detail-accordion > summary::-webkit-details-marker{display:none;}
+.result-detail-kicker{
+  font-size:10px;
+  letter-spacing:.22em;
+  color:rgba(240,234,216,.42);
+  margin-bottom:8px;
+}
+.result-detail-title{
+  font-family:'Shippori Mincho',serif;
+  font-size:20px;
+  line-height:1.7;
+  letter-spacing:.08em;
+  color:var(--gold-l);
+  margin-bottom:8px;
+}
+.result-detail-copy{
+  font-size:12px;
+  line-height:1.9;
+  color:rgba(240,234,216,.64);
+}
+.result-detail-indicator{
+  width:12px;
+  height:12px;
+  border-right:1px solid rgba(228,184,74,.9);
+  border-bottom:1px solid rgba(228,184,74,.9);
+  transform:rotate(45deg);
+  transition:transform .2s ease;
+  flex:0 0 auto;
+  margin-right:6px;
+}
+.result-detail-accordion[open] .result-detail-indicator{
+  transform:rotate(225deg);
+  margin-top:8px;
+}
+.result-detail-content{
+  padding:0 22px 22px;
+}
+
+
+/* 邨ｱ蜷医Γ繝・そ繝ｼ繧ｸ */
+
+.integration{
+
+  background:rgba(255,255,255,.03);
+
+  border:1px solid rgba(201,149,42,.25);
+
+  border-radius:2px;padding:32px;
+
+  position:relative;overflow:hidden;
+
+}
+
+.integration::before{
+
+  content:'✦';
+
+  position:absolute;top:16px;right:24px;
+
+  font-family:'Cinzel Decorative',serif;
+
+  font-size:48px;color:rgba(201,149,42,.06);
+
+}
+
+.integration-text{
+  font-size:14px;line-height:2.2;letter-spacing:.04em;color:rgba(240,234,216,.85);
+  white-space:pre-wrap;
+  word-break:break-word;
+  overflow-wrap:anywhere;
+}
+.integration-text.formatted-output{
+  white-space:normal;
+  letter-spacing:normal;
+}
+.member-panel{
+
+  margin-top:22px;padding:22px 24px;background:rgba(255,255,255,.02);
+
+  border:1px solid rgba(201,149,42,.16);
+
+}
+
+.member-panel-head{
+
+  display:flex;justify-content:space-between;gap:12px;align-items:center;flex-wrap:wrap;
+
+  margin-bottom:12px;
+
+}
+
+.member-panel-copy{
+
+  font-size:12px;line-height:1.9;color:rgba(240,234,216,.62);
+
+  margin-bottom:16px;
+
+}
+
+.upgrade-panel{
+
+  margin-top:18px;padding:24px 24px 22px;background:linear-gradient(180deg,rgba(201,149,42,.1),rgba(255,255,255,.02));
+
+  border:1px solid rgba(201,149,42,.16);position:relative;overflow:hidden;
+
+}
+
+.upgrade-panel::before{
+
+  content:'';position:absolute;left:24px;right:24px;top:0;height:1px;
+
+  background:linear-gradient(90deg,transparent,rgba(228,184,74,.48),transparent);
+
+}
+
+.upgrade-badge{
+  display:inline-flex;align-items:center;justify-content:center;padding:5px 12px;margin-bottom:10px;
+  border:1px solid rgba(201,149,42,.22);background:rgba(201,149,42,.08);
+  font-size:10px;letter-spacing:.12em;color:var(--gold-l);
+}
+.upgrade-head{
+
+  display:grid;grid-template-columns:minmax(0,1fr) 290px;gap:16px;align-items:flex-start;
+
+}
+
+.upgrade-title{
+
+  font-family:'Shippori Mincho',serif;font-size:21px;line-height:1.8;color:var(--gold-l);
+
+  letter-spacing:.08em;margin-bottom:8px;
+
+}
+
+.upgrade-copy{
+
+  max-width:640px;font-size:13px;line-height:2;color:rgba(240,234,216,.74);letter-spacing:.05em;
+
+}
+
+.upgrade-spotlight{
+
+  padding:14px 14px 12px;border:1px solid rgba(201,149,42,.12);background:rgba(255,255,255,.026);
+
+}
+
+.upgrade-spotlight-label{
+  font-size:10px;letter-spacing:.14em;color:var(--muted);margin-bottom:6px;
+}
+.upgrade-spotlight-value{
+
+  font-family:'Shippori Mincho',serif;font-size:18px;line-height:1.7;color:var(--gold-l);
+
+  letter-spacing:.08em;margin-bottom:6px;
+
+}
+
+.upgrade-spotlight-copy{
+
+  font-size:12px;line-height:1.9;color:rgba(240,234,216,.68);letter-spacing:.04em;
+
+}
+
+.upgrade-meta{
+
+  display:flex;justify-content:space-between;gap:12px;align-items:flex-start;flex-wrap:wrap;
+
+  margin-top:12px;
+
+}
+
+.upgrade-price{
+
+  display:flex;flex-direction:column;gap:4px;
+
+}
+
+.upgrade-price-label{
+  font-size:10px;letter-spacing:.14em;color:var(--muted);
+}
+.upgrade-price-value{
+
+  font-family:'Shippori Mincho',serif;font-size:20px;letter-spacing:.08em;color:var(--gold-l);
+
+}
+
+.upgrade-note{
+
+  max-width:420px;font-size:11px;line-height:1.9;color:rgba(240,234,216,.56);
+
+}
+
+.upgrade-list{
+
+  display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:10px;margin-top:16px;
+
+}
+
+.upgrade-item{
+
+  border:1px solid rgba(201,149,42,.1);padding:12px 12px 11px;background:rgba(255,255,255,.016);
+
+}
+
+.upgrade-item-kicker{
+
+  font-size:10px;letter-spacing:.18em;color:var(--muted);margin-bottom:6px;
+
+}
+
+.upgrade-item-body{
+
+  font-size:12px;line-height:1.85;color:rgba(240,234,216,.76);
+
+}
+
+.upgrade-actions{
+
+  display:flex;flex-wrap:wrap;gap:10px;margin-top:16px;
+
+}
+
+.result-ritual{
+
+  margin-top:18px;padding:18px 20px;border:1px solid rgba(201,149,42,.12);
+
+  background:rgba(255,255,255,.018);
+
+}
+
+.ritual-title{
+
+  font-family:'Shippori Mincho',serif;font-size:15px;color:var(--gold-l);
+
+  letter-spacing:.1em;margin-bottom:8px;
+
+}
+
+.ritual-copy{
+
+  font-size:12px;line-height:1.9;color:rgba(240,234,216,.66);letter-spacing:.05em;
+
+  margin-bottom:10px;
+
+}
+
+.ritual-grid{
+
+  display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:10px;
+
+}
+
+.ritual-step{
+
+  border:1px solid rgba(201,149,42,.1);padding:12px;background:rgba(255,255,255,.012);
+
+}
+
+.ritual-step-eyebrow{
+
+  font-size:9px;letter-spacing:.22em;color:var(--muted);margin-bottom:6px;
+
+}
+
+.ritual-step-body{
+
+  font-size:12px;line-height:1.8;color:rgba(240,234,216,.74);
+
+}
+
+.dossier-shell{
+
+  background:linear-gradient(180deg,rgba(255,255,255,.03),rgba(255,255,255,.015));
+
+  border:1px solid rgba(201,149,42,.18);
+
+  padding:28px 28px 30px;position:relative;overflow:hidden;
+
+}
+
+.dossier-shell::before{
+
+  content:'';position:absolute;top:-60px;right:-40px;width:220px;height:220px;
+
+  background:radial-gradient(circle,rgba(201,149,42,.08),transparent 68%);
+
+  pointer-events:none;
+
+}
+
+.dossier-meta{
+
+  display:flex;justify-content:space-between;gap:16px;align-items:flex-start;flex-wrap:wrap;
+
+  margin-bottom:18px;position:relative;z-index:1;
+
+}
+
+.dossier-badge{
+
+  display:inline-flex;align-items:center;gap:8px;padding:5px 12px;border-radius:999px;
+
+  border:1px solid rgba(201,149,42,.2);font-size:10px;letter-spacing:.18em;color:var(--gold-l);
+
+  margin-bottom:10px;background:rgba(201,149,42,.08);
+
+}
+
+.dossier-title{
+
+  font-family:'Shippori Mincho',serif;font-size:28px;letter-spacing:.12em;color:var(--gold-l);
+
+  line-height:1.5;margin-bottom:8px;
+
+}
+
+.dossier-subtitle{
+
+  font-size:12px;line-height:1.9;color:rgba(240,234,216,.62);letter-spacing:.06em;
+
+}
+
+.dossier-actions{display:flex;flex-wrap:wrap;gap:10px;}
+
+.dossier-action-btn{
+
+  padding:10px 14px;background:rgba(255,255,255,.03);
+
+  border:1px solid rgba(201,149,42,.16);color:var(--cream);
+
+  font-size:12px;letter-spacing:.08em;cursor:pointer;transition:all .2s;
+
+}
+
+.dossier-action-btn:hover{border-color:rgba(201,149,42,.4);background:rgba(201,149,42,.06);}
+
+.dossier-hero{
+
+  position:relative;z-index:1;padding:20px 22px;margin-bottom:18px;
+
+  border:1px solid rgba(201,149,42,.14);background:rgba(255,255,255,.02);
+
+}
+
+.dossier-hero-title{
+  font-size:10px;letter-spacing:.16em;color:var(--muted);margin-bottom:10px;
+}
+.dossier-hero-body{
+
+  font-family:'Shippori Mincho',serif;font-size:18px;line-height:2;color:rgba(240,234,216,.9);
+
+}
+
+.dossier-grid{
+
+  display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:14px;position:relative;z-index:1;
+
+}
+
+.dossier-card{
+
+  border:1px solid rgba(201,149,42,.12);padding:18px 18px 16px;background:rgba(255,255,255,.018);
+
+}
+
+.dossier-card.wide{grid-column:1 / -1;}
+
+.dossier-card-eyebrow{
+  font-size:10px;letter-spacing:.14em;color:var(--muted);margin-bottom:8px;
+}
+.dossier-card-title{
+
+  font-family:'Shippori Mincho',serif;font-size:18px;color:var(--gold-l);letter-spacing:.08em;
+
+  margin-bottom:10px;
+
+}
+
+.dossier-card-body{
+  font-size:13px;line-height:2;color:rgba(240,234,216,.82);white-space:pre-wrap;
+}
+.dossier-card-body.rich{white-space:normal;}
+.dossier-card-body.rich p{margin:0 0 10px;}
+.dossier-card-body.rich p:last-child{margin-bottom:0;}
+.dossier-card-body.rich .reading-rich-list{margin-top:10px;}
+.dossier-card-body.rich .reading-rich-list:first-child{margin-top:0;}
+.dossier-subsection + .dossier-subsection{
+  margin-top:14px;padding-top:14px;border-top:1px solid rgba(201,149,42,.1);
+}
+.dossier-subsection-title{
+  font-size:12px;letter-spacing:.08em;color:var(--gold-d);margin-bottom:8px;
+}
+.dossier-list{display:flex;flex-direction:column;gap:8px;}
+
+.dossier-list-item{
+
+  padding-left:14px;position:relative;font-size:13px;line-height:1.9;color:rgba(240,234,216,.8);
+
+}
+
+.dossier-list-item::before{
+
+  content:'•';position:absolute;left:0;top:0;color:var(--gold-d);font-size:10px;
+
+}
+
+.dossier-chip-row{
+
+  display:flex;flex-wrap:wrap;gap:8px;
+
+}
+
+.dossier-chip{
+
+  display:inline-flex;align-items:center;justify-content:center;padding:7px 12px;
+
+  border:1px solid rgba(201,149,42,.14);background:rgba(255,255,255,.02);
+
+  font-size:11px;letter-spacing:.08em;color:rgba(240,234,216,.78);
+
+}
+
+.dossier-loading{
+
+  padding:18px 0 8px;
+
+}
+
+.dossier-proof{
+
+  position:relative;z-index:1;margin-bottom:18px;padding:18px 18px 16px;
+
+  border:1px solid rgba(201,149,42,.12);background:rgba(255,255,255,.018);
+
+}
+
+.dossier-proof-head{
+
+  display:flex;justify-content:space-between;gap:14px;align-items:flex-start;flex-wrap:wrap;
+
+}
+
+.dossier-proof-eyebrow{
+  font-size:10px;letter-spacing:.14em;color:var(--muted);margin-bottom:8px;
+}
+.dossier-proof-title{
+
+  font-family:'Shippori Mincho',serif;font-size:17px;letter-spacing:.08em;color:var(--gold-l);
+
+}
+
+.dossier-proof-copy{
+
+  max-width:360px;font-size:12px;line-height:1.9;color:rgba(240,234,216,.64);
+
+}
+
+.dossier-proof-meta{
+
+  display:flex;flex-wrap:wrap;gap:8px;margin-top:14px;
+
+}
+
+.dossier-proof-pill{
+
+  display:inline-flex;align-items:center;justify-content:center;padding:6px 11px;
+
+  border:1px solid rgba(201,149,42,.14);background:rgba(255,255,255,.02);
+
+  font-size:10px;letter-spacing:.12em;color:rgba(240,234,216,.74);
+
+}
+
+.dossier-proof-section{margin-top:16px;}
+
+.dossier-proof-section-title{
+
+  font-size:10px;letter-spacing:.24em;color:var(--muted);margin-bottom:10px;
+
+}
+
+.dossier-proof-grid{
+
+  display:grid;grid-template-columns:repeat(4,minmax(0,1fr));gap:10px;
+
+}
+
+.dossier-mini-card{
+
+  border:1px solid rgba(201,149,42,.1);padding:10px;background:rgba(255,255,255,.014);
+
+}
+
+.dossier-mini-thumb{
+
+  aspect-ratio:2 / 3;border:1px solid rgba(201,149,42,.08);overflow:hidden;background:rgba(255,255,255,.02);
+
+}
+
+.dossier-mini-thumb img{
+
+  width:100%;height:100%;object-fit:cover;display:block;
+
+}
+
+.dossier-mini-label{
+
+  font-size:10px;letter-spacing:.14em;color:var(--muted);margin-top:8px;
+
+}
+
+.dossier-mini-name{
+
+  font-size:12px;line-height:1.7;color:rgba(240,234,216,.82);margin-top:4px;
+
+}
+
+
+
+@media print{
+
+  body.print-dossier *{visibility:hidden !important;}
+
+  body.print-dossier #rs-dossier,
+
+  body.print-dossier #rs-dossier *{visibility:visible !important;}
+
+  body.print-dossier #rs-dossier{
+
+    position:absolute;left:0;top:0;width:100%;padding:0;margin:0;background:#fff;color:#111;
+
+  }
+
+  body.print-dossier .dossier-shell,
+
+  body.print-dossier .dossier-card,
+
+  body.print-dossier .dossier-hero{
+
+    background:#fff !important;border-color:#bbb !important;box-shadow:none !important;
+
+  }
+
+  body.print-dossier .dossier-title,
+
+  body.print-dossier .dossier-card-title{color:#111 !important;}
+
+  body.print-dossier .dossier-subtitle,
+
+  body.print-dossier .dossier-card-body,
+
+  body.print-dossier .dossier-list-item,
+
+  body.print-dossier .dossier-chip,
+
+  body.print-dossier .dossier-proof-copy,
+
+  body.print-dossier .dossier-mini-name,
+
+  body.print-dossier .dossier-mini-label,
+
+  body.print-dossier .dossier-proof-section-title,
+
+  body.print-dossier .dossier-proof-pill{color:#222 !important;}
+
+  body.print-dossier .dossier-proof,
+
+  body.print-dossier .dossier-mini-card,
+
+  body.print-dossier .dossier-mini-thumb{background:#fff !important;border-color:#ddd !important;}
+
+  body.print-dossier .dossier-proof-title{color:#111 !important;}
+
+  body.print-dossier .dossier-actions{display:none !important;}
+
+  body.print-dossier .dossier-grid{gap:10px;}
+
+}
+
+.followup-actions{display:flex;flex-wrap:wrap;gap:10px;}
+
+.followup-btn{
+
+  padding:10px 14px;background:rgba(255,255,255,.03);
+
+  border:1px solid rgba(201,149,42,.16);color:var(--cream);
+
+  font-size:12px;letter-spacing:.1em;cursor:pointer;transition:all .2s;
+
+}
+
+.followup-btn:hover{border-color:rgba(201,149,42,.38);background:rgba(201,149,42,.06);}
+
+.followup-btn.sel{border-color:rgba(201,149,42,.55);background:rgba(201,149,42,.1);color:var(--gold-l);}
+
+.member-locked{
+
+  font-size:12px;line-height:1.9;color:rgba(240,234,216,.55);
+
+  border:1px dashed rgba(201,149,42,.16);padding:14px 16px;background:rgba(255,255,255,.015);
+
+}
+
+.followup-output{
+
+  margin-top:16px;display:none;
+
+}
+
+.followup-output.on{display:block;}
+
+.followup-log{
+
+  margin-top:14px;display:flex;flex-direction:column;gap:8px;
+
+}
+
+.followup-log-item{
+
+  width:100%;text-align:left;padding:10px 12px;background:rgba(255,255,255,.02);
+
+  border:1px solid rgba(201,149,42,.1);color:rgba(240,234,216,.72);
+
+  cursor:pointer;font-size:12px;letter-spacing:.06em;transition:all .2s;
+
+}
+
+.followup-log-item:hover{border-color:rgba(201,149,42,.3);background:rgba(201,149,42,.05);}
+
+
+
+/* AI loading */
+
+.ai-load{display:flex;align-items:center;gap:14px;padding:24px 0;font-size:13px;color:var(--muted);}
+.ai-load-copy{display:flex;flex-direction:column;gap:5px;}
+.ai-load-title{font-size:13px;color:rgba(240,234,216,.82);letter-spacing:.08em;}
+.ai-load-detail{font-size:11px;color:rgba(240,234,216,.46);line-height:1.8;letter-spacing:.05em;}
+.ai-dots span{display:inline-block;width:5px;height:5px;background:var(--gold);border-radius:50%;animation:dot 1.2s infinite;}
+.ai-dots span:nth-child(2){animation-delay:.2s;}.ai-dots span:nth-child(3){animation-delay:.4s;}
+@keyframes dot{0%,80%,100%{opacity:.2;transform:scale(.8)}40%{opacity:1;transform:scale(1)}}
+.cursor2{display:inline-block;width:1.5px;height:14px;background:var(--gold);animation:blink .8s infinite;vertical-align:middle;margin-left:1px;}
+@keyframes blink{0%,100%{opacity:1}50%{opacity:0}}
+.result-progress-card{
+  margin-bottom:28px;
+  padding:22px 24px;
+  border:1px solid rgba(201,149,42,.18);
+  background:
+    linear-gradient(135deg,rgba(201,149,42,.08),transparent 60%),
+    rgba(255,255,255,.025);
+  border-radius:2px;
+}
+.result-progress-eyebrow{font-size:10px;letter-spacing:.14em;color:rgba(240,234,216,.42);margin-bottom:8px;}
+.result-progress-title{
+  font-family:'Shippori Mincho',serif;
+  font-size:19px;
+  color:var(--gold-l);
+  letter-spacing:.12em;
+  margin-bottom:6px;
+}
+.result-progress-copy{font-size:12px;line-height:1.9;color:rgba(240,234,216,.62);}
+.result-progress-steps{
+  display:grid;
+  grid-template-columns:repeat(auto-fit,minmax(140px,1fr));
+  gap:10px;
+  margin-top:18px;
+}
+.result-progress-step{
+  padding:12px 14px;
+  border:1px solid rgba(201,149,42,.12);
+  background:rgba(12,12,18,.26);
+  min-height:72px;
+}
+.result-progress-step-top{display:flex;align-items:center;justify-content:space-between;gap:10px;margin-bottom:8px;}
+.result-progress-step-index{font-size:10px;letter-spacing:.24em;color:rgba(240,234,216,.34);}
+.result-progress-step-status{font-size:10px;letter-spacing:.16em;color:rgba(240,234,216,.34);}
+.result-progress-step-label{font-size:13px;color:rgba(240,234,216,.78);letter-spacing:.08em;}
+.result-progress-step-copy{margin-top:4px;font-size:11px;line-height:1.7;color:rgba(240,234,216,.42);}
+.result-progress-step.is-working{
+  border-color:rgba(201,149,42,.34);
+  background:rgba(201,149,42,.08);
+  box-shadow:0 0 0 1px rgba(201,149,42,.08) inset;
+}
+.result-progress-step.is-working .result-progress-step-status,
+.result-progress-step.is-working .result-progress-step-label{color:var(--gold-l);}
+.result-progress-step.is-done{
+  border-color:rgba(89,151,118,.34);
+  background:rgba(89,151,118,.08);
+}
+.result-progress-step.is-done .result-progress-step-status{color:rgba(178,229,196,.72);}
+.result-progress-step.is-done .result-progress-step-label{color:rgba(226,244,232,.88);}
+@media (max-width:720px){
+  .result-progress-card{padding:18px 16px;}
+  .result-progress-steps{grid-template-columns:1fr;}
+  .reading-rich-title{font-size:20px;}
+  .reading-rich-lead{font-size:16px;}
+  .reading-rich-grid,
+  .foundation-grid{grid-template-columns:1fr;}
+  .result-detail-accordion > summary,
+  .result-detail-content{padding-left:16px;padding-right:16px;}
+}
+
+
+/* 繧ｫ繝ｼ繝牙ｰ上し繝繝阪う繝ｫ・育ｵ先棡逕ｻ髱｢・・*/
+
+.cards-row-sm{display:flex;flex-wrap:wrap;gap:8px;margin:16px 0;}
+
+.card-sm{
+
+  width:52px;height:80px;border-radius:4px;
+
+  border:1px solid rgba(201,149,42,.25);overflow:hidden;
+
+  position:relative;cursor:pointer;
+
+  transition:transform .2s;
+
+}
+
+.card-sm:hover{transform:translateY(-4px);}
+
+.card-sm-ph{
+
+  width:100%;height:100%;
+
+  background:linear-gradient(155deg,#200c40,#100618);
+
+  display:flex;flex-direction:column;align-items:center;justify-content:center;
+
+}
+
+.card-sm-num{font-family:'Cinzel Decorative',serif;font-size:14px;color:var(--gold-l);}
+
+.card-sm-name{font-size:6px;color:rgba(240,234,216,.5);margin-top:2px;text-align:center;padding:0 2px;}
+
+
+
+/* 繝翫ン繧ｲ繝ｼ繧ｷ繝ｧ繝ｳ繝懊ち繝ｳ */
+
+.nav-btn{
+
+  display:inline-flex;align-items:center;gap:8px;
+
+  padding:12px 28px;
+
+  background:transparent;border:1px solid rgba(201,149,42,.3);
+
+  border-radius:1px;font-family:'Shippori Mincho',serif;
+
+  font-size:13px;letter-spacing:.2em;color:var(--muted);
+
+  cursor:pointer;transition:all .2s;margin-top:12px;
+
+}
+
+.nav-btn:hover{border-color:var(--gold);color:var(--gold-l);}
+
+.nav-btn-primary{
+
+  background:linear-gradient(135deg,var(--gold-d),var(--gold));
+
+  border:none;color:#04030a;font-weight:600;
+
+}
+
+.nav-btn-primary:hover{box-shadow:0 4px 20px rgba(201,149,42,.3);color:#04030a;}
+
+
+
+.today-cta{
+
+  display:inline-flex;align-items:center;justify-content:center;text-decoration:none;
+
+  padding:10px 28px;
+
+  background:linear-gradient(135deg,var(--gold-d),var(--gold));
+
+  border:none;border-radius:1px;
+
+  font-family:'Shippori Mincho',serif;
+
+  font-size:13px;letter-spacing:.25em;
+
+  color:#04030a;font-weight:600;cursor:pointer;
+
+  transition:all .25s;
+
+}
+
+.today-cta:hover{box-shadow:0 4px 20px rgba(201,149,42,.4);transform:translateY(-1px);}
+
+
+
+/* READER MODE 窶・繧ｫ繝ｼ繝牙盾辣ｧ陦ｨ */
+
+.card-ref-table{width:100%;border-collapse:collapse;margin-top:8px;font-size:12px;}
+.card-ref-table td{padding:6px 8px;border-bottom:1px solid rgba(201,149,42,.08);vertical-align:top;}
+.card-ref-pos{color:var(--gold-d);letter-spacing:.08em;white-space:nowrap;width:6em;}
+.card-ref-name{color:var(--gold-l);font-family:'Shippori Mincho',serif;font-weight:600;white-space:nowrap;}
+.card-ref-kw{color:rgba(240,234,216,.55);letter-spacing:.05em;line-height:1.6;}
+.card-ref-note{margin-top:8px;font-size:11px;line-height:1.7;color:var(--muted);}
+.reader-badge{
+  display:inline-block;padding:3px 12px;margin-bottom:16px;
+
+  background:rgba(120,80,200,.15);border:1px solid rgba(160,130,200,.3);
+
+  border-radius:10px;font-size:10px;letter-spacing:.2em;color:rgba(200,180,240,.8);
+
+}
+
+
+
+/* X SHARE BUTTON */
+
+.share-x-btn{
+
+  display:inline-flex;align-items:center;gap:8px;
+
+  padding:12px 22px;
+
+  background:#000;border:1px solid rgba(255,255,255,.18);
+
+  border-radius:1px;font-family:'Shippori Mincho',serif;
+
+  font-size:13px;letter-spacing:.12em;color:#fff;
+
+  cursor:pointer;transition:all .2s;margin-top:12px;
+
+}
+
+.share-x-btn:hover{background:#1a1a1a;border-color:rgba(255,255,255,.35);}
+
+.share-x-btn svg{width:14px;height:14px;fill:#fff;flex-shrink:0;}
+
+
+
+/* TOAST */
+
+.toast{position:fixed;bottom:32px;left:50%;transform:translateX(-50%);background:rgba(12,8,24,.95);border:1px solid rgba(201,149,42,.3);color:var(--cream);padding:10px 24px;border-radius:20px;font-size:12px;letter-spacing:.08em;opacity:0;transition:opacity .28s;pointer-events:none;z-index:9999;white-space:nowrap;}
+
+.toast.on{opacity:1;}
+
+
+
+/* PROGRESS BAR */
+
+.progress-bar{
+
+  position:fixed;top:0;left:0;height:2px;
+
+  background:linear-gradient(90deg,var(--gold-d),var(--gold-l));
+
+  transition:width .4s ease;z-index:9999;
+
+}
+
+
+
+@media(max-width:600px){
+
+  .top-main{padding:32px 22px 28px;}
+
+  .top-seal{margin:0 auto 24px;}
+
+  .top-sub{letter-spacing:.24em;}
+
+  .top-desc{font-size:15px;}
+
+  .top-btns{flex-direction:column;max-width:320px;margin:0 auto;}
+
+  .btn-top{width:100%;min-width:0;}
+
+  .top-note{margin:18px auto 0;}
+
+  .top-side{grid-template-columns:1fr;}
+  .top-point-list{grid-template-columns:1fr;}
+  .narr-grid{grid-template-columns:1fr;}
+  .grid33{gap:6px;}
+  .vault-grid{grid-template-columns:1fr;}
+  .pattern-row{flex-direction:column;gap:4px;}
+
+  .pattern-value{text-align:left;}
+
+  .member-panel-head{align-items:flex-start;}
+
+  .guide-stage{grid-template-columns:1fr;padding:20px;}
+  .guide-visual{min-height:180px;}
+  .offer-grid{grid-template-columns:1fr;}
+  .local-data-actions{flex-direction:column;}
+  .premium-entry{padding:22px 20px 20px;}
+  .premium-entry-title{font-size:22px;}
+
+  .premium-entry-grid{grid-template-columns:1fr;}
+  .site-footer-inner{flex-direction:column;}
+
+  .upgrade-head{grid-template-columns:1fr;}
+
+  .upgrade-list{grid-template-columns:1fr;}
+
+  .basis-grid{grid-template-columns:1fr;}
+
+  .insight-grid{grid-template-columns:1fr;}
+
+  .candidate-grid{grid-template-columns:1fr;}
+
+  .upgrade-meta{flex-direction:column;align-items:flex-start;}
+  .ritual-grid{grid-template-columns:1fr;}
+  .dossier-proof-grid{grid-template-columns:repeat(2,minmax(0,1fr));}
+  .dossier-grid{grid-template-columns:1fr;}
+  .dossier-title{font-size:22px;}
+  .dossier-shell{padding:22px 20px 24px;}
+  .fortune-grid{grid-template-columns:1fr;}
+  .fortune-track{grid-template-columns:1fr;}
+  .fortune-year-grid{grid-template-columns:1fr;}
+  .dynamic-list{grid-template-columns:1fr;}
+}
+
+
+/* 笊絶武笊絶武笊絶武笊絶武笊絶武笊絶武笊絶武笊絶武笊絶武笊絶武笊絶武笊絶武笊絶武笊絶武笊絶武笊絶武笊絶武笊絶武笊絶武
+
+   DEV MODE BADGE
+
+笊絶武笊絶武笊絶武笊絶武笊絶武笊絶武笊絶武笊絶武笊絶武笊絶武笊絶武笊絶武笊絶武笊絶武笊絶武笊絶武笊絶武笊絶武笊絶武 */
+
+.dev-badge{
+
+  position:fixed;top:8px;left:50%;transform:translateX(-50%);z-index:9999;
+
+  background:rgba(180,60,60,.85);color:#fff;
+
+  font-size:10px;letter-spacing:.12em;padding:3px 12px;border-radius:10px;
+
+  font-family:'Noto Sans JP',sans-serif;pointer-events:none;
+
+  border:1px solid rgba(255,100,100,.4);
+
+}
+
+
+
+/* 笊絶武笊絶武笊絶武笊絶武笊絶武笊絶武笊絶武笊絶武笊絶武笊絶武笊絶武笊絶武笊絶武笊絶武笊絶武笊絶武笊絶武笊絶武笊絶武
+
+   API KEY SETTINGS
+
+笊絶武笊絶武笊絶武笊絶武笊絶武笊絶武笊絶武笊絶武笊絶武笊絶武笊絶武笊絶武笊絶武笊絶武笊絶武笊絶武笊絶武笊絶武笊絶武 */
+
+.settings-btn{
+
+  position:fixed;bottom:24px;right:20px;z-index:9000;
+
+  width:44px;height:44px;border-radius:50%;
+
+  background:rgba(12,8,24,.9);border:1px solid rgba(201,149,42,.3);
+
+  color:var(--muted);font-size:18px;cursor:pointer;
+
+  display:flex;align-items:center;justify-content:center;
+
+  transition:all .2s;
+
+}
+
+.settings-btn:hover{border-color:var(--gold);color:var(--gold-l);}
+
+.settings-btn.key-ok::after{
+
+  content:'';position:absolute;top:6px;right:6px;
+
+  width:8px;height:8px;border-radius:50%;background:#5aab5a;
+
+}
+
+.modal-overlay{
+
+  position:fixed;inset:0;z-index:9500;
+
+  background:rgba(4,3,10,.85);backdrop-filter:blur(4px);
+
+  display:flex;align-items:center;justify-content:center;
+
+  padding:20px;opacity:0;pointer-events:none;transition:opacity .25s;
+
+}
+
+.modal-overlay.on{opacity:1;pointer-events:all;}
+
+.modal-box{
+
+  width:100%;max-width:440px;
+
+  background:var(--deep);border:1px solid rgba(201,149,42,.25);
+
+  border-radius:4px;padding:36px 32px;
+
+}
+
+.modal-title{font-family:'Shippori Mincho',serif;font-size:18px;color:var(--gold-l);letter-spacing:.15em;margin-bottom:8px;}
+
+.modal-desc{font-size:12px;color:var(--muted);line-height:1.9;margin-bottom:24px;letter-spacing:.06em;}
+.modal-guide{
+  margin-top:12px;font-size:11px;line-height:1.8;color:rgba(240,234,216,.56);letter-spacing:.05em;
+}
+.modal-label{font-size:11px;letter-spacing:.2em;color:var(--muted);margin-bottom:8px;display:block;}
+.modal-input{
+
+  width:100%;background:rgba(255,255,255,.05);border:1px solid rgba(201,149,42,.2);
+
+  border-radius:1px;padding:13px 16px;font-size:13px;color:var(--cream);
+
+  outline:none;font-family:monospace;letter-spacing:.03em;transition:border-color .2s;
+
+}
+
+.modal-input:focus{border-color:rgba(201,149,42,.5);}
+
+.modal-btns{display:flex;gap:10px;margin-top:20px;}
+
+.modal-save{
+
+  flex:2;padding:13px;background:linear-gradient(135deg,var(--gold-d),var(--gold));
+
+  border:none;border-radius:1px;font-family:'Shippori Mincho',serif;
+
+  font-size:13px;letter-spacing:.2em;color:#04030a;cursor:pointer;font-weight:600;
+
+}
+
+.modal-cancel{
+
+  flex:1;padding:13px;background:transparent;border:1px solid rgba(201,149,42,.2);
+
+  border-radius:1px;font-family:'Shippori Mincho',serif;
+
+  font-size:13px;letter-spacing:.15em;color:var(--muted);cursor:pointer;
+
+}
+
+.modal-cancel:hover{border-color:rgba(201,149,42,.4);color:var(--cream);}
+
+.key-status{font-size:11px;margin-top:10px;letter-spacing:.06em;}
+
+.key-status.ok{color:#5aab5a;}.key-status.ng{color:#c04040;}
+
+
+
+/* 笊絶武笊絶武笊絶武笊絶武笊絶武笊絶武笊絶武笊絶武笊絶武笊絶武笊絶武笊絶武笊絶武笊絶武笊絶武笊絶武笊絶武笊絶武笊絶武
+
+   CARD SELECT GRID
+
+笊絶武笊絶武笊絶武笊絶武笊絶武笊絶武笊絶武笊絶武笊絶武笊絶武笊絶武笊絶武笊絶武笊絶武笊絶武笊絶武笊絶武笊絶武笊絶武 */
+
+.card-select-area{display:none;flex-direction:column;align-items:center;width:100%;max-width:620px;padding:0 8px;}
+
+.card-select-area.on{display:flex;}
+
+.card-select-grid{display:flex;flex-wrap:wrap;justify-content:center;gap:7px;margin:16px 0;width:100%;}
+
+.sel-card{
+
+  width:54px;height:82px;border-radius:6px;
+
+  background:linear-gradient(145deg,#180c30,#0c0620,#180c30);
+
+  border:1.5px solid rgba(201,149,42,.35);
+
+  cursor:pointer;display:flex;align-items:center;justify-content:center;
+
+  font-family:'Cinzel Decorative',serif;font-size:20px;color:rgba(201,149,42,.3);
+
+  transition:all .2s;position:relative;user-select:none;flex-shrink:0;
+
+}
+
+.sel-card:hover{border-color:rgba(201,149,42,.7);color:rgba(201,149,42,.6);transform:translateY(-4px);box-shadow:0 8px 20px rgba(0,0,0,.4);}
+
+.sel-card.chosen{
+
+  border-color:var(--gold);
+
+  background:linear-gradient(145deg,#2a1050,#180a35,#2a1050);
+
+  box-shadow:0 0 16px rgba(201,149,42,.35);color:rgba(201,149,42,.5);
+
+}
+
+.sel-card.chosen::after{
+
+  content:attr(data-order);position:absolute;
+
+  top:5px;right:7px;font-family:'Cinzel Decorative',serif;
+
+  font-size:11px;color:var(--gold-l);
+
+}
+
+.sel-counter{
+  font-family:'Shippori Mincho',serif;font-size:13px;
+  color:var(--muted);letter-spacing:.15em;margin-bottom:4px;text-align:center;
+}
+.sel-counter em{font-style:normal;color:var(--gold-l);font-size:22px;font-family:'Cinzel Decorative',serif;}
+.sel-card-mark{
+  position:relative;z-index:1;
+  font-size:20px;line-height:1;color:rgba(255,255,255,.72);
+  text-shadow:0 0 12px rgba(255,255,255,.12);
+}
+.sel-card-index{
+  position:absolute;left:50%;bottom:7px;transform:translateX(-50%);
+  font-size:8px;letter-spacing:.22em;color:rgba(240,234,216,.38);
+  font-family:'Cinzel Decorative',serif;
+}
+.orc-sel-card{
+  background:
+    radial-gradient(circle at 28% 18%,hsla(var(--card-hue),72%,58%,.18),transparent 38%),
+    radial-gradient(circle at 72% 78%,hsla(calc(var(--card-hue) + 44),68%,52%,.14),transparent 34%),
+    linear-gradient(145deg,hsla(var(--card-hue),56%,14%,1),#07111d 48%,hsla(calc(var(--card-hue) + 24),52%,18%,1));
+}
+.orc-sel-card::before{
+  content:'';position:absolute;inset:7px;border-radius:4px;
+  border:1px solid rgba(255,255,255,.08);pointer-events:none;
+}
+
+
+/* 笊絶武笊絶武笊絶武笊絶武笊絶武笊絶武笊絶武笊絶武笊絶武笊絶武笊絶武笊絶武笊絶武笊絶武笊絶武笊絶武笊絶武笊絶武笊絶武
+
+   CLARIFY SCREEN
+
+笊絶武笊絶武笊絶武笊絶武笊絶武笊絶武笊絶武笊絶武笊絶武笊絶武笊絶武笊絶武笊絶武笊絶武笊絶武笊絶武笊絶武笊絶武笊絶武 */
+
+#s-clarify{
+
+  background:linear-gradient(180deg,#0c0818 0%,#080514 100%);
+
+  align-items:center;justify-content:flex-start;padding:60px 20px 80px;
+
+}
+
+.clarify-wrap{width:100%;max-width:560px;margin:0 auto;}
+
+.clarify-header{text-align:center;margin-bottom:36px;}
+
+.clarify-eyebrow{font-size:11px;letter-spacing:.4em;color:var(--muted);margin-bottom:12px;}
+
+.clarify-title{font-family:'Shippori Mincho',serif;font-size:20px;color:var(--gold-l);letter-spacing:.15em;margin-bottom:8px;}
+
+.clarify-desc{font-size:13px;color:rgba(240,234,216,.5);line-height:2;letter-spacing:.06em;}
+
+.clarify-progress{font-size:12px;color:var(--gold-l);letter-spacing:.18em;margin-bottom:12px;font-family:'Shippori Mincho',serif;}
+
+.clarify-line{width:40px;height:1px;background:var(--gold);margin:14px auto 0;}
+
+.clarify-q{margin-bottom:28px;background:rgba(255,255,255,.02);border:1px solid var(--border2);border-radius:2px;padding:22px 20px;}
+
+.clarify-q-badge{display:inline-flex;align-items:center;gap:6px;font-size:10px;letter-spacing:.2em;color:var(--muted);margin-bottom:10px;}
+
+.clarify-q-badge span{background:rgba(42,107,107,.7);color:#d4ffff;padding:2px 8px;border-radius:2px;font-size:9px;}
+
+.clarify-q-text{font-family:'Shippori Mincho',serif;font-size:14px;color:var(--cream);line-height:1.9;margin-bottom:14px;letter-spacing:.06em;}
+
+.clarify-choices{display:flex;flex-wrap:wrap;gap:8px;}
+
+.clarify-choice{
+
+  padding:9px 16px;border:1px solid rgba(201,149,42,.2);border-radius:20px;
+
+  background:transparent;font-family:'Noto Sans JP',sans-serif;
+
+  font-size:12px;color:var(--muted);cursor:pointer;transition:all .2s;letter-spacing:.05em;
+
+}
+
+.clarify-choice:hover{border-color:rgba(201,149,42,.5);color:var(--cream);}
+
+.clarify-choice.sel{border-color:var(--gold);background:rgba(201,149,42,.12);color:var(--gold-l);}
+
+.clarify-textarea{
+
+  width:100%;background:rgba(255,255,255,.04);border:1px solid rgba(201,149,42,.18);
+
+  border-radius:1px;padding:12px 16px;font-family:'Noto Sans JP',sans-serif;
+
+  font-size:14px;color:var(--cream);outline:none;resize:vertical;min-height:80px;line-height:1.7;
+
+  transition:border-color .25s;
+
+}
+
+.clarify-textarea:focus{border-color:rgba(201,149,42,.5);}
+
+.clarify-btns{display:flex;gap:12px;margin-top:32px;}
+
+
+
+/* 繝・Φ繝励Ξ繝ｼ繝亥屓遲斐・繧ｿ繝ｳ */
+
+.tmpl-answers{display:flex;flex-wrap:wrap;gap:6px;margin-bottom:8px;}
+
+.tmpl-btn{
+
+  padding:5px 13px;border:1px solid rgba(201,149,42,.2);border-radius:14px;
+
+  background:rgba(255,255,255,.03);font-size:11px;color:var(--muted);
+
+  cursor:pointer;transition:all .2s;letter-spacing:.04em;
+
+  font-family:'Noto Sans JP',sans-serif;white-space:nowrap;
+
+}
+
+.tmpl-btn:hover{border-color:rgba(201,149,42,.5);color:var(--cream);background:rgba(201,149,42,.08);}
+
+.tmpl-btn.sel{border-color:var(--gold);background:rgba(201,149,42,.12);color:var(--gold-l);}
+
+.tmpl-label{font-size:9px;letter-spacing:.2em;color:rgba(201,149,42,.4);margin-bottom:6px;display:block;}
+
+.clarify-q-num{font-size:9px;letter-spacing:.2em;color:rgba(201,149,42,.5);margin-bottom:6px;font-family:'Cinzel Decorative',serif;}
+
+.clarify-card-section{margin-bottom:36px;}
+
+.clarify-card-section .clarify-q-badge{margin-bottom:12px;}
+
+</style>
+
+</head>
+
+<body>
+
+
+
+<div class="starfield" id="starfield"></div>
+
+<div class="progress-bar" id="progress" style="width:0%"></div>
+
+<div class="toast" id="toast"></div>
+
+
+
+<!-- 開発者モードバッジ（dev 時のみ表示）-->
+
+<div class="dev-badge" id="dev-badge" style="display:none">🔧 DEV MODE</div>
+
+
+
+<!-- 設定ボタン（開発者モード時のみ表示）-->
+
+<button class="settings-btn" id="settings-btn" onclick="openSettings()" title="APIキー設定（開発者モード）" style="display:none">⚙</button>
+
+
+
+<!-- APIキー設定モーダル -->
+
+<div class="modal-overlay" id="settings-modal">
+  <div class="modal-box">
+    <div class="modal-title">APIキーの設定</div>
+
+    <div class="modal-desc">
+      これは開発者モード専用の直接接続設定です。<br>
+      推奨は `.env` に `OPENAI_API_KEY` を入れて `start-uranai.ps1` から起動する方法です。<br>
+      この入力欄は Anthropic 直接接続の開発用 fallback です。<br>
+      キーはブラウザの sessionStorage に保存されます（タブを閉じると消えます）。</div>
+    <div class="runtime-status warn" id="modal-ai-status">
+      <div class="runtime-status-title">接続状態を確認しています</div>
+      <div class="runtime-status-detail">server.js の状態を読み込んでいます。</div>
+    </div>
+    <div class="modal-guide" id="modal-ai-guide">無料版は `.\setup-openai.ps1`、有料版は `.\setup-anthropic.ps1` を1回ずつ実行すると `.env` を整えられます。</div>
+    <label class="modal-label">ANTHROPIC API KEY</label>
+    <input class="modal-input" type="password" id="apikey-input" placeholder="sk-ant-api03-..." autocomplete="off">
+    <div class="key-status" id="key-status"></div>
+    <div class="modal-btns">
+      <button class="modal-cancel" type="button" onclick="runProviderCheck()">接続テスト</button>
+      <button class="modal-save" onclick="saveApiKey()">保存して閉じる</button>
+      <button class="modal-cancel" id="modal-cancel-btn" onclick="closeSettings()">キャンセル</button>
+    </div>
+  </div>
+</div>
+
+<div class="modal-overlay" id="member-access-modal">
+  <div class="modal-box">
+    <div class="modal-title">深掘り鑑定の認証</div>
+    <div class="modal-desc" id="member-access-desc">
+      公開環境では、サーバー側で発行された会員セッションがあるときだけ有料鑑定を開きます。</div>
+    <div class="runtime-status warn" id="member-access-status">
+      <div class="runtime-status-title">認証待ち</div>
+      <div class="runtime-status-detail">ローカル試験か、認証コード入力で進めます。</div>
+    </div>
+    <div class="modal-guide" id="member-access-guide">ローカル試験ではこの場で試験セッションを発行できます。公開環境では運営側の認証コードが必要です。</div>
+    <div id="google-auth-shell" style="display:none;margin:14px 0 18px;">
+      <div class="modal-label" style="margin-bottom:10px;">GOOGLE LOGIN</div>
+      <div id="google-auth-copy" style="font-size:12px;color:var(--muted);line-height:1.8;margin-bottom:12px;">Googleアカウントでログインすると、Stripeの月額状態とこの端末の閲覧権限を紐づけます。</div>
+      <div id="google-signin-btn" style="display:flex;justify-content:center;"></div>
+      <div class="key-status" id="google-auth-error" style="display:none;margin-top:10px;"></div>
+    </div>
+    <div id="developer-access-shell" style="display:none;margin:14px 0 18px;">
+      <div class="modal-label" style="margin-bottom:10px;">DEVELOPER</div>
+      <div id="developer-access-copy" style="font-size:12px;color:var(--muted);line-height:1.8;margin-bottom:12px;">開発者はこのボタンだけで入れます。</div>
+      <input class="modal-input" type="email" id="developer-email-input" placeholder="tekechannnel@gmail.com" autocomplete="email">
+      <div class="key-status" id="developer-access-error" style="display:none;margin-top:10px;"></div>
+      <div style="display:flex;justify-content:center;margin-top:12px;">
+        <button class="modal-save" type="button" id="developer-access-btn" onclick="submitDeveloperAccess()">開発者で入る</button>
+      </div>
+    </div>
+    <label class="modal-label" id="member-access-label">ACCESS CODE</label>
+    <input class="modal-input" type="password" id="member-access-input" placeholder="認証コードを入力" autocomplete="off" onkeydown="handleMemberAccessKeydown(event)">
+    <div class="key-status" id="member-access-error" style="display:none"></div>
+    <div class="modal-btns">
+      <button class="modal-cancel" type="button" id="member-local-preview-btn" onclick="activateLocalPreviewFromModal()" style="display:none">ローカル試験を開始</button>
+      <button class="modal-save" type="button" id="member-access-submit-btn" onclick="submitMemberAccessCode()">認証して続ける</button>
+      <button class="modal-cancel" type="button" onclick="closeMemberAccessModal()">閉じる</button>
+    </div>
+  </div>
+</div>
+
+<!-- ══════════════════════════════════
+     TOP
+══════════════════════════════════ -->
+<div class="screen active" id="s-top">
+
+  <div class="top-hero-shell">
+
+    <div class="top-main">
+
+      <div class="top-seal">🔮</div>
+
+      <div class="top-title" id="brand-app-name">羅針占術</div>
+      <div class="top-sub" id="brand-app-subtitle">あなたに眠る羅針盤を呼び覚ます</div>
+      <div class="top-desc">
+        真の占いとは夜海を照らす灯台ではなく、<br>
+        暗闇の中で確信を与えるコンパスである
+      </div>
+      <div class="top-btns">
+
+        <a class="btn-top btn-paid" href="?flow=paid" data-flow-target="paid" onclick="if(window.startFlow){startFlow('paid');return false;}">✦ 会員で深掘り鑑定</a>
+
+        <a class="btn-top btn-free" href="?flow=free" data-flow-target="free" onclick="if(window.startFlow){startFlow('free');return false;}">無料1回を試す</a>
+
+      </div>
+      <div class="top-note">
+        無料：いまの向きを知る / 深掘り鑑定：迷いをほどき、自分で進路を選べるところまで読む
+      </div>
+      <div class="runtime-status warn" id="top-ai-status">
+        <div class="runtime-status-title">GPT接続状態を確認しています</div>
+        <div class="runtime-status-detail">`server.js` の状態を読み込んでいます。</div>
+      </div>
+    </div>
+  </div>
+  <div class="top-side">
+
+    <div class="top-side-card" id="top-value-card"></div>
+
+    <div class="top-side-card" id="top-archive-card"></div>
+
+  </div>
+
+  <div class="guide-stage">
+
+    <div class="guide-visual">
+
+      <div class="guide-avatar-shell">
+
+        <div class="guide-sigil" id="guide-sigil">✶</div>
+
+        <div class="guide-shell-label" id="guide-shell-label">羅針占術ノート</div>
+      </div>
+
+    </div>
+
+    <div class="guide-copy">
+
+      <div class="guide-eyebrow" id="guide-eyebrow">羅針占術</div>
+      <div class="guide-name" id="guide-name">羅針占術のスタンス</div>
+      <div class="guide-role" id="guide-role">外の答えではなく、内なる羅針盤を読む</div>
+      <div class="guide-quote" id="guide-quote"></div>
+
+      <div class="guide-note" id="guide-note"></div>
+
+      <div class="offer-grid" id="offer-grid"></div>
+
+    </div>
+
+  </div>
+
+  <div class="vault-grid">
+
+    <div class="vault-card">
+
+      <div class="vault-eyebrow">羅針記録</div>
+      <div class="vault-title">前回の続きから読む</div>
+
+      <div class="vault-desc">前回の鑑定を呼び戻して、同じテーマの続きをそのまま深掘りできます。同じ名前・生年月日のプロフィールなら、別端末でも続きが拾えます。</div>
+      <div class="history-list" id="recent-history-list"></div>
+
+      <div class="vault-empty" id="recent-history-empty">最初の鑑定を受けると、ここに前回の流れが残ります。次に迷ったときは、その続きから読み直せます。同じプロフィールであれば別端末からも呼び戻せます。</div>
+      <button class="vault-link" id="continue-reading-btn" onclick="openLatestHistory()" style="display:none">前回の続きを開く</button>
+
+    </div>
+
+    <div class="vault-card">
+
+      <div class="vault-eyebrow">傾向の地図</div>
+      <div class="vault-title">迷いの傾向地図</div>
+      <div class="vault-desc">続けるほど、よく出るカードや繰り返すテーマから、自分の迷いと戻り方が見えてきます。</div>
+      <div class="pattern-list" id="pattern-summary-list"></div>
+
+      <div class="vault-empty" id="pattern-summary-empty">鑑定が増えると、繰り返し出るカードやテーマから「迷いの癖」がここに見えてきます。</div>
+    </div>
+
+    <div class="vault-card member-card">
+
+      <div class="vault-eyebrow">あとから使えること</div>
+      <div class="vault-title">読み返しと記録</div>
+      <div id="member-status-block">
+        <div class="member-state inactive">Googleログイン / Stripe登録</div>
+        <div class="vault-desc">会員になると、読み返し・記録・深掘り鑑定の導線がここに並びます。ローカル試験中ならそのまま有料導線の確認もできます。</div>
+        <div class="member-benefits">
+          <div class="member-benefit">前回の続きから再開できる</div>
+          <div class="member-benefit">前回との変化を見比べられる</div>
+          <div class="member-benefit">鑑定書をPDFやコピーで残せる</div>
+        </div>
+        <button class="vault-link" type="button" data-member-intent="start-paid" onclick="openMemberAccessModal('start-paid')">会員導線を開く</button>
+      </div>
+
+    </div>
+
+  </div>
+
+  <div class="premium-entry" id="premium-entry">
+    <div class="premium-entry-head">
+      <div>
+        <div class="premium-entry-eyebrow">深掘り鑑定</div>
+        <div class="premium-entry-title">無料で見えた向きを、進路の判断材料まで落とし込む</div>
+        <div class="premium-entry-copy">ここから先は、カードの並びと相談内容をもとに「なぜ迷うのか」「何を確かめてから動くべきか」まで深く読みます。記録として残し、あとから読み返せる前提の導線です。</div>
+        <div class="premium-entry-meta">
+          <div class="premium-entry-pill">月額プラン</div>
+          <div class="premium-entry-pill">Googleログイン + Stripe</div>
+        </div>
+      </div>
+    </div>
+    <div class="premium-entry-story">
+      <div class="premium-entry-story-title">深掘りで増えること</div>
+      <div class="premium-entry-story-line">無料版は入口です。深掘りでは、迷いの核心と判断軸をより具体的に残します。</div>
+      <div class="premium-entry-story-line">前回の鑑定とのつながりも含めて読み返せるので、同じテーマを毎回ゼロから説明し直さずに済みます。</div>
+    </div>
+    <div class="premium-entry-grid">
+      <div class="premium-entry-summary-card">
+        <div class="premium-entry-summary-title">核心まで読む</div>
+        <div class="premium-entry-summary-copy">ルノルマンを主軸に、迷いの芯と現実の分岐点まで言葉にします。</div>
+      </div>
+      <div class="premium-entry-summary-card">
+        <div class="premium-entry-summary-title">判断材料を残す</div>
+        <div class="premium-entry-summary-copy">その場で楽になるだけでなく、あとから読み返せる形で残します。</div>
+      </div>
+      <div class="premium-entry-summary-card">
+        <div class="premium-entry-summary-title">次の一手が見える</div>
+        <div class="premium-entry-summary-copy">気分論ではなく、今日から動ける行動まで絞って返します。</div>
+      </div>
+    </div>
+  <div class="premium-entry-actions">
+    <a class="today-cta" href="?flow=paid" data-member-intent="start-paid" onclick="if(window.openMemberAccessModal){openMemberAccessModal('start-paid');return false;}">会員導線を開く</a>
+    <a class="premium-entry-subbtn" href="?flow=free" data-flow-target="free" onclick="if(window.startFlow){startFlow('free');return false;}">まずは無料で試す</a>
+  </div>
+</div>
+
+<div class="site-footer">
+  <div class="site-footer-inner">
+    <div class="site-footer-note">
+      このサービスは、答えを断定する場ではなく、状況整理と意思決定の補助を目的としています。
+      医療・法律・投資などの専門判断の代替には使わないでください。迷いが強いときは、必要に応じて専門家や信頼できる相手にも相談してください。
+    </div>
+    <div class="site-footer-links">
+      <a class="site-footer-link" href="terms.html" target="_blank" rel="noopener">利用規約</a>
+      <a class="site-footer-link" href="privacy.html" target="_blank" rel="noopener">プライバシーポリシー</a>
+    </div>
+  </div>
+</div>
+
+</div>
+
+
+
+<!-- ══════════════════════════════════
+
+     INPUT
+
+══════════════════════════════════ -->
+
+<div class="screen" id="s-input">
+
+  <div class="input-wrap">
+
+    <div class="input-header">
+
+      <div class="input-eyebrow">STEP 01</div>
+
+      <div class="input-title">まずは、あなたのことを少しだけ</div>
+
+      <div class="input-line"></div>
+
+    </div>
+
+
+
+    <div class="field-group">
+
+      <label class="field-label">お名前（本名がおすすめ）</label>
+
+      <input class="field-input" type="text" id="f-fullname" placeholder="例：山田 花子">
+
+      <div class="field-note">※名前から伝わる印象も見るため、本名での入力がおすすめです。スペースなしでも推定できますが、「姓 名」で区切ると安定します。</div>
+    </div>
+
+
+
+    <div class="field-group">
+
+      <label class="field-label">性別</label>
+
+      <div class="gender-row">
+
+        <button class="gender-btn sel" id="gb-female" onclick="setGender('female')">女性</button>
+
+        <button class="gender-btn" id="gb-male" onclick="setGender('male')">男性</button>
+
+        <button class="gender-btn" id="gb-other" onclick="setGender('other')">その他</button>
+
+      </div>
+
+    </div>
+
+
+
+    <div class="field-group">
+
+      <label class="field-label">誕生年月日</label>
+
+      <div class="date-grid">
+
+        <div>
+
+          <span class="date-label">年</span>
+
+          <select class="field-input field-select" id="f-year"></select>
+
+        </div>
+
+        <div>
+
+          <span class="date-label">月</span>
+
+          <select class="field-input field-select" id="f-month"></select>
+
+        </div>
+
+        <div>
+
+          <span class="date-label">日</span>
+
+          <select class="field-input field-select" id="f-day"></select>
+
+        </div>
+
+      </div>
+
+      <div class="field-note">※日がわからない場合は「不明」を選べます。その場合は、生まれた年と月から見える傾向を中心に読みます。</div>
+    </div>
+
+
+
+    <div class="field-group">
+
+      <label class="field-label">生まれた時間（わかる範囲で）</label>
+
+      <select class="field-input field-select" id="f-hour">
+
+        <option value="12">わからない</option>
+
+      </select>
+
+    </div>
+
+
+
+    <div class="field-group">
+
+      <label class="field-label">相談テーマ</label>
+
+      <select class="field-input field-select" id="f-cat">
+
+        <option value="総合">総合（全体的な流れ）</option>
+        <option value="恋愛">恋愛・結婚</option>
+        <option value="仕事">仕事・転職・お金</option>
+        <option value="人間関係">人間関係</option>
+        <option value="健康">健康・生活習慣</option>
+
+      </select>
+
+    </div>
+
+
+
+    <div class="field-group">
+      <label class="field-label">いま、いちばん気になっていること</label>
+      <textarea class="field-input field-textarea" id="f-theme" placeholder="例：今の仕事を続けるべきか迷っています。上司との関係もしんどく、このままでいいのか不安です。まとまっていなくても、そのまま書いて大丈夫です。"></textarea>
+    </div>
+
+    <div class="field-group">
+      <label class="field-label">体験エピソードから見る反応の傾向</label>
+      <div class="field-note">価値観の正しさではなく、実際にイラッとした場面や居心地よかった場面に近いほうを選んでください。答えに応じて、次の質問が少しだけ変わります。</div>
+        <div class="reaction-shell">
+          <div class="reaction-progress" id="reaction-progress">体験エピソード 1 / 3</div>
+          <div class="reaction-progress-bar"><div class="reaction-progress-fill" id="reaction-progress-fill"></div></div>
+          <div class="reaction-question" id="reaction-question"></div>
+        <div class="reaction-choices" id="reaction-choices"></div>
+        <div class="reaction-summary" id="reaction-summary"></div>
+        <div class="reaction-actions">
+          <button class="vault-link" type="button" onclick="resetReactionFlow()">この質問をやり直す</button>
+        </div>
+      </div>
+    </div>
+
+    <label class="check-row" onclick="toggleCheck()">
+      <div class="check-box" id="check-save"></div>
+      <span class="check-label">入力内容を次回のために自動保存する（この端末だけ）</span>
+    </label>
+    <div class="local-data-note">鑑定結果の履歴もこの端末だけに残ります。あとから削除できます。</div>
+    <div class="local-data-actions">
+      <button class="vault-link" type="button" onclick="clearSavedInputData()">保存した入力を消す</button>
+      <button class="vault-link" type="button" onclick="clearReadingHistoryData()">この履歴を消す</button>
+    </div>
+
+    <div class="input-btns">
+      <button class="btn-main" onclick="goToLen()">この内容で占う ✦</button>
+      <button class="btn-skip" onclick="skipInput()">サンプルで試す</button>
+    </div>
+
+  </div>
+
+</div>
+
+
+
+<!-- ══════════════════════════════════
+
+     LENORMAND
+
+══════════════════════════════════ -->
+
+<div class="screen" id="s-len">
+
+  <div class="len-bg"></div>
+
+  <div class="len-content">
+
+    <div class="deck-title">LENORMAND CARD</div>
+
+    <div class="deck-instruction" id="len-inst">止めた瞬間に、上から並びをそのまま引きます</div>
+
+
+    <div class="shuffle-area" id="len-deck">
+
+      <div class="shuffle-card"><div class="shuffle-card-inner">✦</div></div>
+
+      <div class="shuffle-card"><div class="shuffle-card-inner">✦</div></div>
+
+      <div class="shuffle-card"><div class="shuffle-card-inner">✦</div></div>
+
+      <div class="shuffle-card"><div class="shuffle-card-inner">✦</div></div>
+
+      <div class="shuffle-card"><div class="shuffle-card-inner">✦</div></div>
+
+    </div>
+
+
+
+    <button class="btn-stop" id="len-stop-btn" onclick="stopLen()">シャッフルを止める</button>
+
+
+
+    <div class="cards-fullscreen" id="len-cards-full">
+      <div class="deck-instruction" style="margin-bottom:16px">引いたカード</div>
+      <div id="len-cards-grid"></div>
+      <button class="nav-btn nav-btn-primary" style="margin-top:32px" onclick="goToOrc()">
+        次へ：数秘オラクルカード ✦
+      </button>
+      <div class="flow-nav-row">
+        <button class="flow-nav-btn" onclick="rerollLenReading()">ルノルマンを引き直す</button>
+        <button class="flow-nav-btn" onclick="backToInputFromFlow()">入力を見直す</button>
+      </div>
+    </div>
+  </div>
+</div>
+
+
+<!-- ══════════════════════════════════
+
+     ORACLE
+
+══════════════════════════════════ -->
+
+<div class="screen" id="s-orc">
+
+  <div class="orc-bg"></div>
+
+  <div class="rainbow-light"></div>
+
+  <div class="rainbow-light2"></div>
+
+  <div class="orc-content">
+
+    <div class="deck-title">NUMEROLOGY ORACLE CARD</div>
+
+    <div class="deck-instruction" id="orc-inst">止めたあと、裏向きカードの中から直感で選びます</div>
+
+
+    <div class="shuffle-area" id="orc-deck">
+
+      <div class="shuffle-card"><div class="shuffle-card-inner" style="color:#c060a0">✦</div></div>
+
+      <div class="shuffle-card"><div class="shuffle-card-inner" style="color:#60a0c0">✦</div></div>
+
+      <div class="shuffle-card"><div class="shuffle-card-inner" style="color:#a0c060">✦</div></div>
+
+      <div class="shuffle-card"><div class="shuffle-card-inner" style="color:#c0a060">✦</div></div>
+
+      <div class="shuffle-card"><div class="shuffle-card-inner" style="color:#a060c0">✦</div></div>
+
+    </div>
+
+
+
+    <button class="btn-stop" id="orc-stop-btn" onclick="stopOrc()">シャッフルを止める</button>
+
+
+
+    <div class="card-select-area" id="orc-select-area">
+      <div class="sel-counter">選んだカード <em id="orc-sel-count">0</em> / <em id="orc-sel-max">3</em> 枚</div>
+      <div class="card-select-grid" id="orc-card-grid"></div>
+      <button class="btn-stop" id="orc-confirm-btn" style="display:none;margin-top:16px" onclick="confirmOrcSelection()">このカードで決定 ✦</button>
+      <div class="flow-nav-row">
+        <button class="flow-nav-btn" onclick="backToLenStep()">ルノルマンへ戻る</button>
+        <button class="flow-nav-btn" onclick="backToInputFromFlow()">入力を見直す</button>
+      </div>
+    </div>
+
+    <div class="cards-fullscreen" id="orc-cards-full">
+      <div class="deck-instruction" style="margin-bottom:16px">引いたカード</div>
+      <div class="cards-row" id="orc-cards-grid"></div>
+      <button class="nav-btn nav-btn-primary" style="margin-top:32px" onclick="goToResult()">
+        結果を見る ✦
+      </button>
+      <div class="flow-nav-row">
+        <button class="flow-nav-btn" onclick="rerollOrcReading()">オラクルを引き直す</button>
+        <button class="flow-nav-btn" onclick="backToLenStep()">ルノルマンへ戻る</button>
+        <button class="flow-nav-btn" onclick="backToInputFromFlow()">入力を見直す</button>
+      </div>
+    </div>
+  </div>
+</div>
+
+
+<!-- ══════════════════════════════════
+
+     CLARIFY
+
+══════════════════════════════════ -->
+
+<div class="screen" id="s-clarify">
+
+  <div class="clarify-wrap">
+
+    <div class="clarify-header">
+
+      <div class="clarify-eyebrow">FOCUS TUNING</div>
+      <div class="clarify-progress" id="clarify-progress">追加確認 1〜3問</div>
+      <div class="clarify-title">今の状況に、読みをもう少し近づけます</div>
+      <div class="clarify-desc">
+
+        答えられる範囲だけで大丈夫です。<br>
+
+        近い選択肢を選ぶか、そのまま言葉で書いてください。<br>
+
+        <span style="font-size:11px;color:rgba(201,149,42,.4);">少し補足があるだけで、結果があなたの現実により沿いやすくなります。</span>
+      </div>
+
+      <div class="clarify-line"></div>
+
+    </div>
+
+    <div id="clarify-questions"></div>
+    <div class="clarify-btns">
+      <button class="btn-main" onclick="submitClarify()">この内容で読みを深める ✦</button>
+      <button class="btn-skip" onclick="skipClarify()">このまま結果へ</button>
+    </div>
+    <div class="flow-nav-row">
+      <button class="flow-nav-btn" onclick="backToOrcStep()">カードに戻る</button>
+      <button class="flow-nav-btn" onclick="backToInputFromFlow()">入力を見直す</button>
+    </div>
+  </div>
+</div>
+
+
+<!-- ══════════════════════════════════
+
+     RESULT
+
+══════════════════════════════════ -->
+
+<div class="screen" id="s-result">
+  <div class="result-wrap">
+    <div class="result-progress-card" id="result-progress-card">
+      <div class="result-progress-eyebrow">鑑定の進み</div>
+      <div class="result-progress-title" id="result-progress-title">結果をまとめています</div>
+      <div class="result-progress-copy" id="result-progress-copy">いまの向きと次の進路を順に整理し、まとまったところから下に反映しています。</div>
+      <div class="result-progress-steps" id="result-progress-steps"></div>
+    </div>
+
+    <div class="rs" id="rs-basis" style="display:none">
+      <details class="result-detail-accordion">
+        <summary>
+          <div>
+            <div class="result-detail-kicker">DETAIL</div>
+            <div class="result-detail-title">名前・生まれ・体験エピソードから見える傾向を見る</div>
+            <div class="result-detail-copy">カード結果を読んだあと、必要なときだけ土台を開ける形にしています。</div>
+          </div>
+          <div class="result-detail-indicator" aria-hidden="true"></div>
+        </summary>
+        <div class="result-detail-content">
+          <div class="basis-grid">
+            <div class="basis-panel">
+              <div class="basis-panel-head">STEP 01</div>
+              <div class="basis-panel-title">名前から見える傾向</div>
+              <div class="basis-panel-copy">名前から伝わりやすい印象や、人との関わり方のクセをやさしい言葉でまとめます。</div>
+              <div id="r-namejudge-content"></div>
+            </div>
+            <div class="basis-panel">
+              <div class="basis-panel-head">STEP 02</div>
+              <div class="basis-panel-title">生まれから見える傾向</div>
+              <div class="basis-panel-copy">生まれた時期から見える、力の出し方や揺れやすい場面をかみくだいて整理します。</div>
+              <div id="r-meimei-content"></div>
+            </div>
+            <div class="basis-panel">
+              <div class="basis-panel-head">STEP 03</div>
+              <div class="basis-panel-title">体験エピソードから見える傾向</div>
+              <div class="basis-panel-copy">答え方のクセから、しんどくなりやすい場面と、元気が出やすい動き方を整理します。</div>
+              <div id="r-reaction-content"></div>
+            </div>
+          </div>
+        </div>
+      </details>
+    </div>
+
+    <!-- ルノルマン結果 -->
+    <div class="rs" id="rs-len">
+      <div class="rs-eyebrow">カード鑑定 01</div>
+      <div class="rs-title"><span class="rs-icon">⚜</span>ルノルマンカード鑑定</div>
+      <div class="rs-copy">最初に、現状の流れと見落としやすい点をルノルマンカードから整理します。</div>
+      <div class="cards-row-sm" id="r-len-cards"></div>
+      <!-- 通常モード：AIリーディングテキスト -->
+      <div class="reading-block" id="r-len-block">
+        <div class="ai-load"><div class="ai-dots"><span></span><span></span><span></span></div><div class="ai-load-copy"><div class="ai-load-title">いま起きていることを整理しています</div><div class="ai-load-detail">迷いを増やす説明ではなく、状況の核心と判断材料だけを言葉にしています。</div></div></div>
+      </div>
+      <!-- 占いモード：カード参照表 -->
+      <div id="r-len-ref" style="display:none"></div>
+    </div>
+
+    <!-- 数秘結果 -->
+    <div class="rs" id="rs-orc">
+      <div class="rs-eyebrow">カード鑑定 02</div>
+      <div class="rs-title"><span class="rs-icon">✦</span>オラクルカード鑑定</div>
+      <div class="rs-copy">次に、背景の流れを受け取りながら、その人の本質と未来へつながる整え方をまとめます。</div>
+      <div class="cards-row-sm" id="r-orc-cards"></div>
+      <!-- 通常モード：AIリーディングテキスト -->
+      <div class="reading-block" id="r-orc-block">
+        <div class="ai-load"><div class="ai-dots"><span></span><span></span><span></span></div><div class="ai-load-copy"><div class="ai-load-title">気持ちの整理を進めています</div><div class="ai-load-detail">迷った日に戻れる言葉と、今日から取りうる一歩へ絞ってまとめています。</div></div></div>
+      </div>
+      <!-- 占いモード：カード参照表 -->
+      <div id="r-orc-ref" style="display:none"></div>
+      <div style="display:flex;gap:12px;flex-wrap:wrap;margin-top:20px;align-items:center;">
+        <button class="nav-btn" onclick="gotoTop()">最初に戻る</button>
+        <button class="nav-btn nav-btn-primary" onclick="gotoTop()">もう一度占う</button>
+        <button class="nav-btn" onclick="goToHistory()">履歴へ</button>
+        <button class="share-x-btn" id="dossier-save-btn" onclick="printDossier()" style="display:none">PDF保存</button>
+        <button class="share-x-btn" id="dossier-copy-inline-btn" onclick="copyDossier()" style="display:none">鑑定書コピー</button>
+        <button class="share-x-btn" id="share-x-btn" onclick="shareToX()" style="display:none">
+          <svg viewBox="0 0 24 24"><path d="M18.244 2.25h3.308l-7.227 8.26 8.502 11.24H16.17l-4.714-6.231-5.401 6.231H2.744l7.73-8.835L1.254 2.25H8.08l4.253 5.622zm-1.161 17.52h1.833L7.084 4.126H5.117z"/></svg>
+          Xでシェア
+        </button>
+      </div>
+    </div>
+
+    <!-- 統合メッセージ -->
+    <div class="rs" id="rs-integration">
+      <div class="rs-eyebrow">最終結論</div>
+      <div class="rs-title"><span class="rs-icon">✧</span>いまの答え</div>
+      <div class="rs-copy">迷ったときにここだけ読み返せば、優先順位と次の一歩がわかる形にまとめます。</div>
+      <div class="integration">
+        <div class="ai-load" id="r-aiload">
+          <div class="ai-dots"><span></span><span></span><span></span></div>
+          <div class="ai-load-copy"><div class="ai-load-title">結論を整えています</div><div class="ai-load-detail">ここまでの読みを一本にまとめ、今どう動くかまで落とし込んでいます。</div></div>
+        </div>
+        <div class="integration-text" id="r-integration" style="display:none"></div>
+      </div>
+      <!--
+      <div style="display:flex;gap:12px;flex-wrap:wrap;margin-top:20px;align-items:center;">
+        <button class="nav-btn" onclick="gotoTop()">ↁE最初に戻めE</button>
+        <button class="nav-btn nav-btn-primary" onclick="gotoTop()">もう一度占ぁE</button>
+        <button class="share-x-btn" id="dossier-save-btn" onclick="printDossier()" style="display:none">PDF保孁E</button>
+        <button class="share-x-btn" id="dossier-copy-inline-btn" onclick="copyDossier()" style="display:none">鑑定書をコピー</button>
+        <button class="share-x-btn" id="share-x-btn" onclick="shareToX()" style="display:none">
+          <svg viewBox="0 0 24 24"><path d="M18.244 2.25h3.308l-7.227 8.26 8.502 11.24H16.17l-4.714-6.231-5.401 6.231H2.744l7.73-8.835L1.254 2.25H8.08l4.253 5.622zm-1.161 17.52h1.833L7.084 4.126H5.117z"/></svg>
+          Xでシェア
+        </button>
+      </div>
+      <div class="result-ritual">
+        <div class="ritual-title" id="ritual-title">戻るタイミング</div>
+        <div class="ritual-copy" id="ritual-copy"></div>
+        <div class="ritual-grid" id="ritual-grid"></div>
+      </div>-->
+    </div>
+
+    <div class="rs" id="rs-dossier" style="display:none">
+      <div class="dossier-shell">
+        <div class="dossier-meta">
+          <div>
+            <div class="dossier-badge">鑑定書</div>
+            <div class="dossier-title" id="dossier-title">鑑定書を整えています</div>
+            <div class="dossier-subtitle" id="dossier-subtitle">今回の鑑定結果を、PDFやコピーで残しやすい形へ整えています。</div>
+          </div>
+          <div class="dossier-actions">
+
+            <button class="dossier-action-btn" id="dossier-print-btn" onclick="printDossier()" style="display:none">印刷 / PDF保存</button>
+
+            <button class="dossier-action-btn" id="dossier-copy-btn" onclick="copyDossier()" style="display:none">要約をコピー</button>
+
+          </div>
+
+        </div>
+
+        <div class="dossier-loading" id="dossier-loading">
+
+          <div class="ai-load"><div class="ai-dots"><span></span><span></span><span></span></div><span>鑑定書を製本しています…</span></div>
+
+        </div>
+
+        <div id="dossier-proof" style="display:none"></div>
+
+        <div id="dossier-rendered" style="display:none"></div>
+
+      </div>
+
+    </div>
+
+    <div class="upgrade-panel" id="result-upgrade-panel" style="display:none"></div>
+
+
+
+  </div>
+
+</div>
+
+<script src="https://accounts.google.com/gsi/client" async defer></script>
+<script src="app.js"></script>
+</body>
+</html>
+
+

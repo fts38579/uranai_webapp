@@ -1,0 +1,7 @@
+入力: 保存して閉じる
+encode=ignore, decode=replace: bytes=95db91b682b582c495c282b682e9 result='�ۑ����ĕ\x82���'
+encode=ignore, decode=ignore: bytes=95db91b682b582c495c282b682e9 result='ۑĕ\x82'
+encode=replace, decode=replace: bytes=95db91b682b582c495c282b682e9 result='�ۑ����ĕ\x82���'
+encode=replace, decode=ignore: bytes=95db91b682b582c495c282b682e9 result='ۑĕ\x82'
+encode=xmlcharrefreplace, decode=replace: bytes=95db91b682b582c495c282b682e9 result='�ۑ����ĕ\x82���'
+encode=xmlcharrefreplace, decode=ignore: bytes=95db91b682b582c495c282b682e9 result='ۑĕ\x82'

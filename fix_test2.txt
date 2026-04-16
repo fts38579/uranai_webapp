@@ -1,0 +1,29 @@
+=== 修正前 ===
+s-top{
+  align-items:center;justify-content:flex-start;
+  background:radial-gradient(ellipse at 50% 20%,#1a0a30 0%,#08051a 60%,#04030a 100%);
+  min-height:100vh;text-align:center;padding:72px 20px 88px;position:relative;
+}
+.top-hero-shell{
+  width:100%;max-width:680px;margin:0 auto 0;
+}
+.top-main{
+  position:relative;overflow:hidden;text-align:center;
+  padding:48px 40px 40px;border:1px solid rgba(201,149,42,.16);
+  background:
+    radial-gradient(circle at 50% 0%,rgba(201,149,42,.12
+
+=== 修正後 ===
+s-top{
+  align-items:center;justify-content:flex-start;
+  background:radial-gradient(ellipse at 50% 20%,#1a0a30 0%,#08051a 60%,#04030a 100%);
+  min-height:100vh;text-align:center;padding:72px 20px 88px;position:relative;
+}
+.top-hero-shell{
+  width:100%;max-width:680px;margin:0 auto 0;
+}
+.top-main{
+  position:relative;overflow:hidden;text-align:center;
+  padding:48px 40px 40px;border:1px solid rgba(201,149,42,.16);
+  background:
+    radial-gradient(circle at 50% 0%,rgba(201,149,42,.12

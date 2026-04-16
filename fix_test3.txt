@@ -1,0 +1,53 @@
+=== 修正前 ===
+</style>
+</head>
+<body>
+
+<div class="starfield" id="starfield"></div>
+<div class="progress-bar" id="progress" style="width:0%"></div>
+<div class="toast" id="toast"></div>
+
+<!-- 髢狗匱閠・Δ繝ｼ繝峨ヰ繝・ず・・dev 譎ゅ・縺ｿ陦ｨ遉ｺ・・-->
+<div class="dev-badge" id="dev-badge" style="display:none">肌 DEV MODE</div>
+
+<!-- 險ｭ螳壹・繧ｿ繝ｳ・磯幕逋ｺ閠・Δ繝ｼ繝画凾縺ｮ縺ｿ陦ｨ遉ｺ・・-->
+<button class="settings-btn" id="settings-btn" onclick="openSettings()" title="API繧ｭ繝ｼ險ｭ螳夲ｼ磯幕逋ｺ閠・Δ繝ｼ繝会ｼ・ style="display:none">笞・/button>
+
+<!-- API繧ｭ繝ｼ險ｭ螳壹Δ繝ｼ繝繝ｫ -->
+<div class="modal-overlay" id="settings-modal">
+  <div class="modal-box">
+    <div class="modal-title">API繧ｭ繝ｼ縺ｮ險ｭ螳・/div>
+    <div class="modal-desc">
+      縺薙ｌ縺ｯ髢狗匱閠・Δ繝ｼ繝牙ｰら畑縺ｮ逶ｴ謗･謗･邯夊ｨｭ螳壹〒縺吶・br>
+      謗ｨ螂ｨ縺ｯ `.env` 縺ｫ `OPENAI_API_KEY` 繧貞・繧後※ `start-uranai.ps1` 縺九ｉ襍ｷ蜍輔☆繧区婿豕輔〒縺吶・br>
+      縺薙・蜈･蜉帶ｬ・・ Anthropic 逶ｴ謗･謗･邯壹・髢狗匱逕ｨ fallback 縺ｧ縺吶・br>
+      繧ｭ繝ｼ縺ｯ繝悶Λ繧ｦ繧ｶ縺ｮsessionStorage縺ｫ菫晏ｭ倥＆繧後∪縺呻ｼ医ち繝悶ｒ髢峨§繧九→豸亥悉・峨・    </div>
+    <div class="runtime-status warn" id="modal-ai-status">
+    
+
+=== 修正後 ===
+</style>
+</head>
+<body>
+
+<div class="starfield" id="starfield"></div>
+<div class="progress-bar" id="progress" style="width:0%"></div>
+<div class="toast" id="toast"></div>
+
+<!-- 開発老E��ードバチE���E�Edev 時�Eみ表示�E�E-->
+<div class="dev-badge" id="dev-badge" style="display:none">🔧 DEV MODE</div>
+
+<!-- 設定�Eタン�E�開発老E��ード時のみ表示�E�E-->
+<button class="settings-btn" id="settings-btn" onclick="openSettings()" title="APIキー設定（開発老E��ード！E style="display:none">⚁E/button>
+
+<!-- APIキー設定モーダル -->
+<div class="modal-overlay" id="settings-modal">
+  <div class="modal-box">
+    <div class="modal-title">APIキーの設宁E/div>
+    <div class="modal-desc">
+      これは開発老E��ード専用の直接接続設定です、Ebr>
+      推奨は `.env` に `OPENAI_API_KEY` を�Eれて `start-uranai.ps1` から起動する方法です、Ebr>
+      こ�E入力欁E�E Anthropic 直接接続�E開発用 fallback です、Ebr>
+      キーはブラウザのsessionStorageに保存されます（タブを閉じると消去�E�、E    </div>
+    <div class="runtime-status warn" id="modal-ai-status">
+    
