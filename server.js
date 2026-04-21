@@ -155,6 +155,7 @@ const PAID_MODELS = new Set([
   'claude-opus-4-1-20250805',
   'claude-opus-4-0',
   'claude-opus-4-20250514',
+  'claude-sonnet-4-20250514',
   'gpt-5.4',
   'gpt-5.4-pro',
 ]);
